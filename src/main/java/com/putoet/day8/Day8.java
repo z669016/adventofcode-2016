@@ -12,8 +12,5 @@ public class Day8 {
         doorLock.display();
 
         System.out.println("Pixels lit is " + doorLock.pixelsLit());
-
-        // zfhsfogpo is not the right answer
-        // zfhfsfogpo is also no the right answer
     }
 }
