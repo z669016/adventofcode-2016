@@ -64,8 +64,4 @@ public class Decompressor {
 
         return decompressedLength;
     }
-
-    public static int decompressedLengthV2(String compressedText) {
-        return decompress(compressedText).length();
-    }
 }
