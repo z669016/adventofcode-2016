@@ -1,0 +1,4 @@
+The first building contains a strontium generator, a strontium-compatible microchip, a plutonium generator, and a plutonium-compatible microchip.
+The second building contains a thulium generator, a ruthenium generator, a ruthenium-compatible microchip, a curium generator, and a curium-compatible microchip.
+The third building contains a thulium-compatible microchip.
+The fourth building contains nothing relevant.
