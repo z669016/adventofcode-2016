@@ -3,31 +3,32 @@ package com.putoet.day12;
 import com.putoet.utils.ResourceLines;
 import com.putoet.utils.assembunny.Assembunny;
 import com.putoet.utils.assembunny.Instruction;
-
-import java.util.List;
-import java.util.OptionalInt;
+import com.putoet.utils.assembunny.Register;
+import com.putoet.utils.assembunny.RegisterSet;
 
 public class Day12 {
+    private static Register a, b, c, d;
+    private static Assembunny assembunny;
+
     public static void main(String[] args) {
-        final List<String> registerNames = List.of("a", "b", "c", "d");
-        Assembunny assembunny = new Assembunny(registerNames);
+        setup();
+
         Instruction[] instructions = assembunny.compile(ResourceLines.list("/day12.txt"));
         assembunny.run(instructions);
+        System.out.println("Part 1 - Value for register 'a' is " + a.get());
 
-        OptionalInt a = assembunny.register("a");
-        if (a.isPresent())
-            System.out.println("Part 1 - Value for register 'a' is " + a.getAsInt());
-
-        assembunny = new Assembunny(registerNames);
-        assembunny.setRegister("c", 1);
+        setup();
+        c.accept(1);
         instructions = assembunny.compile(ResourceLines.list("/day12.txt"));
         assembunny.run(instructions);
+        System.out.println("Part 2 - Value for register 'a' is " + a.get());
+    }
 
-        a = assembunny.register("a");
-        if (a.isPresent())
-            System.out.println("Part 2 - Value for register 'a' is " + a.getAsInt());
-
-
-
+    private static void setup() {
+        a = new Register("a");
+        b = new Register("b");
+        c = new Register("c");
+        d = new Register("d");
+        assembunny = new Assembunny(RegisterSet.of(a, b, c, d));
     }
 }

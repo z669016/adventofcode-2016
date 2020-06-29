@@ -1,15 +1,16 @@
 package com.putoet.utils.assembunny;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class Assembunny {
     public static final String INTEGER_REGEXP = "^-?\\d+$";
     private static boolean verbose = false;
-    private Map<String, Register> regs = new HashMap<>();
+    private RegisterSet regs;
 
-    public Assembunny(List<String> registerNames) {
-        registerNames.forEach(name -> regs.put(name, new Register(name)));
+    public Assembunny(RegisterSet regs) {
+        assert regs != null;
+
+        this.regs = regs;
     }
 
     public static void enableVerbose() {
@@ -29,16 +30,10 @@ public class Assembunny {
         int ip = 0;
         while (ip < program.length) {
             if (verbose)
-                System.out.println(regsToString() + " " + program[ip].toString());
+                System.out.println(regs.toString() + " " + program[ip].toString());
 
             ip += program[ip].execute();
         }
-    }
-
-    private String regsToString() {
-        return "[" +
-                regs.values().stream().map(register -> register.name() + ":" + register.get()).collect(Collectors.joining(", ")) +
-                "]";
     }
 
     public Instruction[] compile(List<String> program) {
@@ -66,28 +61,23 @@ public class Assembunny {
     private Instruction cpyInstruction(int line, String[] tokens) {
         checkOperantCount(3, line, tokens);
 
-        final boolean constant = tokens[1].matches("^-?\\d+$");
-        if (!constant) checkRegister(line, tokens[1].trim());
-        checkRegister(line, tokens[2].trim());
+        final boolean constant = tokens[1].matches(INTEGER_REGEXP);
+        final Register r2 = checkRegister(line, tokens[2].trim());
 
         if (constant)
-            return new Cpy(new InOperant(Integer.parseInt(tokens[1].trim())), regs.get(tokens[2].trim()));
+            return new Cpy(new InOperant(Integer.parseInt(tokens[1].trim())), r2);
         else
-            return new Cpy(new InOperant(regs.get(tokens[1].trim())), regs.get(tokens[2].trim()));
+            return new Cpy(new InOperant(checkRegister(line, tokens[1].trim())), r2);
     }
 
     private Instruction incInstruction(int line, String[] tokens) {
         checkOperantCount(2, line, tokens);
-        checkRegister(line, tokens[1].trim());
-
-        return new Inc(regs.get(tokens[1].trim()));
+        return new Inc(checkRegister(line, tokens[1].trim()));
     }
 
     private Instruction decInstruction(int line, String[] tokens) {
         checkOperantCount(2, line, tokens);
-        checkRegister(line, tokens[1].trim());
-
-        return new Dec(regs.get(tokens[1].trim()));
+        return new Dec(checkRegister(line, tokens[1].trim()));
     }
 
     private Instruction jnzInstruction(int line, String[] tokens) {
@@ -96,12 +86,10 @@ public class Assembunny {
             throw new IllegalArgumentException(compilerErrorAt(line) + "Invalid offset '" + tokens[2] + "'");
 
         final boolean constant = tokens[1].matches(INTEGER_REGEXP);
-        if (!constant) checkRegister(line, tokens[1].trim());
-
         if (constant)
             return new Jnz(new InOperant(Integer.parseInt(tokens[1].trim())), new InOperant(Integer.parseInt(tokens[2].trim())));
         else
-            return new Jnz(new InOperant(regs.get(tokens[1].trim())), new InOperant(Integer.parseInt(tokens[2].trim())));
+            return new Jnz(new InOperant(checkRegister(line, tokens[1].trim())), new InOperant(Integer.parseInt(tokens[2].trim())));
     }
 
     private String compilerErrorAt(int line) {
@@ -113,17 +101,15 @@ public class Assembunny {
             throw new IllegalArgumentException(compilerErrorAt(line) + "missing operant(s)");
     }
 
-    private void checkRegister(int line, String name) {
-        if (!regs.containsKey(name))
+    private Register checkRegister(int line, String name) {
+        final Optional<Register> reg = regs.get(name);
+        if (reg.isEmpty())
             throw new IllegalArgumentException(compilerErrorAt(line) + "Register '" + name + "' not defined");
+
+        return reg.get();
     }
 
-    public OptionalInt register(String name) {
-        return regs.containsKey(name) ? OptionalInt.of(regs.get(name).get()) : OptionalInt.empty();
-    }
-
-    public void setRegister(String name, int value) {
-        if (regs.containsKey(name))
-            regs.get(name).accept(value);
+    public RegisterSet regs() {
+        return regs;
     }
 }

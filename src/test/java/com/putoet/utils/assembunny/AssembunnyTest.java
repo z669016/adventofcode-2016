@@ -1,5 +1,6 @@
 package com.putoet.utils.assembunny;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -8,11 +9,21 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class AssembunnyTest {
+    private Register a, b;
+    private RegisterSet regs;
+    private Assembunny assembunny;
+
+    @BeforeEach
+    void setup() {
+        a = new Register("a");
+        b = new Register("b");
+        regs = RegisterSet.of(a, b);
+        assembunny = new Assembunny(regs);
+    }
 
     @Test
     void create() {
-        assertThrows(AssertionError.class, () -> new Assembunny(List.of("")));
-        assertThrows(AssertionError.class, () -> new Assembunny(List.of("1")));
+        assertThrows(AssertionError.class, () -> new Assembunny(null));
     }
 
     @Test
@@ -20,20 +31,12 @@ class AssembunnyTest {
         final Instruction nop = mock(Nop.class);
         when(nop.execute()).thenReturn(1);
 
-        final Assembunny assembunny = new Assembunny(List.of("a", "b"));
         final Instruction[] instructions = new Instruction[]{nop, nop, nop};
 
         Assembunny.enableVerbose();
         assembunny.run(instructions);
+        Assembunny.disableVerbose();
         verify(nop, times(instructions.length)).execute();
-    }
-
-    @Test
-    void register() {
-        final Assembunny assembunny = new Assembunny(List.of("a", "b"));
-        assertTrue(assembunny.register("a").isPresent());
-        assertTrue(assembunny.register("b").isPresent());
-        assertFalse(assembunny.register("c").isPresent());
     }
 
     @Test
@@ -45,8 +48,7 @@ class AssembunnyTest {
                 "dec a",
                 "jnz a 4"
         );
-        final Assembunny assembunny = new Assembunny(List.of("a", "b"));
-        Instruction[] instructions = assembunny.compile(program);
+        final Instruction[] instructions = assembunny.compile(program);
 
         for (int idx = 0; idx < program.size(); idx++)
             assertEquals(program.get(idx), instructions[idx].toString());
@@ -54,8 +56,6 @@ class AssembunnyTest {
 
     @Test
     void compilerError() {
-        final Assembunny assembunny = new Assembunny(List.of("a", "b"));
-
         assertThrows(IllegalArgumentException.class, () -> assembunny.compile(List.of("cpy")));
         assertThrows(IllegalArgumentException.class, () -> assembunny.compile(List.of("cpy a")));
         assertThrows(IllegalArgumentException.class, () -> assembunny.compile(List.of("cpy 1 c")));
@@ -82,10 +82,8 @@ class AssembunnyTest {
                 "jnz a 2",
                 "dec a"
         );
-        final Assembunny assembunny = new Assembunny(List.of("a", "b"));
         final Instruction[] instructions = assembunny.compile(program);
         assembunny.run(instructions);
-        assertTrue(assembunny.register("a").isPresent());
-        assertEquals(42, assembunny.register("a").getAsInt());
+        assertEquals(42, a.get());
     }
 }
