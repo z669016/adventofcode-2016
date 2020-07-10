@@ -25,12 +25,12 @@ public class RouteFinder {
         List<Route> foundRoutes = new ArrayList<>(List.of(new Route(startingPoint)));
         int count = 0;
 
-        while (!containsTargetRoute(foundRoutes, targetPoint) && count < MAX_STEPS) {
+        while (foundRoutes.size() > 0 && !containsTargetRoute(foundRoutes, targetPoint) && count < MAX_STEPS) {
             foundRoutes = nextStep(foundRoutes, visited);
             count++;
         }
 
-        if (!containsTargetRoute(foundRoutes, targetPoint))
+        if (foundRoutes.size() > 0 && !containsTargetRoute(foundRoutes, targetPoint))
             throw new IllegalStateException("Target route not found within " + MAX_STEPS + " steps.");
 
         return filterTargetRoutes(foundRoutes, targetPoint);
@@ -44,7 +44,7 @@ public class RouteFinder {
         List<Route> foundRoutes = new ArrayList<>(List.of(new Route(startingPoint)));
         int count = 0;
 
-        while (count < steps) {
+        while (foundRoutes.size() > 0 && count < steps) {
             foundRoutes = nextStep(foundRoutes, visited);
             count++;
         }

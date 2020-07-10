@@ -34,6 +34,7 @@ class RouteFinderTest {
         assertThrows(AssertionError.class, () -> finder.find(STARTING_POINT, null));
 
         assertEquals(List.of(), finder.find(STARTING_POINT, Point.of(9,0)));
+        assertEquals(List.of(), finder.find(Point.of(1, 8), TARGET_POINT));
 
         final List<Route> routes = finder.find(STARTING_POINT, TARGET_POINT);
         assertEquals(1, routes.size());
