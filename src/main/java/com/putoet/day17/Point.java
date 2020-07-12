@@ -1,4 +1,4 @@
-package com.putoet.day13;
+package com.putoet.day17;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -6,16 +6,12 @@ import java.util.Optional;
 public class Point {
     private final int x, y;
 
-    public Point(int x, int y) {
-        assert x >= 0;
-        assert y >= 0;
+    private Point(int x, int y) {
+        assert x >= 0 && x <= 3;
+        assert y >= 0 && y <= 3;
 
         this.x = x;
         this.y = y;
-    }
-
-    public static Point of(int x, int y) {
-        return new Point(x, y);
     }
 
     public int x() { return x; }
@@ -26,7 +22,7 @@ public class Point {
     }
 
     public Optional<Point> right() {
-        return Optional.of(new Point(x + 1, y));
+        return x < 3 ? Optional.of(new Point(x() + 1, y())) : Optional.empty();
     }
 
     public Optional<Point> up() {
@@ -34,12 +30,20 @@ public class Point {
     }
 
     public Optional<Point> down() {
-        return Optional.of(new Point(x, y + 1));
+        return y < 3 ? Optional.of(new Point(x, y + 1)) : Optional.empty();
     }
 
-    @Override
-    public String toString() {
-        return "(" + x + ", " + y + ")";
+    public static Point of(int x, int y) {
+        return new Point(x, y);
+    }
+
+    public Optional<Point> move(Direction direction) {
+        return switch(direction) {
+            case UP -> up();
+            case RIGHT -> right();
+            case DOWN -> down();
+            case LEFT -> left();
+        };
     }
 
     @Override
