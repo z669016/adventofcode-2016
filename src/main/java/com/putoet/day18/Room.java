@@ -1,7 +1,9 @@
 package com.putoet.day18;
 
 import java.util.Arrays;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class Room {
     private final Tile[][] tiles;
@@ -13,49 +15,13 @@ public class Room {
     }
 
     public static Room of(String rowOfTiles, int numberOfRows) {
-        assert rowOfTiles != null;
-        assert rowOfTiles.matches("^[\\^\\.]+$");
         assert numberOfRows > 0;
 
-        final Tile[][] tiles = new Tile[numberOfRows][];
-        tiles[0] = Tile.of(rowOfTiles);
-        for (int idx = 1; idx < numberOfRows; idx++) {
-            tiles[idx] = next(tiles[idx - 1]);
-        }
-
-        return new Room(tiles);
-    }
-
-    private static Tile[] next(Tile[] rowOfTiles) {
-        final Tile[] nextRowOfTiles = new Tile[rowOfTiles.length];
-
-        for (int idx = 0; idx < rowOfTiles.length; idx++) {
-            nextRowOfTiles[idx] = next(idx == 0 ? null : rowOfTiles[idx-1]
-                    , rowOfTiles[idx]
-                    , idx == rowOfTiles.length - 1 ? null : rowOfTiles[idx + 1]
-                    );
-        }
-
-        return nextRowOfTiles;
-    }
-
-    private static Tile next(Tile left, Tile center, Tile right) {
-        left = (left == null ? Tile.SAFE : left);
-        right = (right == null ? Tile.SAFE : right);
-
-        if (left.isTrap() && center.isTrap() && right.isSafe())
-            return Tile.TRAP;
-
-        if (left.isTrap() && center.isSafe() && right.isSafe())
-            return Tile.TRAP;
-
-        if (left.isSafe() && center.isTrap() && right.isTrap())
-            return Tile.TRAP;
-
-        if (left.isSafe() && center.isSafe() && right.isTrap())
-            return Tile.TRAP;
-
-        return Tile.SAFE;
+        final TileRowSupplier supplier = new TileRowSupplier(Tile.of(rowOfTiles));
+        return new Room(IntStream.range(0, numberOfRows)
+                .mapToObj(idx -> supplier.get())
+                .toArray(Tile[][]::new)
+        );
     }
 
     public long safeTileCount() {
@@ -72,5 +38,54 @@ public class Room {
                         .map(Tile::toString).collect(Collectors.joining())
                 )
                 .collect(Collectors.joining("\n")) ;
+    }
+
+    private static class TileRowSupplier implements Supplier<Tile[]> {
+        private Tile[] nextRow;
+
+        public TileRowSupplier(Tile[] nextRow) {
+            assert nextRow != null;
+
+            this.nextRow = nextRow;
+        }
+
+        @Override
+        public Tile[] get() {
+            final Tile[] result = nextRow;
+            nextRow = next();
+            return result;
+        }
+
+        private Tile[] next() {
+            final Tile[] nextRowOfTiles = new Tile[nextRow.length];
+
+            for (int idx = 0; idx < nextRow.length; idx++) {
+                nextRowOfTiles[idx] = next(idx == 0 ? null : nextRow[idx-1]
+                        , nextRow[idx]
+                        , idx == nextRow.length - 1 ? null : nextRow[idx + 1]
+                );
+            }
+
+            return nextRowOfTiles;
+        }
+
+        private Tile next(Tile left, Tile center, Tile right) {
+            left = (left == null ? Tile.SAFE : left);
+            right = (right == null ? Tile.SAFE : right);
+
+            if (left.isTrap() && center.isTrap() && right.isSafe())
+                return Tile.TRAP;
+
+            if (left.isTrap() && center.isSafe() && right.isSafe())
+                return Tile.TRAP;
+
+            if (left.isSafe() && center.isTrap() && right.isTrap())
+                return Tile.TRAP;
+
+            if (left.isSafe() && center.isSafe() && right.isTrap())
+                return Tile.TRAP;
+
+            return Tile.SAFE;
+        }
     }
 }

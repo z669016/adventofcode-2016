@@ -5,6 +5,14 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class RoomTest {
+    @Test
+    void of() {
+        assertThrows(AssertionError.class, () -> Room.of(null, 10));
+        assertThrows(AssertionError.class, () -> Room.of("", 10));
+        assertThrows(AssertionError.class, () -> Room.of(".1.", 10));
+        assertThrows(AssertionError.class, () -> Room.of("...", 0));
+
+    }
 
     @Test
     void ofThree() {
