@@ -15,9 +15,9 @@ class WhiteElephantPartyTest {
         final int size = 5;
         final WhiteElephantParty party = new WhiteElephantParty(size);
 
-        assertEquals(5, party.elves().length);
+        assertEquals(5, party.elves().size());
         for (int idx = 0; idx < size; idx++)
-            assertEquals(idx + 1, party.elves()[idx].id());
+            assertEquals(idx + 1, party.elves().get(idx).id());
     }
 
     @Test

@@ -1,20 +1,22 @@
 package com.putoet.day19;
 
-import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class WhiteElephantParty {
-    protected Elf[] elves;
+    protected List<Elf> elves;
     protected int active = 0;
 
     public WhiteElephantParty(int partySize) {
         assert partySize > 0;
 
         final Supplier<Elf> supplier = Elf.supplier();
-        elves = IntStream.range(0, partySize)
+        elves = new LinkedList(IntStream.range(0, partySize)
                 .mapToObj(i -> supplier.get())
-                .toArray(Elf[]::new);
+                .collect(Collectors.toList()));
         active = partySize;
     }
 
@@ -23,20 +25,20 @@ public class WhiteElephantParty {
         int next = nextFrom(current);
 
         while (next != current) {
-            elves[current].stealFrom(elves[next]);
+            elves.get(current).stealFrom(elves.get(next));
             active--;
 
             current = nextCurrent(current);
             next = nextFrom(current);
         }
 
-        return elves[current];
+        return elves.get(current);
     }
 
     protected int nextCurrent(int current) {
         do {
-            current = (current + 1) % elves.length;
-        } while (elves[current].isSkipped());
+            current = (current + 1) % elves.size();
+        } while (elves.get(current).isSkipped());
         return current;
     }
 
@@ -44,9 +46,9 @@ public class WhiteElephantParty {
         return nextCurrent(current);
     }
 
-    public Elf[] elves() { return elves; }
+    public List<Elf> elves() { return elves; }
 
     public long activeElves() {
-        return Arrays.stream(elves).filter(elf -> !elf.isSkipped()).count();
+        return elves.stream().filter(elf -> !elf.isSkipped()).count();
     }
 }
