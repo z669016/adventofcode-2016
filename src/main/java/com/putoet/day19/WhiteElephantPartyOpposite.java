@@ -12,9 +12,8 @@ public class WhiteElephantPartyOpposite extends WhiteElephantParty {
         int skip = (active - 1) / 2;
         do {
             current = (current + 1) % elves.size();
-            if (!elves.get(current).isSkipped())
-                skip--;
-        } while (elves.get(current).isSkipped() || skip > 0);
+            skip--;
+        } while (skip > 0);
 
         return current;
     }

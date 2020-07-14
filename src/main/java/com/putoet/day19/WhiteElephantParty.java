@@ -14,9 +14,9 @@ public class WhiteElephantParty {
         assert partySize > 0;
 
         final Supplier<Elf> supplier = Elf.supplier();
-        elves = new LinkedList(IntStream.range(0, partySize)
+        elves = IntStream.range(0, partySize)
                 .mapToObj(i -> supplier.get())
-                .collect(Collectors.toList()));
+                .collect(Collectors.toCollection(LinkedList::new));
         active = partySize;
     }
 
@@ -26,6 +26,7 @@ public class WhiteElephantParty {
 
         while (next != current) {
             elves.get(current).stealFrom(elves.get(next));
+            elves.remove(next);
             active--;
 
             current = nextCurrent(current);
@@ -36,10 +37,7 @@ public class WhiteElephantParty {
     }
 
     protected int nextCurrent(int current) {
-        do {
-            current = (current + 1) % elves.size();
-        } while (elves.get(current).isSkipped());
-        return current;
+        return current >= elves.size() ? 0 : (current + 1) % elves.size();
     }
 
     protected int nextFrom(int current) {
