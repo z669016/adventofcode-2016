@@ -13,4 +13,6 @@ public class Day19 {
         System.out.println("The winner using opposite strategy is " + winner.id() + "  with " + winner.presents() + " presents.");
         System.out.println("Number of actives elves is " + party.activeElves());
     }
+
+    // 2024098 is not correct
 }
