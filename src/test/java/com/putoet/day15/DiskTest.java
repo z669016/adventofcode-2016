@@ -8,6 +8,8 @@ class DiskTest {
 
     @Test
     void position() {
+        Disk.reset();
+
         final Disk one = Disk.of(5,4);
         final Disk two = Disk.of(2, 1);
 

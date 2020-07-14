@@ -17,8 +17,7 @@ class RouteFinderTest {
                         "",
                         new PasscodeDirection(new Passcode("ihgpwlah")::forRoute)
                 ));
-
-        System.out.println(routes);
+        // System.out.println(routes);
     }
 
 }
