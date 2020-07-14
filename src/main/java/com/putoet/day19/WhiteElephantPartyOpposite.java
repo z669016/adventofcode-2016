@@ -6,15 +6,16 @@ public class WhiteElephantPartyOpposite extends WhiteElephantParty {
     }
 
     protected int nextFrom(int current) {
-        if (active == 1)
+        if (active == 1) {
             return current;
+        }
 
-        int skip = (active - 1) / 2;
+        int skip = active / 2;
         do {
-            current = (current + 1) % elves.length;
-            if (!elves[current].isSkipped())
+            current = current + 1 >= elves.length ? 0 : current + 1;
+            if (elves[current] != null)
                 skip--;
-        } while (elves[current].isSkipped() || skip > 0);
+        } while (elves[current] == null || skip > 0);
 
         return current;
     }

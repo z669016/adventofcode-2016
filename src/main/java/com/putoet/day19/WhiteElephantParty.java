@@ -1,6 +1,7 @@
 package com.putoet.day19;
 
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.function.Supplier;
 import java.util.stream.IntStream;
 
@@ -23,7 +24,10 @@ public class WhiteElephantParty {
         int next = nextFrom(current);
 
         while (next != current) {
+            // System.out.printf("%d steals from %s\n", elves[current].id(), elves[next].id());
             elves[current].stealFrom(elves[next]);
+            elves[next] = null;
+
             active--;
 
             current = nextCurrent(current);
@@ -35,8 +39,8 @@ public class WhiteElephantParty {
 
     protected int nextCurrent(int current) {
         do {
-            current = (current + 1) % elves.length;
-        } while (elves[current].isSkipped());
+            current = (current + 1) >= elves.length ? 0 : current + 1;
+        } while (elves[current] == null);
         return current;
     }
 
@@ -47,6 +51,6 @@ public class WhiteElephantParty {
     public Elf[] elves() { return elves; }
 
     public long activeElves() {
-        return Arrays.stream(elves).filter(elf -> !elf.isSkipped()).count();
+        return Arrays.stream(elves).filter(Objects::nonNull).count();
     }
 }
