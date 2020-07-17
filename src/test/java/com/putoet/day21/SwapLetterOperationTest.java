@@ -24,6 +24,7 @@ class SwapLetterOperationTest {
     void apply() {
         final SwapLetterOperation swap = new SwapLetterOperation("swap letter a with letter d");
         assertEquals("dbca", swap.apply("abcd"));
+        assertEquals("abcd", swap.unApply(swap.apply("abcd")));
     }
 
     @Test

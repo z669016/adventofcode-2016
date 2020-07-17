@@ -20,9 +20,14 @@ class ReverseOperationTest {
     }
 
     @Test
+    void unAapply() {
+        ReverseOperation reverse = new ReverseOperation("reverse positions 1 through 4");
+        assertEquals("abcdef", reverse.unApply(reverse.apply("abcdef")));
+    }
+
+    @Test
     void applyError() {
         final ReverseOperation reverse = new ReverseOperation("reverse positions 4 through 6");
-
         assertThrows(AssertionError.class, () -> reverse.apply(null));
         assertThrows(IllegalArgumentException.class, () -> reverse.apply("abc"));
         assertThrows(IllegalArgumentException.class, () -> reverse.apply("abcde"));
@@ -30,22 +35,19 @@ class ReverseOperationTest {
 
     @Test
     void applyMiddle() {
-        ReverseOperation reverse = new ReverseOperation("reverse positions 1 through 4");
-
+        final ReverseOperation reverse = new ReverseOperation("reverse positions 1 through 4");
         assertEquals("aedcbf", reverse.apply("abcdef"));
     }
 
     @Test
     void applyStart() {
-        ReverseOperation reverse = new ReverseOperation("reverse positions 0 through 3");
-
+        final ReverseOperation reverse = new ReverseOperation("reverse positions 0 through 3");
         assertEquals("dcbaef", reverse.apply("abcdef"));
     }
 
     @Test
     void applyEnd() {
-        ReverseOperation reverse = new ReverseOperation("reverse positions 2 through 5");
-
+        final ReverseOperation reverse = new ReverseOperation("reverse positions 2 through 5");
         assertEquals("abfedc", reverse.apply("abcdef"));
     }
 }

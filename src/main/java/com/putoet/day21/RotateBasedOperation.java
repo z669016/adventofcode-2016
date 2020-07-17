@@ -25,10 +25,31 @@ public class RotateBasedOperation implements ScrambleOperation {
     public String apply(String password) {
         assert password != null;
 
+        return RotateOperation.rotateRight(password, steps(password, letter));
+    }
+
+    @Override
+    public String unApply(String password) {
+        assert password != null;
+
+        for (int steps = 1; steps < password.length() + 2; steps++) {
+            final String unapplied = RotateOperation.rotateLeft(password, steps);
+            if (password.equals(apply(unapplied)))
+                return unapplied;
+        }
+
+       throw new IllegalStateException("Could not unApply rotate based on positio of letter " + letter + " on password '" + password + "'");
+    }
+
+    @Override
+    public String toString() {
+        return String.format("rotate based on position of letter %s", letter);
+    }
+
+    private static int steps(String password, String letter) {
         int steps = password.indexOf(letter); // plus a number of times equal to that index
         if (steps >= 4) steps++; // plus one additional time if the index was at least 4
         steps += 1; // rotate the string to the right one time
-
-        return RotateOperation.rotateRight(password, steps);
+        return steps;
     }
 }

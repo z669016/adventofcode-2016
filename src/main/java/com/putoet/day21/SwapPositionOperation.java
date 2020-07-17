@@ -24,6 +24,20 @@ public class SwapPositionOperation implements ScrambleOperation {
 
     @Override
     public String apply(String password) {
+        return swap(password, from, to);
+    }
+
+    @Override
+    public String unApply(String password) {
+        return apply(password);
+    }
+
+    @Override
+    public String toString() {
+        return String.format("swap position %d with %d", from, to);
+    }
+
+    private static String swap(String password, int from, int to) {
         assert password != null;
 
         if (from >= password.length())

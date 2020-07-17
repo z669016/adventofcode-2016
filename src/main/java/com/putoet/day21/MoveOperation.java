@@ -24,6 +24,20 @@ public class MoveOperation implements ScrambleOperation {
 
     @Override
     public String apply(String password) {
+        return move(password,from, to);
+    }
+
+    @Override
+    public String unApply(String password) {
+        return move(password, to, from);
+    }
+
+    @Override
+    public String toString() {
+        return String.format("move position %d to %d", from, to);
+    }
+
+    private static String move(String password, int from, int to) {
         assert password != null;
 
         if (from >= password.length())
@@ -34,14 +48,14 @@ public class MoveOperation implements ScrambleOperation {
         if (from == to)
             return password;
 
-        return putIn(takeFrom(password), password.charAt(from));
+        return putIn(takeFrom(password, from), password.charAt(from), to);
     }
 
-    private String putIn(String password, char c) {
+    private static String putIn(String password, char c, int to) {
         return password.substring(0, to) + c + password.substring(to);
     }
 
-    private String takeFrom(String password) {
+    private static String takeFrom(String password, int from) {
         return password.substring(0, from) + password.substring(from + 1);
     }
 }

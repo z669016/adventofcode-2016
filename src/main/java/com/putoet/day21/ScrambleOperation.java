@@ -1,8 +1,6 @@
 package com.putoet.day21;
 
-import java.util.function.Function;
-
-public interface ScrambleOperation extends Function<String,String> {
+public interface ScrambleOperation {
 
     static ScrambleOperation of(String line) {
         final String[] split = line.split(" ");
@@ -14,4 +12,7 @@ public interface ScrambleOperation extends Function<String,String> {
             default -> throw new IllegalArgumentException("Invalid operation '" + line + "'");
         };
     }
+
+    String apply(String password);
+    String unApply(String password);
 }

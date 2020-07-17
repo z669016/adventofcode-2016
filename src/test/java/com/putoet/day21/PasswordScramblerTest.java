@@ -34,6 +34,7 @@ class PasswordScramblerTest {
         assertEquals(8, scrambleOperations.size());
 
         assertEquals("decab", scrambler.apply("abcde"));
+        assertEquals("abcde", scrambler.unApply(scrambler.apply("abcde")));
     }
 
     @Test

@@ -23,6 +23,7 @@ class RotateOperationTest {
         final RotateOperation rotateLeft = new RotateOperation("rotate left 3 steps");
         assertEquals("a", rotateLeft.apply("a"));
         assertEquals("defgabc", rotateLeft.apply("abcdefg"));
+        assertEquals("abcdefg", rotateLeft.unApply(rotateLeft.apply("abcdefg")));
     }
 
     @Test
@@ -30,5 +31,6 @@ class RotateOperationTest {
         final RotateOperation rotateRight = new RotateOperation("rotate right 3 steps");
         assertEquals("a", rotateRight.apply("a"));
         assertEquals("efgabcd", rotateRight.apply("abcdefg"));
+        assertEquals("abcdefg", rotateRight.unApply(rotateRight.apply("abcdefg")));
     }
 }

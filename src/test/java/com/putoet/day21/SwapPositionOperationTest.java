@@ -30,6 +30,7 @@ class SwapPositionOperationTest {
     void applyFrontToBack() {
         final SwapPositionOperation swap = new SwapPositionOperation("swap position 0 with position 3");
         assertEquals("dbca", swap.apply("abcd"));
+        assertEquals("abcd", swap.unApply(swap.apply("abcd")));
     }
 
     @Test

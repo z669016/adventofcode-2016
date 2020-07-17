@@ -20,8 +20,23 @@ public class ReverseOperation implements ScrambleOperation {
 
         assert from >= 0;
     }
+
     @Override
     public String apply(String password) {
+        return reverse(password, from, to);
+    }
+
+    @Override
+    public String unApply(String password) {
+        return apply(password);
+    }
+
+    @Override
+    public String toString() {
+        return String.format("reverse position %d through %d", from, to);
+    }
+
+    private static String reverse(String password, int from, int to) {
         assert password != null;
 
         if (from >= password.length() || to >= password.length())

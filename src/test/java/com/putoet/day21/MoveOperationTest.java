@@ -21,6 +21,12 @@ class MoveOperationTest {
     }
 
     @Test
+    void unApply() {
+        final MoveOperation move = new MoveOperation("move position 1 to position 3");
+        assertEquals("abcdef", move.unApply(move.apply("abcdef")));
+    }
+
+    @Test
     void applyBackToFront() {
         final MoveOperation move = new MoveOperation("move position 3 to position 0");
         assertEquals("dabc", move.apply("abcd"));

@@ -26,4 +26,27 @@ class RotateBasedOperationTest {
         assertEquals("oad", rotate.apply("oad"));
         assertEquals("cefdghiob", rotate.apply("obcefdghi"));
     }
+
+    @Test
+    void unApply() {
+        final RotateBasedOperation rotate = new RotateBasedOperation("rotate based on position of letter a");
+
+//        System.out.println("abcdefgh - " + rotate.apply("abcdefgh"));
+//        System.out.println("habcdefg - " + rotate.apply("habcdefg"));
+//        System.out.println("ghabcdef - " + rotate.apply("ghabcdef"));
+//        System.out.println("fghabcde - " + rotate.apply("fghabcde"));
+//        System.out.println("efghabcd - " + rotate.apply("efghabcd"));
+//        System.out.println("defghabc - " + rotate.apply("defghabc"));
+//        System.out.println("cdefghab - " + rotate.apply("cdefghab"));
+//        System.out.println("bcdefgha - " + rotate.apply("bcdefgha"));
+
+        assertEquals("abcdefgh", rotate.unApply(rotate.apply("abcdefgh")));
+        assertEquals("habcdefg", rotate.unApply(rotate.apply("habcdefg")));
+        assertEquals("ghabcdef", rotate.unApply(rotate.apply("ghabcdef")));
+        assertEquals("fghabcde", rotate.unApply(rotate.apply("fghabcde")));
+        assertEquals("efghabcd", rotate.unApply(rotate.apply("efghabcd")));
+        assertEquals("defghabc", rotate.unApply(rotate.apply("defghabc")));
+        assertEquals("cdefghab", rotate.unApply(rotate.apply("cdefghab")));
+        assertEquals("bcdefgha", rotate.unApply(rotate.apply("bcdefgha")));
+    }
 }

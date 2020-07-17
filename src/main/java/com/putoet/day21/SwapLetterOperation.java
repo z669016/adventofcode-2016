@@ -24,6 +24,20 @@ public class SwapLetterOperation implements ScrambleOperation {
 
     @Override
     public String apply(String password) {
+        return swap(password, from, to);
+    }
+
+    @Override
+    public String unApply(String password) {
+        return apply(password);
+    }
+
+    @Override
+    public String toString() {
+        return String.format("swap letter %s with %s", from, to);
+    }
+
+    private static String swap(String password, String from, String to) {
         assert password != null;
 
         if (!password.contains(from) || !password.contains(to))

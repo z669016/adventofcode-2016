@@ -23,6 +23,20 @@ public class RotateOperation implements ScrambleOperation {
 
     @Override
     public String apply(String password) {
+        return rotate(password, steps, left);
+    }
+
+    @Override
+    public String unApply(String password) {
+        return rotate(password, steps, !left);
+    }
+
+    @Override
+    public String toString() {
+        return String.format("rotate %s %d %s", left ? "left" : "right", steps, steps == 1 ? "step" : "steps");
+    }
+
+    private static String rotate(String password, int steps, boolean left) {
         assert password != null;
 
         if (steps == 0 || password.length() == 1)
