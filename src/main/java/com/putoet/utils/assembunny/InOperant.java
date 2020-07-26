@@ -14,6 +14,17 @@ public class InOperant implements Supplier<Integer> {
         this.supplier = supplier;
     }
 
+    public boolean isRegister() {
+        return supplier instanceof Register;
+    }
+
+    Register register() {
+        if (isRegister())
+            return (Register)  supplier;
+
+        throw new IllegalStateException("Cannot transform InOperant into Register");
+    }
+
     @Override
     public Integer get() {
         return supplier.get();

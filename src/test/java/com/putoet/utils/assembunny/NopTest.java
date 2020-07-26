@@ -11,4 +11,12 @@ class NopTest {
         final Instruction nop = new Nop();
         assertEquals(1, nop.execute());
     }
+
+    @Test
+    void toggle() {
+        final Instruction nop = new Nop();
+        final Instruction toggle =nop.toggle();
+
+        assertEquals(nop,toggle);
+    }
 }

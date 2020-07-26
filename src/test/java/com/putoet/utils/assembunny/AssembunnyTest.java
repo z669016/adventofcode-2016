@@ -5,7 +5,8 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 class AssembunnyTest {
@@ -85,5 +86,21 @@ class AssembunnyTest {
         final Instruction[] instructions = assembunny.compile(program);
         assembunny.run(instructions);
         assertEquals(42, a.get());
+    }
+
+    @Test
+    void toggle() {
+        final List<String> program = List.of(
+                "cpy 2 a",
+                "tgl a",
+                "tgl a",
+                "tgl a",
+                "cpy 1 a",
+                "dec a",
+                "dec a"
+        );
+        final Instruction[] instructions = assembunny.compile(program);
+        assembunny.run(instructions);
+        assertEquals(3, a.get());
     }
 }

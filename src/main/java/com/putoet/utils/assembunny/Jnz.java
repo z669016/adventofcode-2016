@@ -13,12 +13,17 @@ public class Jnz implements Instruction {
     }
 
     @Override
+    public Instruction toggle() {
+        return new Cpy(register, offset);
+    }
+
+    @Override
     public int execute() {
         return register.get() != 0 ? offset.get() : 1;
     }
 
     @Override
     public String toString() {
-        return "jnz " + register.toString() + " " + offset.get();
+        return "jnz " + register + " " + offset;
     }
 }

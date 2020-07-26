@@ -1,22 +1,29 @@
 package com.putoet.utils.assembunny;
 
 public class Inc implements Instruction {
-    private final Register register;
+    private final InOperant in;
 
-    public Inc(Register register) {
-        assert register != null;
+    public Inc(InOperant in) {
+        assert in != null;
 
-        this.register = register;
+        this.in = in;
+    }
+
+    @Override
+    public Instruction toggle() {
+        return new Dec(in);
     }
 
     @Override
     public int execute() {
-        register.accept(register.get() + 1);
+        if (in.isRegister())
+            in.register().accept(in.register().get() + 1);
+
         return 1;
     }
 
     @Override
     public String toString() {
-        return "inc " + register.name();
+        return "inc " + in;
     }
 }

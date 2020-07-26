@@ -23,4 +23,14 @@ class JnzTest {
         register.accept(7);
         assertEquals(offset, jnz.execute());
     }
+
+    @Test
+    void toggle() {
+        final Register register = new Register("a");
+        final int offset = 13;
+        final Instruction jnz = new Jnz(new InOperant(register), new InOperant(offset));
+        final Instruction toggle = jnz.toggle();
+
+        assertTrue(toggle instanceof Cpy);
+    }
 }

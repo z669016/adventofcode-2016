@@ -5,7 +5,8 @@ import java.util.*;
 public class Assembunny {
     public static final String INTEGER_REGEXP = "^-?\\d+$";
     private static boolean verbose = false;
-    private RegisterSet regs;
+    private final RegisterSet regs;
+    private ExecutionContext context;
 
     public Assembunny(RegisterSet regs) {
         assert regs != null;
@@ -27,13 +28,17 @@ public class Assembunny {
     }
 
     public void run(Instruction[] program) {
-        int ip = 0;
-        while (ip < program.length) {
-            if (verbose)
-                System.out.println(regs.toString() + " " + program[ip].toString());
+        final Register ip = new Register("ip");
+        context = new ExecutionContext(ip, regs, program);
 
-            ip += program[ip].execute();
+        while (ip.get() < program.length) {
+            if (verbose)
+                System.out.println(regs.toString() + " " + program[ip.get()].toString());
+
+            ip.accept(ip.get() + program[ip.get()].execute());
         }
+
+        context = null;
     }
 
     public Instruction[] compile(List<String> program) {
@@ -49,47 +54,45 @@ public class Assembunny {
             return new Nop();
 
         final String[] tokens = programLine.split(" ");
-        switch(tokens[0]) {
-            case "cpy": return cpyInstruction(line, tokens);
-            case "inc": return incInstruction(line, tokens);
-            case "dec": return decInstruction(line, tokens);
-            case "jnz": return jnzInstruction(line, tokens);
-        }
-        throw new IllegalArgumentException(compilerErrorAt(line) + "unknown instruction '" + programLine + "'");
+        return switch(tokens[0]) {
+            case "cpy" -> cpyInstruction(line, tokens);
+            case "inc" -> incInstruction(line, tokens);
+            case "dec" -> decInstruction(line, tokens);
+            case "jnz" -> jnzInstruction(line, tokens);
+            case "tgl" -> tglInstruction(line, tokens);
+            default -> throw new IllegalArgumentException(compilerErrorAt(line) + "unknown instruction '" + programLine + "'");
+        };
     }
 
     private Instruction cpyInstruction(int line, String[] tokens) {
         checkOperantCount(3, line, tokens);
 
-        final boolean constant = tokens[1].matches(INTEGER_REGEXP);
-        final Register r2 = checkRegister(line, tokens[2].trim());
+        return new Cpy(inOperant(line, tokens[1]), inOperant(line, tokens[2]));
+    }
 
-        if (constant)
-            return new Cpy(new InOperant(Integer.parseInt(tokens[1].trim())), r2);
-        else
-            return new Cpy(new InOperant(checkRegister(line, tokens[1].trim())), r2);
+    private InOperant inOperant(int line, String token) {
+        return token.matches(INTEGER_REGEXP) ? new InOperant(Integer.parseInt(token.trim())) : new InOperant(checkRegister(line, token.trim()));
     }
 
     private Instruction incInstruction(int line, String[] tokens) {
         checkOperantCount(2, line, tokens);
-        return new Inc(checkRegister(line, tokens[1].trim()));
+        return new Inc(inOperant(line, tokens[1]));
     }
 
     private Instruction decInstruction(int line, String[] tokens) {
         checkOperantCount(2, line, tokens);
-        return new Dec(checkRegister(line, tokens[1].trim()));
+        return new Dec(inOperant(line, tokens[1]));
     }
 
     private Instruction jnzInstruction(int line, String[] tokens) {
         checkOperantCount(3, line, tokens);
-        if (!tokens[2].matches(INTEGER_REGEXP))
-            throw new IllegalArgumentException(compilerErrorAt(line) + "Invalid offset '" + tokens[2] + "'");
 
-        final boolean constant = tokens[1].matches(INTEGER_REGEXP);
-        if (constant)
-            return new Jnz(new InOperant(Integer.parseInt(tokens[1].trim())), new InOperant(Integer.parseInt(tokens[2].trim())));
-        else
-            return new Jnz(new InOperant(checkRegister(line, tokens[1].trim())), new InOperant(Integer.parseInt(tokens[2].trim())));
+        return new Jnz(inOperant(line, tokens[1]), inOperant(line, tokens[2]));
+    }
+
+    private Instruction tglInstruction(int line, String[] tokens) {
+        checkOperantCount(2, line, tokens);
+        return new Tgl(inOperant(line, tokens[1]), () -> context);
     }
 
     private String compilerErrorAt(int line) {

@@ -13,7 +13,7 @@ class IncTest {
     @Test
     void execute() {
         final Register register = new Register("ax");
-        final Instruction inc = new Inc(register);
+        final Instruction inc = new Inc(new InOperant(register));
 
         assertEquals("inc ax", inc.toString());
 
@@ -22,5 +22,14 @@ class IncTest {
         assertEquals(1, register.get());
         assertEquals(1, inc.execute());
         assertEquals(2, register.get());
+    }
+
+    @Test
+    void toggle() {
+        final Register register = new Register("ax");
+        final Instruction inc = new Inc(new InOperant(register));
+        final Instruction toggle = inc.toggle();
+
+        assertTrue(toggle instanceof Dec);
     }
 }
