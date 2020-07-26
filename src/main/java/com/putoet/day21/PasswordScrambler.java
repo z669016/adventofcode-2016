@@ -19,7 +19,6 @@ public class PasswordScrambler implements ScrambleOperation {
         assert password != null;
 
         for (ScrambleOperation operation : operations) {
-            // System.out.println(operation.toString());
             password = operation.apply(password);
         }
         return password;
@@ -30,7 +29,6 @@ public class PasswordScrambler implements ScrambleOperation {
         assert password != null;
 
         for (int idx = operations.size() - 1; idx >= 0; idx--) {
-            // System.out.println(operation.toString());
             password = operations.get(idx).unApply(password);
         }
         return password;
