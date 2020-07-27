@@ -2,11 +2,21 @@ package com.putoet.day13;
 
 import com.putoet.utils.maze.AbstractMaze;
 
-public class OfficeDesignerMaze extends AbstractMaze {
+public class OfficeDesignerMaze extends AbstractMaze<String> {
     private final int officeDesignerFavouriteNumber;
 
     public OfficeDesignerMaze(int officeDesignerFavouriteNumber) {
         this.officeDesignerFavouriteNumber = officeDesignerFavouriteNumber;
+    }
+
+    @Override
+    public boolean contains(int x, int y) {
+        return y >= 0 && x >= 0;
+    }
+
+    @Override
+    public String cell(int x, int y) {
+        return isWall(x, y) ? "#" : ".";
     }
 
     @Override
@@ -17,5 +27,10 @@ public class OfficeDesignerMaze extends AbstractMaze {
                 .filter(bit -> bit == '1')
                 .count();
         return ones % 2 == 1;
+    }
+
+    @Override
+    public void draw() {
+        draw(10, 10);
     }
 }

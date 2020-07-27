@@ -2,7 +2,12 @@ package com.putoet.utils.maze;
 
 import java.util.Optional;
 
-public abstract class AbstractMaze implements Maze {
+public abstract class AbstractMaze<T> implements Maze<T> {
+    public void checkCoordinates(int x, int y) {
+        if (!contains(x, y))
+            throw new IllegalArgumentException("Invalid coordinates (" + x + "," + y + ")");
+    }
+
     @Override
     public boolean isOpen(int x, int y) {
         return !isWall(x, y);
@@ -34,7 +39,7 @@ public abstract class AbstractMaze implements Maze {
                 if (onRoute)
                     System.out.print("O");
                 else
-                    System.out.print(isWall(x, y) ? "#" : ".");
+                    System.out.print(contains(x, y) ? cell(x, y) : " ");
             }
             System.out.println();
         }

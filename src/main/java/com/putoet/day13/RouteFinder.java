@@ -10,9 +10,9 @@ import java.util.stream.Collectors;
 public class RouteFinder {
     private static final int MAX_STEPS = 100_000_000;
 
-    private final Maze maze;
+    private final Maze<String> maze;
 
-    public RouteFinder(Maze maze) {
+    public RouteFinder(Maze<String> maze) {
         assert maze != null;
 
         this.maze = maze;
