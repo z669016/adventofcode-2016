@@ -1,5 +1,9 @@
 package com.putoet.day13;
 
+import com.putoet.utils.maze.Maze;
+import com.putoet.utils.maze.Point;
+import com.putoet.utils.maze.Route;
+
 import java.util.*;
 import java.util.stream.Collectors;
 

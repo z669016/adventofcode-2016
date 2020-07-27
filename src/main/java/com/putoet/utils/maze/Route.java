@@ -1,4 +1,4 @@
-package com.putoet.day13;
+package com.putoet.utils.maze;
 
 import java.util.ArrayList;
 import java.util.List;

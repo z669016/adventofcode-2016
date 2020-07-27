@@ -1,5 +1,8 @@
 package com.putoet.day13;
 
+import com.putoet.utils.maze.Maze;
+import com.putoet.utils.maze.Point;
+import com.putoet.utils.maze.Route;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +17,7 @@ class RouteFinderTest {
     private static final Point TARGET_POINT = Point.of(7,4);
     private static final Point STARTING_POINT = Point.of(1, 1);
     private static final int OFFICE_DESIGNER_FAVOURITE_NUMBER = 10;
-    private static final Maze MAZE = new Maze(OFFICE_DESIGNER_FAVOURITE_NUMBER);
+    private static final OfficeDesignerMaze MAZE = new OfficeDesignerMaze(OFFICE_DESIGNER_FAVOURITE_NUMBER);
 
     private RouteFinder finder;
 

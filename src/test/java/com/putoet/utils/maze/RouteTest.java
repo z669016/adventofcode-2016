@@ -1,4 +1,4 @@
-package com.putoet.day13;
+package com.putoet.utils.maze;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -7,7 +7,7 @@ import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class RouteTest {
+public class RouteTest {
     public static Point[] POINTS = new Point[] {
             Point.of(1, 1),
             Point.of(1, 2),

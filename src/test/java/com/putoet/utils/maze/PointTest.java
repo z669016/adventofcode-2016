@@ -1,5 +1,6 @@
-package com.putoet.day13;
+package com.putoet.utils.maze;
 
+import com.putoet.utils.maze.Point;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

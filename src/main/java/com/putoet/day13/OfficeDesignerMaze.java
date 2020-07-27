@@ -1,14 +1,18 @@
 package com.putoet.day13;
 
+import com.putoet.utils.maze.Maze;
+import com.putoet.utils.maze.Route;
+
 import java.util.Optional;
 
-public class Maze {
+public class OfficeDesignerMaze implements Maze {
     private final int officeDesignerFavouriteNumber;
 
-    public Maze(int officeDesignerFavouriteNumber) {
+    public OfficeDesignerMaze(int officeDesignerFavouriteNumber) {
         this.officeDesignerFavouriteNumber = officeDesignerFavouriteNumber;
     }
 
+    @Override
     public boolean isWall(int x, int y) {
         final int code = (x*x) + (3*x) + (2*x*y) + y + (y*y) + officeDesignerFavouriteNumber;
         final String binary = Integer.toBinaryString(code);
@@ -18,15 +22,18 @@ public class Maze {
         return ones % 2 == 1;
     }
 
+    @Override
     public boolean isOpen(int x, int y) {
         return !isWall(x, y);
     }
 
+    @Override
     public void draw(Route route) {
         final int maxX = route.maxX() + 1, maxY = route.maxY() + 1;
         draw(Optional.of(route), maxX, maxY);
     }
 
+    @Override
     public void draw(int maxX, int maxY) {
         draw(Optional.empty(), maxX, maxY);
     }
