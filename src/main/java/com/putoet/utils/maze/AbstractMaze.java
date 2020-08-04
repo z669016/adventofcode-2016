@@ -3,7 +3,7 @@ package com.putoet.utils.maze;
 import java.util.Optional;
 
 public abstract class AbstractMaze<T> implements Maze<T> {
-    public void checkCoordinates(int x, int y) {
+    protected void checkCoordinates(int x, int y) {
         if (!contains(x, y))
             throw new IllegalArgumentException("Invalid coordinates (" + x + "," + y + ")");
     }

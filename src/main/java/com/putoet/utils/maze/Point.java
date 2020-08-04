@@ -37,6 +37,12 @@ public class Point {
         return Optional.of(new Point(x, y + 1));
     }
 
+    public int distance(Point other) {
+        assert other != null;
+
+        return Math.abs(x - other.x) + Math.abs(y - other.y);
+    }
+
     @Override
     public String toString() {
         return "(" + x + ", " + y + ")";

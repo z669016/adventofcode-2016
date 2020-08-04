@@ -33,9 +33,9 @@ class RangeTest {
     @Test
     void compareTo() {
         assertEquals(0, Range.of(1, 2).compareTo(Range.of(1, 2)));
-        assertEquals(1, Range.of(1, 2).compareTo(Range.of(1, 3)));
-        assertEquals(-1, Range.of(1, 3).compareTo(Range.of(1, 2)));
-        assertEquals(1, Range.of(1, 2).compareTo(Range.of(2, 3)));
-        assertEquals(-1, Range.of(1, 2).compareTo(Range.of(0, 3)));
+        assertEquals(-1, Range.of(1, 2).compareTo(Range.of(1, 3)));
+        assertEquals(1, Range.of(1, 3).compareTo(Range.of(1, 2)));
+        assertEquals(-1, Range.of(1, 2).compareTo(Range.of(2, 3)));
+        assertEquals(1, Range.of(1, 2).compareTo(Range.of(0, 3)));
     }
 }

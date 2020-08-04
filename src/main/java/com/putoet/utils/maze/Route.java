@@ -63,11 +63,10 @@ public class Route {
     }
 
     private int max(Function<Point,Integer> ref) {
-        final OptionalInt max = route.stream()
+        return route.stream()
                 .mapToInt(ref::apply)
-                .max();
-
-        return max.orElseGet(() -> 0);
+                .max()
+                .orElseGet(() -> 0);
     }
 
     public int length() {

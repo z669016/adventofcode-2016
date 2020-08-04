@@ -1,12 +1,14 @@
 package com.putoet.day24;
 
+import com.putoet.maze.Maze;
+import com.putoet.search.GenericSearch;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.*;
 
+import static com.putoet.day24.Cell.*;
+import static com.putoet.search.GenericSearch.bfs;
 import static org.junit.jupiter.api.Assertions.*;
 
 class DuctLayoutTest {
@@ -22,25 +24,41 @@ class DuctLayoutTest {
                 "###########"
         );
 
-        layout = DuctLayout.of(lines);
+        layout = new DuctLayout(lines);
     }
 
     @Test
     void draw() {
-        layout.draw();
-    }
-
-    @Test
-    void is() {
-        assertTrue(layout.isWall(1, 0));
-        assertTrue(layout.isOpen(2, 1));
-        assertTrue(layout.isGate(3, 1));
+        System.out.println(layout.toString());
     }
 
     @Test
     void gates() {
         final List<Cell> gates = layout.gates();
         assertEquals(5, gates.size());
-        assertEquals(Set.of(0, 1, 2, 3, 4), gates.stream().map(Cell::number).collect(Collectors.toSet()));
+        assertEquals(List.of(GATE0, GATE1, GATE2, GATE3, GATE4), gates);
+    }
+
+    @Test
+    void bsf() {
+        final Optional<GenericSearch.Node<Maze.Location>> result =
+                bfs(Maze.Location.of(1, 1), ml -> layout.cell(ml) == GATE4, layout::successors);
+        assertTrue(result.isPresent());
+        assertEquals(Maze.Location.of(3, 1), result.get().state);
+
+        System.out.println(result.get().path());
+    }
+
+    @Test
+    void combinations() {
+        final List<List<Cell>> combinations = layout.gateCombinations();
+        final Map<String, Map<String,Integer>> distances = layout.distances(combinations);
+
+        // distances.forEach((uk, uv) -> uv.forEach((vk, vv) -> System.out.println(uk + " -> " + vk + " = " + vv)));
+
+        final OptionalInt min = layout.shortestPathFrom(GATE0, distances);
+
+        assertTrue(min.isPresent());
+        assertEquals(14, min.getAsInt());
     }
 }

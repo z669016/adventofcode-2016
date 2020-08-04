@@ -1,73 +1,138 @@
 package com.putoet.day24;
 
-import com.putoet.utils.maze.AbstractMaze;
+import com.putoet.maze.Maze;
+import com.putoet.misc.TSP;
+import com.putoet.search.GenericSearch;
+import org.paukov.combinatorics3.Generator;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-public class DuctLayout extends AbstractMaze<Cell> {
+import static com.putoet.search.GenericSearch.bfs;
 
-    private final Cell[][] grid;
+public class DuctLayout implements Maze<Cell> {
+    private final int rows, columns;
+    private Cell[][] grid;
+    private Cell goal;
 
-    private DuctLayout(Cell[][] grid) {
-        this.grid = grid;
+    public DuctLayout(List<String> maze) {
+        assert maze != null;
+        assert maze.size() > 0;
+
+        grid = maze.stream().sequential()
+                .map(line -> line.chars()
+                        .mapToObj(Cell::of)
+                        .toArray(Cell[]::new))
+                .toArray(Cell[][]::new);
+
+        this.rows = grid.length;
+        this.columns = grid[0].length;
+
+        Arrays.stream(grid).forEach(row -> {
+            if (row.length != this.columns)
+                throw new IllegalArgumentException("Rows have variable lengths, which is not allowed");
+        });
     }
 
     @Override
-    public boolean contains(int x, int y) {
-        return (y >= 0 && y < grid.length) && (x >= 0 && x < grid[y].length);
+    public String toString() {
+        final StringBuilder sb = new StringBuilder();
+        for (Cell[] row : grid) {
+            for (Cell cell : row) {
+                sb.append(cell.toString());
+            }
+            sb.append(System.lineSeparator());
+        }
+        return sb.toString();
     }
 
     @Override
-    public Cell cell(int x, int y) {
-        assert y >=0 && y < grid.length;
-        assert x >= 0 && x < grid[y].length;
+    public List<Maze.Location> successors(Maze.Location ml) {
+        assert ml != null;
 
-        return grid[y][x];
+        final List<Maze.Location> locations = new ArrayList<>();
+        if (ml.row + 1 < rows && grid[ml.row + 1][ml.column] != Cell.WALL) {
+            locations.add(new Maze.Location(ml.row + 1, ml.column));
+        }
+        if (ml.row - 1 >= 0 && grid[ml.row - 1][ml.column] != Cell.WALL) {
+            locations.add(new Maze.Location(ml.row - 1, ml.column));
+        }
+        if (ml.column + 1 < columns && grid[ml.row][ml.column + 1] != Cell.WALL) {
+            locations.add(new Maze.Location(ml.row, ml.column + 1));
+        }
+        if (ml.column - 1 >= 0 && grid[ml.row][ml.column - 1] != Cell.WALL) {
+            locations.add(new Maze.Location(ml.row, ml.column - 1));
+        }
+        return locations;
     }
 
     @Override
-    public boolean isWall(int x, int y) {
-        checkCoordinates(x, y);
-
-        return cell(x, y).type() == Cell.Type.WALL;
+    public Cell cell(Location location) {
+        Maze.checkLocation(location, rows, columns);
+        return grid[location.row][location.column];
     }
 
     @Override
-    public boolean isOpen(int x, int y) {
-        checkCoordinates(x, y);
-
-        return cell(x, y).type() == Cell.Type.OPEN;
-    }
-
-    public boolean isGate(int x, int y) {
-        checkCoordinates(x, y);
-
-        return cell(x, y).type() == Cell.Type.GATE;
-    }
-
-    @Override
-    public void draw() {
-        draw(grid[0].length, grid.length);
+    public Optional<Location> locate(Predicate<Cell> predicate) {
+        return locate(grid, predicate);
     }
 
     public List<Cell> gates() {
         return Arrays.stream(grid)
                 .flatMap(Arrays::stream)
-                .filter(cell -> cell.type() == Cell.Type.GATE)
+                .filter(cell -> cell != Cell.OPEN && cell != Cell.WALL)
+                .distinct()
+                .sorted()
                 .collect(Collectors.toList());
     }
 
-    public static DuctLayout of(List<String> lines) {
-        assert lines != null;
-        assert lines.size() > 0;
+    public List<List<Cell>> gateCombinations() {
+        return Generator.combination(gates())
+                .simple(2)
+                .stream()
+                .collect(Collectors.toList());
+    }
 
-        final Cell[][] grid = lines.stream().sequential()
-                .map(line -> line.chars()
-                        .mapToObj(Cell::of)
-                        .toArray(Cell[]::new))
-                .toArray(Cell[][]::new);
-        return new DuctLayout(grid);
+    public Map<String, Map<String,Integer>> distances(List<List<Cell>> combinations) {
+        assert combinations != null;
+
+        final Map<String, Map<String,Integer>> distances = new HashMap<>();
+        gates().forEach(gate -> distances.put(gate.toString(),new HashMap<>()));
+
+        combinations.forEach(combination-> {
+            final Cell u = combination.get(0);
+            final Cell v = combination.get(1);
+
+            final Optional<Maze.Location> start = locate(cell -> cell == u);
+
+            start.ifPresent(location -> {
+                final Optional<GenericSearch.Node<Maze.Location>> weight =
+                        bfs(location, ml -> cell(ml) == v, this::successors);
+                weight.ifPresent(locationNode -> {
+                    distances.get(u.toString()).put(v.toString(), locationNode.steps());
+                    distances.get(v.toString()).put(u.toString(), locationNode.steps());
+                });
+            });
+        });
+
+        return distances;
+    }
+
+    public OptionalInt shortestPathFrom(Cell start, Map<String, Map<String,Integer>> distances) {
+        assert start != null;
+        assert distances != null;
+
+        final List<Cell[]> permutations = TSP.permutations(gates().toArray(Cell[]::new)).stream()
+                .filter(g ->g[0] == start)
+                .collect(Collectors.toList());
+
+        return permutations.stream().mapToInt(path -> {
+            int length = 0;
+            for (int idx = 0; idx < path.length - 1; idx++) {
+                length += distances.get(path[idx].toString()).get(path[idx+1].toString());
+            }
+            return length;
+        }).min();
     }
 }
