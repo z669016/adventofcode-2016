@@ -2,10 +2,11 @@ package com.putoet.utils.assembunny;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
-class TglTest {
+class OutTest {
     private ExecutionContext context = null;
 
     @Test
@@ -13,8 +14,8 @@ class TglTest {
         final Register a = mock(Register.class);
         final ExecutionContext context = mock(ExecutionContext.class);
 
-        final Instruction tgl = new Tgl(new InOperant(a), () -> context);
-        final Instruction toggle = tgl.toggle();
+        final Instruction out = new Out(new InOperant(a), () -> context);
+        final Instruction toggle = out.toggle();
 
         assertTrue(toggle instanceof Inc);
     }
@@ -22,23 +23,15 @@ class TglTest {
     @Test
     void execute() {
         final Register a = mock(Register.class);
-        final Register ip = mock(Register.class);
-        final Instruction nop = mock(Nop.class);
-        final Instruction[] program = new Instruction[] {null, null, null, null, null, null};
 
         when(a.get()).thenReturn(2);
-        when(ip.get()).thenReturn(1);
-        when(nop.toggle()).thenReturn(nop);
-        program[3] = nop;
-
-        final Instruction tgl = new Tgl(new InOperant(a), () -> context);
+        final Instruction out = new Out(new InOperant(a), () -> context);
 
         context = mock(ExecutionContext.class);
-        when(context.ip()).thenReturn(ip);
-        when(context.program()).thenReturn(program);
+        when(context.consumer()).thenReturn(i -> assertEquals(2, i));
 
-        tgl.execute();
+        out.execute();
 
-        verify(nop, times(1)).toggle();
+        verify(context, times(1)).consumer();
     }
 }

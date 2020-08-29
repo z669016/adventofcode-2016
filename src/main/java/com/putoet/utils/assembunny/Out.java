@@ -1,29 +1,33 @@
 package com.putoet.utils.assembunny;
 
-public class Inc implements Instruction {
-    private final InOperant in;
+import java.util.function.Supplier;
 
-    public Inc(InOperant in) {
+public class Out implements Instruction {
+    private final InOperant in;
+    private final Supplier<ExecutionContext> supplier;
+
+    public Out(InOperant in, Supplier<ExecutionContext> supplier) {
         assert in != null;
+        assert supplier != null;
 
         this.in = in;
+        this.supplier = supplier;
     }
 
     @Override
     public Instruction toggle() {
-        return new Dec(in);
+        return new Inc(in);
     }
 
     @Override
     public int execute() {
-        if (in.isRegister())
-            in.register().accept(in.register().get() + 1);
+        supplier.get().consumer().accept(in.get());
 
         return 1;
     }
 
     @Override
     public String toString() {
-        return "inc " + in;
+        return "out " + in;
     }
 }

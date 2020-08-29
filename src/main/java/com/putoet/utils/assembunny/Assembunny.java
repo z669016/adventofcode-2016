@@ -1,17 +1,23 @@
 package com.putoet.utils.assembunny;
 
 import java.util.*;
+import java.util.function.Consumer;
 
 public class Assembunny {
     public static final String INTEGER_REGEXP = "^-?\\d+$";
     private static boolean verbose = false;
     private final RegisterSet regs;
     private ExecutionContext context;
+    private Consumer<Integer> consumer;
 
     public Assembunny(RegisterSet regs) {
         assert regs != null;
 
         this.regs = regs;
+    }
+
+    public void setConsumer(Consumer<Integer> consumer) {
+        this.consumer = consumer;
     }
 
     public static void enableVerbose() {
@@ -29,7 +35,7 @@ public class Assembunny {
 
     public void run(Instruction[] program) {
         final Register ip = new Register("ip");
-        context = new ExecutionContext(ip, regs, program);
+        context = new ExecutionContext(ip, regs, program, consumer);
 
         while (ip.get() < program.length) {
             if (verbose)
@@ -60,6 +66,7 @@ public class Assembunny {
             case "dec" -> decInstruction(line, tokens);
             case "jnz" -> jnzInstruction(line, tokens);
             case "tgl" -> tglInstruction(line, tokens);
+            case "out" -> outInstruction(line, tokens);
             default -> throw new IllegalArgumentException(compilerErrorAt(line) + "unknown instruction '" + programLine + "'");
         };
     }
@@ -93,6 +100,11 @@ public class Assembunny {
     private Instruction tglInstruction(int line, String[] tokens) {
         checkOperantCount(2, line, tokens);
         return new Tgl(inOperant(line, tokens[1]), () -> context);
+    }
+
+    private Instruction outInstruction(int line, String[] tokens) {
+        checkOperantCount(2, line, tokens);
+        return new Out(inOperant(line, tokens[1]), () -> context);
     }
 
     private String compilerErrorAt(int line) {
