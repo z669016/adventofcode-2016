@@ -79,6 +79,12 @@ class PartCombinationsTest {
 
         // You can add two RTG's if there is only one unconnected chip
         assertTrue(combinations.add(hydrogenRtg, lithiumRtg));
+
+        // you can never add non matching RTG and chip
+        assertFalse(combinations.add(eleriumRtg, lithiumChip));
+
+        // You should always be able to add a matching RTG and chip
+        assertTrue((combinations.add(eleriumRtg, eleriumChip)));
     }
 
     @Test
@@ -121,5 +127,10 @@ class PartCombinationsTest {
         assertTrue(combinations.add(eleriumChip));
         assertTrue(combinations.add(hydrogenChip, lithiumChip));
         assertTrue(combinations.remove(hydrogenChip, lithiumChip));
+
+        combinations.add(eleriumRtg, eleriumRtg);
+        combinations.add(hydrogenRtg, hydrogenChip);
+        assertFalse(combinations.remove(eleriumRtg, hydrogenChip));
+        assertTrue(combinations.remove(eleriumRtg, eleriumChip));
     }
 }
