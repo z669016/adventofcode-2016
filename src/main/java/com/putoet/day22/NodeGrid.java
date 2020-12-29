@@ -4,22 +4,23 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class NodeGrid {
-    private Node[][] nodes;
+    private final Node[][] nodes;
+    private final Node empty;
+    private final int maxX;
+    private final int maxY;
 
     public NodeGrid(List<Node> list){
         assert list != null;
         assert list.size() > 0;
 
-        final OptionalInt maxX = list.stream().mapToInt(Node::x).max();
-        final OptionalInt maxY = list.stream().mapToInt(Node::y).max();
+        maxX = list.stream().mapToInt(Node::x).max().getAsInt();
+        maxY = list.stream().mapToInt(Node::y).max().getAsInt();
 
-        assert maxX.isPresent();
-        assert maxY.isPresent();
-
-        if ((maxX.getAsInt() + 1) * (maxY.getAsInt() + 1) != list.size())
+        if ((maxX + 1) * (maxY + 1) != list.size())
             throw new IllegalStateException("List is not a complete grid");
 
-        nodes = new Node[maxY.getAsInt() + 1][maxX.getAsInt() + 1];
+        nodes = new Node[maxY + 1][maxX + 1];
+        empty = list.stream().filter(node -> node.used() == 0).findFirst().get();
         list.forEach(node -> nodes[node.y()][node.x()] = node);
     }
 
@@ -38,5 +39,42 @@ public class NodeGrid {
                 .flatMap(Arrays::stream)
                 .map(Objects::toString)
                 .collect(Collectors.joining("[", ", ", "]"));
+    }
+
+    void print() {
+        final StringBuilder line1 = new StringBuilder("    ");
+        final StringBuilder line2 = new StringBuilder("    ");
+        for (int x = 0; x < nodes[0].length; x++) {
+            line1.append(" ").append(x / 10 == 0 ? " " : (x/10)).append(" ");
+            line2.append(" ").append(x % 10).append(" ");
+        }
+        System.out.println(line1.toString());
+        System.out.println(line2.toString());
+        for (int y = 0; y < nodes.length; y++) {
+            System.out.printf("%3d ", y);
+            for (int x = 0; x < nodes[y].length; x++) {
+                System.out.print(nodeAsChar(nodes[y][x]));
+            }
+            System.out.println();
+        }
+        System.out.println();
+    }
+
+    private String nodeAsChar(Node node) {
+        assert node != null;
+
+        if (node.x() == 0 && node.y() == 0)
+            return "(.)";
+
+        if (node.x() == maxX && node.y() == 0)
+            return " G ";
+
+        if (empty.equals(node))
+            return "[_]";
+
+        if (node.used() > empty.free())
+            return " # ";
+
+        return " . ";
     }
 }
