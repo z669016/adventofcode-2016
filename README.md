@@ -12,3 +12,10 @@ Also uses the algorithm library, which contains generic classes for addressing c
 It was never my intention to create the shortest program possible. I did try to create clear and simple implementations.
 
 ## Day 1
+Not too difficult using the ```Point``` class from the AoC library (for moving around a grid). Created a ```Location``` 
+helper class to keep track of a current location (```Point```) and facing (current ```Direction```). Translate the CVS 
+data in a stream of pairs with ```Turn``` and distance, and ```move``` the current location.
+The answer to part 1 is simply the Manhattan distance from the origin to the current location after all moves.
+For part 2, I've added a ```trace``` (```Set```) and a ```doubles``` (```List```) property, to keep track of points 
+visited and points visited more than once updated by the ```move``` method. The anser for part 2, is the first element 
+in the ```doubles``` list.
