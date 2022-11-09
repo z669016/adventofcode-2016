@@ -1,6 +1,6 @@
 package com.putoet.day21;
 
-import com.putoet.utils.ResourceLines;
+import com.putoet.resources.ResourceLines;
 
 public class Day21 {
     public static void main(String[] args) {

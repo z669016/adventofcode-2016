@@ -1,7 +1,8 @@
 package com.putoet.day5;
 
-import com.putoet.utils.MD5;
+import com.putoet.security.MD5;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.OptionalInt;
@@ -21,7 +22,7 @@ public class PasswordGenerator {
         this.password = emptyPassword(size);
     }
 
-    public String generate(String prefix) {
+    public String generate(String prefix) throws NoSuchAlgorithmException {
         while (!isComplete(password)) {
             final String hash = nextMatchingHash(prefix);
             final String c = getCharacterFunction.apply(hash);
@@ -68,7 +69,7 @@ public class PasswordGenerator {
         return password.stream().noneMatch(s -> s.length() == 0);
     }
 
-    private String nextMatchingHash(String prefix)  {
+    private String nextMatchingHash(String prefix) throws NoSuchAlgorithmException {
         index++;
         String key = prefix + index;
         String hash = MD5.hash(key);
@@ -100,12 +101,12 @@ public class PasswordGenerator {
     };
 
 
-    public static String generatePassword(String doorId) {
+    public static String generatePassword(String doorId) throws NoSuchAlgorithmException {
         final PasswordGenerator generator = new PasswordGenerator(8, GET_CHAR_6, PUT_NEXT_POS);
         return generator.generate(doorId);
     }
 
-    public static String generatePassword(String doorId, Function<String,String> getCharacterFunction, Function<String, OptionalInt> getPositionFunction) {
+    public static String generatePassword(String doorId, Function<String,String> getCharacterFunction, Function<String, OptionalInt> getPositionFunction) throws NoSuchAlgorithmException {
         final PasswordGenerator generator = new PasswordGenerator(8, getCharacterFunction, getPositionFunction);
         return generator.generate(doorId);
     }

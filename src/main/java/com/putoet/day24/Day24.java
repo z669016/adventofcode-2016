@@ -1,7 +1,7 @@
 package com.putoet.day24;
 
 import com.putoet.misc.TSP;
-import com.putoet.utils.ResourceLines;
+import com.putoet.resources.ResourceLines;
 
 import java.util.List;
 import java.util.Map;

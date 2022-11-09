@@ -1,6 +1,7 @@
 package com.putoet.day14;
 
-import com.putoet.utils.MD5;
+import com.putoet.security.MD5;
+import lombok.SneakyThrows;
 
 import java.util.function.Supplier;
 
@@ -18,6 +19,7 @@ public class IndexStretchedHashSupplier implements Supplier<IndexedHash> {
         this.salt = salt;
     }
 
+    @SneakyThrows
     @Override
     public IndexedHash get() {
         final String code = salt + index;

@@ -1,6 +1,6 @@
 package com.putoet.day8;
 
-import com.putoet.utils.ResourceLines;
+import com.putoet.resources.ResourceLines;
 
 public class Day8 {
     public static void main(String[] args) {

@@ -1,6 +1,6 @@
 package com.putoet.day12;
 
-import com.putoet.utils.ResourceLines;
+import com.putoet.resources.ResourceLines;
 import com.putoet.utils.assembunny.Assembunny;
 import com.putoet.utils.assembunny.Instruction;
 import com.putoet.utils.assembunny.Register;

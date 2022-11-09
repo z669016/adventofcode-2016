@@ -1,6 +1,6 @@
 package com.putoet.day6;
 
-import com.putoet.utils.ResourceLines;
+import com.putoet.resources.ResourceLines;
 
 import java.util.List;
 

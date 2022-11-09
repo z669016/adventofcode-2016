@@ -1,9 +1,8 @@
 package com.putoet.day22;
 
-import com.putoet.utils.ResourceLines;
+import com.putoet.resources.ResourceLines;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Day22 {
     public static void main(String[] args) {

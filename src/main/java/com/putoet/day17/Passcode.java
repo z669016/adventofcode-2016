@@ -1,6 +1,7 @@
 package com.putoet.day17;
 
-import com.putoet.utils.MD5;
+import com.putoet.security.MD5;
+import lombok.SneakyThrows;
 
 public class Passcode {
     private final String seed;
@@ -11,6 +12,7 @@ public class Passcode {
         this.seed = seed;
     }
 
+    @SneakyThrows
     public String forRoute(final String route) {
         assert route != null;
 
