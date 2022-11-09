@@ -33,13 +33,20 @@ public class Location {
     }
 
     enum Turn {
-        RIGHT, LEFT
+        RIGHT, LEFT;
+
+        static Turn from(char c) {
+            return switch (c) {
+                case 'L' -> LEFT;
+                case 'R' -> RIGHT;
+                default -> throw new IllegalArgumentException("Invalid turn:" + c);
+            };
+        }
     }
 
     private Direction facing = Direction.NORTH;
-    private final List<Integer> moved = new ArrayList<>(List.of(0, 0, 0, 0));
     private final Set<Point> trace = new HashSet<>();
-    private Point current = new Point(0, 0);
+    private Point current = Point.ORIGIN;
     private final List<Point> doubles = new ArrayList<>();
 
     public Location() {
@@ -52,11 +59,7 @@ public class Location {
 
     public void move(Turn turn, int distance) {
         facing = facing.turn(turn);
-        moved.set(facing.ordinal(), moved.get(facing.ordinal()) + distance);
-        traceMove(distance);
-    }
 
-    private void traceMove(int distance) {
         while (distance-- > 0) {
             current = current.add(facing.asPoint());
 
@@ -67,32 +70,11 @@ public class Location {
         }
     }
 
-    public List<Integer> moved() {
-        return Collections.unmodifiableList(moved);
-    }
-
     public int distance() {
-        return Math.abs(moved.get(0) - moved.get(2)) + Math.abs(moved.get(1) - moved.get(3));
+        return current.manhattanDistance();
     }
 
     public List<Point> doubles() {
         return doubles;
-    }
-
-    public void move(String directionDistance) {
-        assert directionDistance != null;
-
-        directionDistance = directionDistance.trim();
-        assert directionDistance.length() > 1;
-        assert directionDistance.charAt(0) == 'L' || directionDistance.charAt(0) == 'R';
-
-        final Turn turn = directionDistance.charAt(0) == 'L' ? Turn.LEFT : Turn.RIGHT;
-        final int distance = Integer.parseInt(directionDistance.substring(1));
-
-        move(turn, distance);
-    }
-
-    public void move(List<String> directionDistanceList) {
-        directionDistanceList.forEach(this::move);
     }
 }
