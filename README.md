@@ -34,3 +34,14 @@ Implemented a simple ```Figure``` record, with a method ```possibleTriangle```. 
 into a list of ```Figure```s, filter the possible triangles, and count the number of elements in the list.
 Part 2 is the same, although the transformation of the input into a list of (a,b,c) values is changed.
 
+## Day 4
+Created an ```EncryptedName``` record with a ```name```, ```sectorId```, and ```checksum``` property and a factory
+method which returns an ```Optional<>```. The factory method returns an ```Optional.empty()``` on invalid names. The 
+trick is of course in validating the checksum.
+
+For part 1 simply transform the input into a list of ```EncryptedName```s, and sum the sectorId, which is straight 
+forward using streams. For part 2, I added a ```decrypt``` to the ```EncryptedName```, and simply searched for the
+```EncryptedName``` that decrypted to the name "northpole object storage" (which I stumbled upon after looking at list 
+of all decrypted names.
+
+

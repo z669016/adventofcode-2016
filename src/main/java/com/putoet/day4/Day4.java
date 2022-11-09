@@ -2,23 +2,20 @@ package com.putoet.day4;
 
 import com.putoet.resources.ResourceLines;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 public class Day4 {
     public static void main(String[] args) {
-        final List<String> data = ResourceLines.list("/day4.txt");
-        final List<EncryptedName> encryptedNames = data.stream()
+        final var encryptedNames= ResourceLines.stream("/day4.txt")
                 .map(EncryptedName::from)
                 .filter(Optional::isPresent)
                 .map(Optional::get)
-                .collect(Collectors.toList());
-        final long validNames = encryptedNames.size();
+                .toList();
+        final var validNames = encryptedNames.size();
 
         System.out.println("Number of valid rooms is: " + validNames);
-        System.out.println("Sum of the secor id's is: " + encryptedNames.stream()
-                .mapToInt(name -> name.sectorId())
+        System.out.println("Sum of the sector id's is: " + encryptedNames.stream()
+                .mapToInt(EncryptedName::sectorId)
                 .sum());
 
         encryptedNames.forEach(encryptedName -> {
