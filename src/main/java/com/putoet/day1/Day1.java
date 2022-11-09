@@ -11,6 +11,6 @@ public class Day1 {
         drop.move(directions);
 
         System.out.println("Distance to HQ is " + drop.distance());
-        System.out.println("Distance to first double is " + drop.doubles().get(0).distance());
+        System.out.println("Distance to first double is " + drop.doubles().get(0).manhattanDistance());
     }
 }
