@@ -3,12 +3,10 @@ package com.putoet.day1;
 import com.putoet.resources.CSV;
 import org.javatuples.Pair;
 
-import java.util.List;
-
 public class Day1 {
     public static void main(String[] args) {
-        final List<String> directions = CSV.flatList("/day1.txt");
-        final Location drop = new Location();
+        final var directions = CSV.flatList("/day1.txt");
+        final var drop = new Location();
 
         directions.stream()
                 .map(directionDistance -> {

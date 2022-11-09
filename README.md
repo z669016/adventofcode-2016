@@ -19,3 +19,13 @@ The answer to part 1 is simply the Manhattan distance from the origin to the cur
 For part 2, I've added a ```trace``` (```Set```) and a ```doubles``` (```List```) property, to keep track of points 
 visited and points visited more than once updated by the ```move``` method. The anser for part 2, is the first element 
 in the ```doubles``` list.
+
+## Day 2
+Actually not too much different from day 1. Instead of moving across a grid of points, now you need to move across a
+```KeyPad```, and press the key at the end of every move sequence. For part 1, I created a 3x3 keypad, translate the
+input in a series of directions and after moving according to the directions, ```press``` the current key to 
+remember it. The result is the string made out of the remembered pressed keys.
+For part 2, I renamed ```KeyPad``` into ```SquareKeyPad```, abstracted a ```KeyPad``` interface, moved generic methods
+into an ```AbstractKeyPad``` and implemented a DiamondKeyPad *which uses a 5x5 grid under the hood. The only
+difference between the two is the way the grid boundaries are managed.
+

@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public abstract class AbstractKeyPadBase<T> implements KeyPad {
+public abstract class AbstractKeyPad<T> implements KeyPad {
     protected final List<T> code = new ArrayList<>();
 
     protected int currentX;

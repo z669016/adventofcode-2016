@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface KeyPad {
     enum Direction {
-        U, D, L, R;
+        U, D, L, R
     }
 
     int x();

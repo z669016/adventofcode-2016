@@ -5,8 +5,8 @@ import com.putoet.utils.FixedNonNegativeGrid;
 
 import java.util.List;
 
-public class SquareKeyPad extends AbstractKeyPadBase<Integer> {
-    private final FixedGrid<Integer> grid = new FixedNonNegativeGrid<Integer>(List.of(
+public class SquareKeyPad extends AbstractKeyPad<Integer> {
+    private final FixedGrid<Integer> grid = new FixedNonNegativeGrid<>(List.of(
             List.of(7, 8, 9),
             List.of(4, 5, 6),
             List.of(1, 2, 3)));
