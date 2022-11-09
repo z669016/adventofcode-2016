@@ -5,11 +5,10 @@ import com.putoet.resources.ResourceLines;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Day3 {
     public static void main(String[] args) {
-        final List<String> list = ResourceLines.list("/day3.txt");
+        final var list = ResourceLines.list("/day3.txt");
         System.out.println("Possible triangle count is " + list.stream()
                 .map(Figure::from)
                 .filter(Figure::possibleTriangle)
@@ -41,6 +40,6 @@ public class Day3 {
         line = line.trim();
         while (line.contains("  "))
             line = line.replace("  ", " ");
-        return Arrays.stream(line.split(" ")).map(Integer::parseInt).collect(Collectors.toList());
+        return Arrays.stream(line.split(" ")).map(Integer::parseInt).toList();
     }
 }

@@ -2,23 +2,10 @@ package com.putoet.day3;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
-public class Figure {
-    private final int a, b, c;
-
-    private Figure(int a, int b, int c) {
-        this.a = a;
-        this.b = b;
-        this.c = c;
-    }
-
+public record Figure(int a, int b, int c) {
     public boolean possibleTriangle() {
         return ((a + b) > c) && ((a + c) > b) && ((b + c) > a);
-    }
-
-    static Figure from(int a, int b, int c) {
-        return new Figure(a, b, c);
     }
 
     static Figure from(List<Integer> list) {
@@ -32,6 +19,6 @@ public class Figure {
         line = line.trim();
         while (line.contains("  "))
             line = line.replace("  ", " ");
-        return from(Arrays.stream(line.split(" ")).map(Integer::parseInt).collect(Collectors.toList()));
+        return from(Arrays.stream(line.split(" ")).map(Integer::parseInt).toList());
     }
 }

@@ -29,3 +29,8 @@ For part 2, I renamed ```KeyPad``` into ```SquareKeyPad```, abstracted a ```KeyP
 into an ```AbstractKeyPad``` and implemented a DiamondKeyPad *which uses a 5x5 grid under the hood. The only
 difference between the two is the way the grid boundaries are managed.
 
+## Day 3
+Implemented a simple ```Figure``` record, with a method ```possibleTriangle```. For part 1, transform the input
+into a list of ```Figure```s, filter the possible triangles, and count the number of elements in the list.
+Part 2 is the same, although the transformation of the input into a list of (a,b,c) values is changed.
+
