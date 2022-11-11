@@ -60,3 +60,11 @@ the position for the next character, and one function for extracting the passwor
 for part 2, of course is that a position may only be set once, and an invalid position must be ignored. This is solved
 in the ```generate()``` method and can be handled identical for part 1 and 2.
 
+## Day 6
+Basic approach, is to transform the input (list of strings), into a ```List<List<Character>>``` (split each string 
+into a list of character). Then count the characters on each position, and replace the list of lists into a 
+```List<Map<Character,Integer>>``` where the map contains the count of each character in a position (so the map
+at index 0, contains the map with all characters at position 0 and the count of their occurance at that position).
+
+For part 1, filter the most occurring keys from each map, and join the result into a string. This approach proofed 
+helpful for part 2, for now simply filter to the least occurring keys for each position.
