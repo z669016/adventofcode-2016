@@ -44,4 +44,19 @@ forward using streams. For part 2, I added a ```decrypt``` to the ```EncryptedNa
 ```EncryptedName``` that decrypted to the name "northpole object storage" (which I stumbled upon after looking at list 
 of all decrypted names.
 
+## Day 5
+Brute force search for a hash starting with five zero's and when found, return character at position 6 (the first 
+char after the five zeroes). Repeat this enough times so it generates a password of sufficient length (8 for part 1). 
+
+The ```PasswordGenerator``` takes care of this, the class initializes with an empty list of the required size of
+empty strings (each string is a character for the password). The ```generate()``` method, fills the list one by one
+from beginning to the end, and returns the password found (joining the list elements) when the list is complete.
+Part 2 wasn't that much more difficult. What changed compared to part 1, is the way the position of the character
+in the password is determined (for part 1, it was a simple increasing index, for part two the position is a character 
+in the hash), and the character to extract for the password (for part 1 its character 6, for part 2 it's character 7).
+
+So, I've made the solution more generic, by passing two functions as parameter to the constructor, one for determining
+the position for the next character, and one function for extracting the password character from the hash.nThe trick
+for part 2, of course is that a position may only be set once, and an invalid position must be ignored. This is solved
+in the ```generate()``` method and can be handled identical for part 1 and 2.
 
