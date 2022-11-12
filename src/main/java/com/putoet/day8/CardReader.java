@@ -30,21 +30,21 @@ public class CardReader implements Supplier<Optional<Consumer<FixedGrid<Integer>
     }
 
     private Consumer<FixedGrid<Integer>> decode(String instruction) {
+        instruction = instruction.trim().toLowerCase();
         if (instruction.contains("rect")) {
-            final Matcher matcher = RECT_PATTERN.matcher(instruction.trim().toLowerCase());
+            final Matcher matcher = RECT_PATTERN.matcher(instruction);
             if (matcher.matches())
                 return new RectInstruction(Integer.parseInt(matcher.group(1)), Integer.parseInt(matcher.group(2)));
         } else if (instruction.contains("column")) {
-            final Matcher matcher = ROTATE_COLUMN_PATTERN.matcher(instruction.trim().toLowerCase());
+            final Matcher matcher = ROTATE_COLUMN_PATTERN.matcher(instruction);
             if (matcher.matches())
                 return new RotateColumnInstruction(Integer.parseInt(matcher.group(1)), Integer.parseInt(matcher.group(2)));
         } else if (instruction.contains("row")) {
-            final Matcher matcher = ROTATE_ROW_PATTERN.matcher(instruction.trim().toLowerCase());
+            final Matcher matcher = ROTATE_ROW_PATTERN.matcher(instruction);
             if (matcher.matches())
                 return new RotateRowInstruction(Integer.parseInt(matcher.group(1)), Integer.parseInt(matcher.group(2)));
         }
 
         throw new IllegalArgumentException("Invalid instruction '" + instruction + "'");
-
     }
 }

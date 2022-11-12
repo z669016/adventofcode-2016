@@ -18,6 +18,5 @@ public class RectInstruction implements Consumer<FixedGrid<Integer>> {
         for (int idy = 0; idy < b; idy++)
             for (int idx = 0; idx < a; idx++)
                 grid.set(idx, idy, 1);
-
     }
 }

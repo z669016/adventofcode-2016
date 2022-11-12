@@ -4,13 +4,14 @@ import com.putoet.resources.ResourceLines;
 
 public class Day8 {
     public static void main(String[] args) {
-        final TinyCodeDisplayingScreen display = new TinyCodeDisplayingScreen();
         final CardReader cardReader = new CardReader(ResourceLines.list("/day8.txt"));
-        final DoorLock doorLock = new DoorLock(display, cardReader);
+        final DoorLock doorLock = new DoorLock(cardReader);
 
         doorLock.swipe();
-        doorLock.display();
 
         System.out.println("Pixels lit is " + doorLock.pixelsLit());
+
+        doorLock.display();
+
     }
 }

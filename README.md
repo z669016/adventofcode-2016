@@ -77,3 +77,13 @@ addresses contain an ABBA in any supernet-sequence but not in any hypernet-seque
 part 1. For part 2, I added a ```listABA(text)``` and a ```containsBAB(abaList,text)``` to the ```ABBA``` helper class. 
 listABA is used by the ```IP7.supportsTLS()``` to extract all ABA's from an address's supernet sequences, and 
 containsBAB checks if any of the hypernet-sequences contains the BAB of any ABA in the list.
+
+## Day 8
+The basic idea: I have a ```CardReader``` crass which is a ```Supplier``` of instructions read from the card. An
+instruction can be a ```RectInstruction```, a ```RotateRowInstruction```, or a ```RotateColumnInstruction```. Each
+instruction is a ```Consumer``` of a ```FixedGrid<Integer>```. A ```DoorLock``` class has a ```CardReader```, and
+and when the ```swipe()``` method is called on the card reader, all instructions are read one by one from the card
+reader, and each instruction is executed against (consumes) the fixed grid (led lights) of the door lock. AFter the 
+swipe, the ```pixelsLit()``` method, can count the leds lit in the grid.
+
+For part 2, the ```display()``` method of the ```DoorLock``` can show the code on the screen.

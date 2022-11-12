@@ -12,7 +12,6 @@ class RectInstructionTest {
 
     @Test
     void accept() {
-        final TinyCodeDisplayingScreen display = new TinyCodeDisplayingScreen();
         final FixedGrid<Integer> grid = new FixedNonNegativeGrid<>(List.of(
                 List.of(0, 0, 0, 0, 0, 0, 0),
                 List.of(0, 0, 0, 0, 0, 0, 0),
@@ -20,7 +19,7 @@ class RectInstructionTest {
         ));
 
         new RectInstruction(3, 2).accept(grid);
-        display.display(grid);
+        DoorLock.display(grid);
 
         assertEquals(1, grid.get(0,0));
         assertEquals(1, grid.get(1,0));

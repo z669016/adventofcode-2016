@@ -14,8 +14,6 @@ class CardReaderTest {
 
     @Test
     void get() {
-        final TinyCodeDisplayingScreen display = new TinyCodeDisplayingScreen();
-
         final FixedGrid<Integer> grid = new FixedNonNegativeGrid<>(List.of(
                 List.of(0, 0, 0, 0, 0, 0, 0),
                 List.of(0, 0, 0, 0, 0, 0, 0),
@@ -36,7 +34,7 @@ class CardReaderTest {
             consumer = cardReader.get();
         }
 
-        display.display(grid);
+        DoorLock.display(grid);
 
         assertEquals(0, grid.get(0,0));
         assertEquals(1, grid.get(1,0));
