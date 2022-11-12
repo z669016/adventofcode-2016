@@ -68,3 +68,12 @@ at index 0, contains the map with all characters at position 0 and the count of 
 
 For part 1, filter the most occurring keys from each map, and join the result into a string. This approach proofed 
 helpful for part 2, for now simply filter to the least occurring keys for each position.
+
+## Day 7
+Really ABBA encoded IPv7 addresses? So, started with a record called IP7, with a method called ```supportsTL()```).
+To determine if an IP7 address supports TLS, it's split into a list of hypernet-sequences (parts inside brackets) and
+supernet-sequences (parts outside of brackets). An ```ABBA.containsABBA``` method then helps to validate which 
+addresses contain an ABBA in any supernet-sequence but not in any hypernet-sequence. That's all what's needed to solve 
+part 1. For part 2, I added a ```listABA(text)``` and a ```containsBAB(abaList,text)``` to the ```ABBA``` helper class. 
+listABA is used by the ```IP7.supportsTLS()``` to extract all ABA's from an address's supernet sequences, and 
+containsBAB checks if any of the hypernet-sequences contains the BAB of any ABA in the list.

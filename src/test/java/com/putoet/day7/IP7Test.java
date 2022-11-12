@@ -28,17 +28,17 @@ class IP7Test {
 
     @Test
     void outsideBrackets() {
-        assertEquals(List.of("ioxxoj", "zxcvbn"), IP7.supernetSequences("ioxxoj[asdfgh]zxcvbn"));
-        assertEquals(List.of("ioxxoj", "zxcvbn"), IP7.supernetSequences("ioxxoj[asdfgh][]zxcvbn"));
-        assertEquals(List.of("ioxxoj", "ab", "zxcvbn"), IP7.supernetSequences("ioxxoj[asdfgh]ab[cd]zxcvbn"));
-        assertEquals(List.of("ioxxoj", "ab", "zxcvbn"), IP7.supernetSequences("ioxxoj[asdfgh]ab[cd]zxcvbn[q]"));
+        assertEquals(List.of("ioxxoj", "zxcvbn"), IP7.superNetSequences("ioxxoj[asdfgh]zxcvbn"));
+        assertEquals(List.of("ioxxoj", "zxcvbn"), IP7.superNetSequences("ioxxoj[asdfgh][]zxcvbn"));
+        assertEquals(List.of("ioxxoj", "ab", "zxcvbn"), IP7.superNetSequences("ioxxoj[asdfgh]ab[cd]zxcvbn"));
+        assertEquals(List.of("ioxxoj", "ab", "zxcvbn"), IP7.superNetSequences("ioxxoj[asdfgh]ab[cd]zxcvbn[q]"));
     }
 
     @Test
     void betweenBrackets() {
-        assertEquals(List.of("asdfgh"), IP7.hypernetSequences("ioxxoj[asdfgh]zxcvbn"));
-        assertEquals(List.of("asdfgh"), IP7.hypernetSequences("[]ioxxoj[asdfgh][]zxcvbn"));
-        assertEquals(List.of("asdfgh", "cd"), IP7.hypernetSequences("ioxxoj[asdfgh]ab[cd]zxcvbn"));
-        assertEquals(List.of("asdfgh", "cd", "q"), IP7.hypernetSequences("ioxxoj[asdfgh]ab[cd]zxcvbn[q]"));
+        assertEquals(List.of("asdfgh"), IP7.hyperNetSequences("ioxxoj[asdfgh]zxcvbn"));
+        assertEquals(List.of("asdfgh"), IP7.hyperNetSequences("[]ioxxoj[asdfgh][]zxcvbn"));
+        assertEquals(List.of("asdfgh", "cd"), IP7.hyperNetSequences("ioxxoj[asdfgh]ab[cd]zxcvbn"));
+        assertEquals(List.of("asdfgh", "cd", "q"), IP7.hyperNetSequences("ioxxoj[asdfgh]ab[cd]zxcvbn[q]"));
     }
 }
