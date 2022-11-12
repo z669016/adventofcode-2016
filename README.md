@@ -87,3 +87,17 @@ reader, and each instruction is executed against (consumes) the fixed grid (led 
 swipe, the ```pixelsLit()``` method, can count the leds lit in the grid.
 
 For part 2, the ```display()``` method of the ```DoorLock``` can show the code on the screen.
+
+## Day 9
+This doesn't look too difficult, so there is probably a catch in part 2. For part 1, I created a ```Decompressor```
+it creates a decompressed version using a ```StringBuilder```. This will probably work if the string isn't going to be
+too long.
+
+For part 2, I took an entirely different approach. Let's split the input into a ```Sequence```, and a sequence is 
+either a ```FixedSequence``` (piece of non repeated text) or a ```RepeatSequence``` (a repeating ```Sequence```, notice 
+the recursion!). The length of a ```FixedSequence``` is the length of the text, while the length of a 
+```RepeatSequence``` is repeat-factor times the ```Sequence``` to repeat (which in turn can be a ```FixedSequence``` or 
+a ```RepeatSequence```). The ```SequenceBuilder``` is the top level ```Sequence```, which transforms the input into
+a ```List<Sequence>```. The total length for part 2, is now simply the sum of the length of all sequences in the list.
+And that calculation is simple, but the resulting string will probably take too much memory (and a lot of time to
+display on the screen).
