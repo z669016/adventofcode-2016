@@ -5,113 +5,10 @@ import org.javatuples.Pair;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class Building implements Comparable<Building> {
-    private final Building prev;
-    private final int count;
-    private final int elevator;
-    private final Floor[] floors;
-    private final List<String> devices;
+public record Building(int count, int elevator, Floor[] floors, Building prev) implements Comparable<Building> {
 
-    public Building(int count, int elevator, Floor[] floors, Building prev) {
+    public Building {
         assert floors != null && floors.length == 4;
-
-        this.count = count;
-        this.elevator = elevator;
-        this.floors = floors;
-        this.prev = prev;
-
-        if (prev == null)
-            this.devices = Arrays.stream(floors)
-                    .map(Floor::devices)
-                    .flatMap(Collection::stream)
-                    .map(Device::code)
-                    .sorted()
-                    .toList();
-        else
-            this.devices = null;
-    }
-
-    private static Set<Device> take(Device take, Set<Device> from) {
-        final Set<Device> newSet = new HashSet<>(from);
-        newSet.remove(take);
-        return newSet;
-    }
-
-    public static Set<Pair<Set<Device>, Set<Device>>> optionsToTake(Set<Device> devices) {
-        // Short circuit for an empty set
-        if (devices.size() == 0)
-            return Set.of();
-
-        // Short circuit for a set of 1
-        if (devices.size() == 1)
-            return Set.of(new Pair<>(devices, Set.of()));
-
-        // create the result set
-        final Set<Pair<Set<Device>, Set<Device>>> options = new HashSet<>();
-
-        // Take options with only 1 item to remove
-        final Set<Pair<Device, Set<Device>>> takeOne = takeOne(devices);
-
-        // Add the single options and generate the options moving two devices in teh same run
-        takeOne.stream()
-                .peek(pair -> options.add(new Pair<>(Set.of(pair.getValue0()), pair.getValue1())))
-                .forEach(pair -> takeOne(pair.getValue1())
-                        .forEach(sub -> options.add(new Pair<>(Set.of(pair.getValue0(), sub.getValue0()), sub.getValue1()))));
-
-        // Only return valid options, so check to make sure
-        return options.stream()
-                .filter(pair -> Floor.isValid(pair.getValue0()) && Floor.isValid(pair.getValue1()))
-                .collect(Collectors.toSet());
-    }
-
-    private static boolean containsGenerator(String name, Set<Device> devices) {
-        for (Device device : devices){
-            if (device instanceof Generator && device.name().startsWith(name))
-                return true;
-        }
-
-        return false;
-    }
-
-    private static boolean containsMicrochip(String name, Set<Device> devices) {
-        for (Device device : devices){
-            if (device instanceof Microchip && device.name().startsWith(name))
-                return true;
-        }
-
-        return false;
-    }
-
-    private static Set<Pair<Device, Set<Device>>> takeOne(Set<Device> devices) {
-        // Short circuit an empty set
-        if (devices.size() == 0)
-            return Set.of();
-
-        boolean microchipLeavingGenerator = false;
-        boolean generatorLeavingMicrochip = false;
-
-        // Add the single choices, but if there are multiple alike (e.g. move a microchip and leave
-        // its generator) then only use the first one in the list
-        final Set<Pair<Device, Set<Device>>> options = new HashSet<>();
-        for (Device device : devices) {
-            final Set<Device> leaving = take(device, devices);
-            if (device instanceof Microchip && containsGenerator(device.name(), leaving)) {
-                if (!microchipLeavingGenerator) {
-                    microchipLeavingGenerator = true;
-                    options.add(new Pair<>(device, leaving));
-                }
-            } else if (device instanceof Generator && containsMicrochip(device.name(), leaving)) {
-                if (!generatorLeavingMicrochip) {
-                    generatorLeavingMicrochip = true;
-                    options.add(new Pair<>(device, leaving));
-                }
-            } else {
-                options.add(new Pair<>(device, leaving));
-
-            }
-        }
-
-        return options;
     }
 
     @Override
@@ -123,21 +20,25 @@ public class Building implements Comparable<Building> {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Building building)) return false;
-        return count == building.count && elevator == building.elevator && Arrays.equals(floors, building.floors);
+        return Floors.equals(floors, building.floors);
+//        return elevator == building.elevator && Floors.equals(floors, building.floors);
+//        return count == building.count && elevator == building.elevator && Floors.equals(floors, building.floors);
     }
 
     @Override
     public int hashCode() {
         int result = Objects.hash(count, elevator);
-        result = 31 * result + Arrays.hashCode(floors);
+        result = 31 * result + Floors.hashCode(floors);
         return result;
     }
 
     public boolean done() {
-        return floors[0].devices().isEmpty() && floors[1].devices().isEmpty() && floors[2].devices().isEmpty();
+        return Floors.done(floors);
     }
 
-    public List<String> devices() { return devices != null ? devices : prev.devices(); }
+    public List<String> devices() {
+        return Floors.devices(floors);
+    }
 
     public int count() { return count; }
 
@@ -212,5 +113,86 @@ public class Building implements Comparable<Building> {
         }
 
         return sb.toString();
+    }
+
+    private static Set<Device> take(Device take, Set<Device> from) {
+        return from.stream().filter(d -> !take.equals(d)).collect(Collectors.toSet());
+    }
+
+    public static Set<Pair<Set<Device>, Set<Device>>> optionsToTake(Set<Device> devices) {
+        // Short circuit for an empty set
+        if (devices.size() == 0)
+            return Set.of();
+
+        // Short circuit for a set of 1
+        if (devices.size() == 1)
+            return Set.of(new Pair<>(devices, Set.of()));
+
+        // create the result set
+        final Set<Pair<Set<Device>, Set<Device>>> options = new HashSet<>();
+
+        // Take options with only 1 item to remove
+        final Set<Pair<Device, Set<Device>>> takeOne = takeOne(devices);
+
+        // Add the single options and generate the options moving two devices in teh same run
+        takeOne.stream()
+                .peek(pair -> options.add(new Pair<>(Set.of(pair.getValue0()), pair.getValue1())))
+                .forEach(pair -> takeOne(pair.getValue1())
+                        .forEach(sub -> options.add(new Pair<>(Set.of(pair.getValue0(), sub.getValue0()), sub.getValue1()))));
+
+        // Only return valid options, so check to make sure
+        return options.stream()
+                .filter(pair -> Floor.isValid(pair.getValue0()) && Floor.isValid(pair.getValue1()))
+                .collect(Collectors.toSet());
+    }
+
+    private static boolean containsGenerator(String name, Set<Device> devices) {
+        for (Device device : devices){
+            if (device instanceof Generator && device.name().equals(name))
+                return true;
+        }
+
+        return false;
+    }
+
+    private static boolean containsMicrochip(String name, Set<Device> devices) {
+        for (Device device : devices){
+            if (device instanceof Microchip && device.name().equals(name))
+                return true;
+        }
+
+        return false;
+    }
+
+    private static Set<Pair<Device, Set<Device>>> takeOne(Set<Device> devices) {
+        // Short circuit an empty set
+        if (devices.size() == 0)
+            return Set.of();
+
+        boolean microchipLeavingGenerator = false;
+        boolean generatorLeavingMicrochip = false;
+
+        // Add the single choices, but if there are multiple alike (e.g. move a microchip and leave
+        // its generator) then only use the first one in the list
+        final Set<Pair<Device, Set<Device>>> options = new HashSet<>();
+        for (Device device : devices) {
+            final Set<Device> leaving = take(device, devices);
+            if (device instanceof Microchip && containsGenerator(device.name(), leaving)) {
+                if (!microchipLeavingGenerator) {
+                    microchipLeavingGenerator = true;
+                    options.add(new Pair<>(device, leaving));
+                }
+            } else if (device instanceof Generator && containsMicrochip(device.name(), leaving)) {
+                if (!generatorLeavingMicrochip) {
+                    generatorLeavingMicrochip = true;
+                    options.add(new Pair<>(device, leaving));
+                }
+            } else {
+                options.add(new Pair<>(device, leaving));
+
+            }
+        }
+
+        return options;
     }
 }

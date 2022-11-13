@@ -24,8 +24,8 @@ public class Solver {
 
         if (found == null)
             throw new IllegalArgumentException("Could not solve this puzzle.");
-        else
-            System.out.println(found);
+//        else
+//            System.out.println(found);
 
 
         return found.count();

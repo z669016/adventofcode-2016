@@ -20,14 +20,26 @@ public record Floor(int id, Set<Device> devices) {
         return Optional.empty();
     }
 
+    public Set<Device> generators() {
+        return generators(devices);
+    }
+
+    public Set<Device> microchips() {
+        return microchips(devices);
+    }
+
+    public boolean isValid() {
+        return isValid(devices);
+    }
+
     public static boolean isValid(Set<Device> devices) {
         assert devices != null;
 
         if (devices.size() < 2)
             return true;
 
-        final Set<Device> generators = devices.stream().filter(device -> device instanceof Generator).collect(Collectors.toSet());
-        final Set<Device> microchips = devices.stream().filter(device -> device instanceof Microchip).collect(Collectors.toSet());
+        final Set<Device> generators = generators(devices);
+        final Set<Device> microchips = microchips(devices);
 
         if (microchips.isEmpty() || generators.isEmpty())
             return true;
@@ -38,6 +50,14 @@ public record Floor(int id, Set<Device> devices) {
         }
 
         return true;
+    }
+
+    public static Set<Device> generators(Set<Device> devices) {
+        return devices.stream().filter(device -> device instanceof Generator).collect(Collectors.toSet());
+    }
+
+    public static Set<Device> microchips(Set<Device> devices) {
+        return devices.stream().filter(device -> device instanceof Microchip).collect(Collectors.toSet());
     }
 
     private static boolean hasGenerator(Set<Device> generators, String name) {
@@ -51,5 +71,13 @@ public record Floor(int id, Set<Device> devices) {
 
     public boolean contains(String code) {
         return devices.stream().anyMatch(device -> code.equals(device.code()));
+    }
+
+    public boolean containsGenerator(String name) {
+        return generators().stream().anyMatch(device -> name.equals(device.name()));
+    }
+
+    public boolean containsMicrochip(String name) {
+        return microchips().stream().anyMatch(device -> name.equals(device.name()));
     }
 }

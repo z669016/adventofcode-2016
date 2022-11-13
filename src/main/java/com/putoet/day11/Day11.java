@@ -38,6 +38,9 @@ public class Day11 {
     };
 
     public static void main(String[] args) {
+//        System.out.println("Total memory: " + Runtime.getRuntime().totalMemory());
+//        System.out.println("Max memory: " + Runtime.getRuntime().maxMemory());
+
         part1();
         part2();
     }
