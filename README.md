@@ -101,3 +101,18 @@ a ```RepeatSequence```). The ```SequenceBuilder``` is the top level ```Sequence`
 a ```List<Sequence>```. The total length for part 2, is now simply the sum of the length of all sequences in the list.
 And that calculation is simple, but the resulting string will probably take too much memory (and a lot of time to
 display on the screen).
+
+## Day 10
+According to the story, there's a ```ChipFactory``` where ```Microchip```s are handled (consumed) by either a ```Bot``` 
+or they end up in an ```Output```. A ```Bot``` can have a higher and lower value ```Microchip```, so microchips must
+be ```Comparable```. Once a ```Bot``` has two microchips, he passes them on to a next ```Consumer```  (being another 
+```Bot``` or an ```Output```).
+The record ```Microchip``` simply holds a value and implements ```Comparable<Microchip>```. A ```Bot``` and an 
+```Output``` implement ```Consumer<Microchip>```, and a Bot can have a higher-consumer amd a lower-consumer to pass
+on the chips once he has two of them. The ```ChipFactory.run()``` creates a map of ```Consumers```from the instructions
+and wires them all together. 
+For part 1, run the factory, and search the list of ```Bot```s for the one that contains chip 17 and 61. For part 2,
+select ```Output``` from the factory output list and multiply the values of the chips they contain.
+
+
+

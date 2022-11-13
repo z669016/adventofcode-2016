@@ -3,9 +3,7 @@ package com.putoet.day10;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.function.Consumer;
-import java.util.stream.Collectors;
 
 public class Output implements Consumer<Microchip> {
     public static final String PREFIX = "output-";
@@ -41,12 +39,5 @@ public class Output implements Consumer<Microchip> {
                 "id=" + id +
                 ", microchips=" + microchips +
                 '}';
-    }
-
-    public static List<Output> from(Map<String,Consumer<Microchip>> consumers) {
-        return consumers.values().stream()
-                .filter(consumer -> consumer instanceof Output)
-                .map(consumer -> (Output) consumer)
-                .collect(Collectors.toList());
     }
 }

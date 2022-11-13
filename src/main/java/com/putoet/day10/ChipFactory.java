@@ -1,5 +1,6 @@
 package com.putoet.day10;
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -11,7 +12,7 @@ import java.util.regex.Pattern;
 public class ChipFactory implements Runnable {
     private enum DestinationType {
         bot, output
-    };
+    }
 
     private static final Pattern VALUE_PATTERN = Pattern.compile("value (\\d+) goes to bot (\\d+)");
     private static final Pattern GIVES_PATTERN = Pattern.compile("bot (\\d+) gives low to (output|bot) (\\d+) and high to (output|bot) (\\d+)");
@@ -19,14 +20,26 @@ public class ChipFactory implements Runnable {
     private final Map<String,Consumer<Microchip>> consumers;
     private final Iterator<String> iterator;
 
-    public ChipFactory(Map<String, Consumer<Microchip>> consumers, List<String> instructions) {
-        assert consumers != null;
+    public ChipFactory(List<String> instructions) {
         assert instructions != null;
 
-        this.consumers = consumers;
+        this.consumers = new HashMap<>();
         this.iterator = instructions.iterator();
     }
 
+    public List<Bot> bots() {
+        return consumers.values().stream()
+                .filter(consumer -> consumer instanceof Bot)
+                .map(consumer -> (Bot) consumer)
+                .toList();
+    }
+
+    public List<Output> output() {
+        return consumers.values().stream()
+                .filter(consumer -> consumer instanceof Output)
+                .map(consumer -> (Output) consumer)
+                .toList();
+    }
     @Override
     public void run() {
         while (iterator.hasNext()) {

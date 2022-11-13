@@ -2,10 +2,7 @@ package com.putoet.day10;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.function.Consumer;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -22,12 +19,11 @@ class ChipFactoryTest {
                 "bot 0 gives low to output 2 and high to output 0",
                 "value 2 goes to bot 2"
         );
-        final Map<String, Consumer<Microchip>> consumers = new HashMap<>();
-        final ChipFactory factory = new ChipFactory(consumers, instructions);
+        final ChipFactory factory = new ChipFactory(instructions);
 
         factory.run();
 
-        final List<Output> outputs = Output.from(consumers);
+        final List<Output> outputs = factory.output();
         assertEquals(3, outputs.size());
         for (int idx = 0; idx < 3; idx++) {
             final Output output = outputs.get(idx);
@@ -41,9 +37,8 @@ class ChipFactoryTest {
                 fail();
         }
 
-        final List<Bot> bots = Bot.from(consumers);
+        final List<Bot> bots = factory.bots();
         assertEquals(3, bots.size());
         bots.forEach(bot -> assertEquals(2, bot.microchips().size()));
-
     }
 }

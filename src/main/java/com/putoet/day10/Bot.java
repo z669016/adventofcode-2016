@@ -2,13 +2,13 @@ package com.putoet.day10;
 
 import java.util.*;
 import java.util.function.Consumer;
-import java.util.stream.Collectors;
 
+@SuppressWarnings("OptionalUsedAsFieldOrParameterType")
 public class Bot implements Consumer<Microchip> {
     public static final String PREFIX = "bot-";
 
     private final int id;
-    private Set<Microchip> microchips = new HashSet<>();
+    private final Set<Microchip> microchips = new HashSet<>();
     private Optional<Consumer<Microchip>> higherConsumer = Optional.empty();
     private Optional<Consumer<Microchip>> lowerConsumer = Optional.empty();
 
@@ -19,6 +19,10 @@ public class Bot implements Consumer<Microchip> {
     public String name() { return PREFIX + id; }
 
     public Set<Microchip> microchips() { return microchips; }
+
+    public boolean contains(final Microchip chip) {
+        return microchips.contains(chip);
+    }
 
     public void setHigherConsumer(Consumer<Microchip> higherConsumer) {
         assert higherConsumer != null;
@@ -35,17 +39,11 @@ public class Bot implements Consumer<Microchip> {
     }
 
     private Optional<Microchip> higher() {
-        final Optional<Microchip> higher = microchips.stream().max(Microchip::compareTo);
-        //higher.ifPresent(microchips::remove);
-
-        return higher;
+        return microchips.stream().max(Microchip::compareTo);
     }
 
     private Optional<Microchip> lower() {
-        final Optional<Microchip> lower = microchips.stream().min(Microchip::compareTo);
-        //lower.ifPresent(microchips::remove);
-
-        return lower;
+        return microchips.stream().min(Microchip::compareTo);
     }
 
     @Override
@@ -70,8 +68,7 @@ public class Bot implements Consumer<Microchip> {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Bot)) return false;
-        Bot bot = (Bot) o;
+        if (!(o instanceof Bot bot)) return false;
         return id == bot.id;
     }
 
@@ -87,12 +84,4 @@ public class Bot implements Consumer<Microchip> {
                 ", microchips=" + microchips +
                 '}';
     }
-
-    public static List<Bot> from(Map<String,Consumer<Microchip>> consumers) {
-        return consumers.values().stream()
-                .filter(consumer -> consumer instanceof Bot)
-                .map(consumer -> (Bot) consumer)
-                .collect(Collectors.toList());
-    }
-
 }
