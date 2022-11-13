@@ -1,6 +1,5 @@
 package com.putoet.day11;
 
-import java.util.Locale;
 import java.util.Objects;
 
 public class Generator extends Device {
@@ -11,9 +10,7 @@ public class Generator extends Device {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Generator)) return false;
-
-        Generator device = (Generator) o;
+        if (!(o instanceof Generator device)) return false;
 
         return name().equals(device.name());
     }
@@ -24,7 +21,7 @@ public class Generator extends Device {
     }
 
     @Override
-    public String toString() {
-        return name().charAt(0) + "g";
+    public String type() {
+        return "g";
     }
 }

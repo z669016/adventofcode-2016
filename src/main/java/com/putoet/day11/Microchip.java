@@ -10,9 +10,7 @@ public class Microchip extends Device {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Microchip)) return false;
-
-        Microchip device = (Microchip) o;
+        if (!(o instanceof Microchip device)) return false;
 
         return name().equals(device.name());
     }
@@ -23,7 +21,7 @@ public class Microchip extends Device {
     }
 
     @Override
-    public String toString() {
-        return name().charAt(0) + "m";
+    public String type() {
+        return "m";
     }
 }

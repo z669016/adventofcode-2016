@@ -3,20 +3,28 @@ package com.putoet.day11;
 import java.util.Set;
 
 public class Day11 {
-    private static final Generator dg = new Generator("dilithium");
-    private static final Microchip dm = new Microchip("dilithium");
-    private static final Generator eg = new Generator("elerium");
-    private static final Microchip em = new Microchip("elerium");
-    private static final Generator cg = new Generator("curium");
-    private static final Microchip cm = new Microchip("curium");
-    private static final Generator rg = new Generator("ruthenium");
-    private static final Microchip rm = new Microchip("ruthenium");
-    private static final Generator tg = new Generator("thulium");
-    private static final Microchip tm = new Microchip("thulium");
-    private static final Generator sg = new Generator("strontium");
-    private static final Microchip sm = new Microchip("strontium");
-    private static final Generator pg = new Generator("plutonium");
-    private static final Microchip pm = new Microchip("plutonium");
+    public static final String DILITHIUM = "dilithium";
+    public static final String ELERIUM = "elerium";
+    public static final String CURIUM = "curium";
+    public static final String RUTHENIUM = "ruthenium";
+    public static final String THULIUM = "thulium";
+    public static final String STRONTIUM = "strontium";
+    public static final String PLUTONIUM = "plutonium";
+
+    private static final Generator dg = new Generator(DILITHIUM);
+    private static final Microchip dm = new Microchip(DILITHIUM);
+    private static final Generator eg = new Generator(ELERIUM);
+    private static final Microchip em = new Microchip(ELERIUM);
+    private static final Generator cg = new Generator(CURIUM);
+    private static final Microchip cm = new Microchip(CURIUM);
+    private static final Generator rg = new Generator(RUTHENIUM);
+    private static final Microchip rm = new Microchip(RUTHENIUM);
+    private static final Generator tg = new Generator(THULIUM);
+    private static final Microchip tm = new Microchip(THULIUM);
+    private static final Generator sg = new Generator(STRONTIUM);
+    private static final Microchip sm = new Microchip(STRONTIUM);
+    private static final Generator pg = new Generator(PLUTONIUM);
+    private static final Microchip pm = new Microchip(PLUTONIUM);
 
     // The first floor contains a strontium generator, a strontium-compatible microchip, a plutonium generator, and a plutonium-compatible microchip.
     // The second floor contains a thulium generator, a ruthenium generator, a ruthenium-compatible microchip, a curium generator, and a curium-compatible microchip.
@@ -44,7 +52,7 @@ public class Day11 {
 
     private static void part2() {
         final Floor[] part2 = new Floor[]{
-                floors[0].add(Set.of(dg, dm, eg, em)).get(),
+                floors[0].add(Set.of(dg, dm, eg, em)).orElseThrow(),
                 floors[1],
                 floors[2],
                 floors[3]};
@@ -57,6 +65,6 @@ public class Day11 {
     }
 
     private static String duration(long start, long end) {
-        return (end-start) > 1000L ? (end - start) + " ms." : (end - start) / 1000 + "sec.";
+        return (end - start) > 1000L ? (end - start) + " ms." : (end - start) / 1000 + "sec.";
     }
 }

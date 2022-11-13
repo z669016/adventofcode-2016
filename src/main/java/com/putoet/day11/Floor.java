@@ -5,13 +5,9 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class Floor {
-    private final int id;
-    private final Set<Device> devices;
-
-    public Floor(int id, Set<Device> devices) {
-        this.id = id;
-        this.devices = devices;
+public record Floor(int id, Set<Device> devices) {
+    public Floor {
+        assert devices != null;
     }
 
     public Optional<Floor> add(Set<Device> toAdd) {
@@ -44,24 +40,6 @@ public class Floor {
         return true;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Floor)) return false;
-
-        Floor floor = (Floor) o;
-
-        if (id != floor.id) return false;
-        return devices.equals(floor.devices);
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id;
-        result = 31 * result + devices.hashCode();
-        return result;
-    }
-
     private static boolean hasGenerator(Set<Device> generators, String name) {
         for (Device device : generators) {
             if (device.name().equals(name))
@@ -69,14 +47,6 @@ public class Floor {
         }
 
         return false;
-    }
-
-    public Set<Device> devices() {
-        return devices;
-    }
-
-    public boolean isValid() {
-        return isValid(devices);
     }
 
     public boolean contains(String code) {

@@ -15,4 +15,11 @@ public abstract class Device {
     public String code() {
         return toString().toUpperCase();
     }
+
+    public abstract String type();
+
+    @Override
+    public String toString() {
+        return name().charAt(0) + type();
+    }
 }

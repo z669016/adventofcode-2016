@@ -26,28 +26,17 @@ public class Building implements Comparable<Building> {
                     .flatMap(Collection::stream)
                     .map(Device::code)
                     .sorted()
-                    .collect(Collectors.toList());
+                    .toList();
         else
             this.devices = null;
     }
 
-    /**
-     * Remove the item to take from the list and return a new (smaller) list
-     * @param take The device to remove from the list
-     * @param from
-     * @return
-     */
     private static Set<Device> take(Device take, Set<Device> from) {
         final Set<Device> newSet = new HashSet<>(from);
         newSet.remove(take);
         return newSet;
     }
 
-    /**
-     * Create options for next moves
-     * @param devices A Set<Device> for which new valid options need to be determined
-     * @return Set with possible moves (a pair with a set of devices to move and a set of devices to leave behind)
-     */
     public static Set<Pair<Set<Device>, Set<Device>>> optionsToTake(Set<Device> devices) {
         // Short circuit for an empty set
         if (devices.size() == 0)
@@ -93,11 +82,6 @@ public class Building implements Comparable<Building> {
         return false;
     }
 
-    /**
-     * Create options for taking just one item from the set
-     * @param devices the set of devices to use
-     * @return Set of options (pair with one devide, and a set of remaining devices
-     */
     private static Set<Pair<Device, Set<Device>>> takeOne(Set<Device> devices) {
         // Short circuit an empty set
         if (devices.size() == 0)
@@ -138,8 +122,7 @@ public class Building implements Comparable<Building> {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Building)) return false;
-        Building building = (Building) o;
+        if (!(o instanceof Building building)) return false;
         return count == building.count && elevator == building.elevator && Arrays.equals(floors, building.floors);
     }
 
@@ -171,7 +154,7 @@ public class Building implements Comparable<Building> {
             if (!previousAreEmpty(elevator)) {
                 // Only consider downward if the elevator is at floor 1 or up
                 if (elevator > 0) {
-                    // If there are options to move 1 item down, the don't consider to move two!
+                    // If there are options to move 1 item down, then don't consider to move two!
                     if (!hasSingleMoves || option.getValue0().size() == 1) {
                         final Optional<Floor> newFloor = floors[elevator - 1].add(option.getValue0());
                         if (newFloor.isPresent()) {
@@ -184,7 +167,7 @@ public class Building implements Comparable<Building> {
                 }
             }
 
-            // Consider upward options if the elevator isn;t at the top floor
+            // Consider upward options if the elevator isn't at the top floor
             if (elevator < floors.length - 1) {
                 // If there are options to move 2 items up, then don't consider to move just one
                 if (!hasDoubleMoves || option.getValue0().size() > 1) {
