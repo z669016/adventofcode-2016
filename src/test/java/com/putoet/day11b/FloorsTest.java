@@ -1,10 +1,10 @@
-package com.putoet.day11;
+package com.putoet.day11b;
 
 import org.junit.jupiter.api.Test;
 
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class FloorsTest {
     private final Generator cg = new Generator("C");
@@ -33,6 +33,6 @@ class FloorsTest {
                 new Floor(3, Set.of())
         };
 
-        assertTrue(Floors.equals(first, second));
+        assertTrue(new Floors(first).equals(new Floors(second)));
     }
 }

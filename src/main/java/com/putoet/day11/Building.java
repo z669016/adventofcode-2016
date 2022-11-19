@@ -5,31 +5,22 @@ import org.javatuples.Pair;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public record Building(int count, int elevator, Floor[] floors, Building prev) implements Comparable<Building> {
+public record Building(int count, int elevator, Floor[] floors, Building prev) {
 
     public Building {
         assert floors != null && floors.length == 4;
     }
 
     @Override
-    public int compareTo(Building other) {
-        return Integer.compare(this.count, other.count);
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Building building)) return false;
-        return Floors.equals(floors, building.floors);
-//        return elevator == building.elevator && Floors.equals(floors, building.floors);
-//        return count == building.count && elevator == building.elevator && Floors.equals(floors, building.floors);
+        return elevator == building.elevator && Floors.equals(floors, building.floors);
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(count, elevator);
-        result = 31 * result + Floors.hashCode(floors);
-        return result;
+        return Objects.hash(elevator, floors);
     }
 
     public boolean done() {
