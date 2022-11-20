@@ -24,4 +24,9 @@ public class IndexedHashSupplier implements Supplier<IndexedHash> {
         final String hash = MD5.hash(code).toLowerCase();
         return new IndexedHash(index++, hash);
     }
+
+    @Override
+    public String toString() {
+        return "'index hash'";
+    }
 }

@@ -143,4 +143,16 @@ For part 1, ```Finder.locate()``` simply calls ```Finder.find()```, and the pred
 has been found. For part 2, ```Finder.distinct()``` calls ```Finder.find()```, and the predicate checks if the 
 max number of steps have been taken. Clean and simple!
 
+## Day 14
+A few things to be noticed; first generate MD5 hashes, check for a sequence of three characters, and look forward in 
+future hashes if an even longer sequence of 5 characters occur within the next 1000. This feels like caching is 
+required to prevent unnecessary hash calculations (which are pretty expensive to do).
+So, the value to generate is an ```IndexedHash``` (record with int index, and hash string). The class providing the 
+hash values ```IndexHashSupplier``` is a ```Supplier<IndexedHash>```. To enable looking forward, wrap it with a 
+```IndexedHashPeekableSupplier```, which also implements caching to prevent too many calculations.
+The ```IndexedHashGenerator``` uses the ```IndexedHashSupplier``` to get next values, and a ```SequenceValidator```
+to check if the generated hash matches the right conditions. That is enough to solve part 1, with the different 
+features clearly seperated in different classes.
+For part 2, actually only the ```IndexedHashSupplier```  needs to change into a ```IndexStretchedHashSupplier```, end the rest
+(caching, checking values) can be the same. 
 

@@ -30,4 +30,9 @@ public class IndexStretchedHashSupplier implements Supplier<IndexedHash> {
 
         return new IndexedHash(index++, hash);
     }
+
+    @Override
+    public String toString() {
+        return "'stretched index hash'";
+    }
 }
