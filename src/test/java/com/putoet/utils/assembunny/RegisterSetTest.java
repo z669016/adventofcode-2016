@@ -14,9 +14,9 @@ class RegisterSetTest {
     private static final String CX = "cx";
     private static final String DX = "dx";
 
-    private Register ax = new Register(AX);
-    private Register bx = new Register(BX);
-    private Register cx = new Register(CX);
+    private final Register ax = new Register(AX);
+    private final Register bx = new Register(BX);
+    private final Register cx = new Register(CX);
     private RegisterSet set;
 
     @BeforeEach

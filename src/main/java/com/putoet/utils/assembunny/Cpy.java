@@ -26,6 +26,6 @@ public class Cpy implements Instruction {
 
     @Override
     public String toString() {
-        return "cpy " + in.toString() + " " + (out.isRegister() ? out.register().name() : out.get());
+        return "cpy " + in + " " + (out.isRegister() ? out.register().name() : out.get());
     }
 }

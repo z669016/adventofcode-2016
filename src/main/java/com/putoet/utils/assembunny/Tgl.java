@@ -4,7 +4,7 @@ import java.util.function.Supplier;
 
 public class Tgl implements Instruction {
     private final InOperant in;
-    private Supplier<ExecutionContext> supplier;
+    private final Supplier<ExecutionContext> supplier;
 
     public Tgl(InOperant in, Supplier<ExecutionContext> supplier) {
         assert in != null;

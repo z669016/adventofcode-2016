@@ -7,7 +7,7 @@ import com.putoet.utils.assembunny.Register;
 import com.putoet.utils.assembunny.RegisterSet;
 
 public class Day12 {
-    private static Register a, b, c, d;
+    private static Register a, c;
     private static Assembunny assembunny;
 
     public static void main(String[] args) {
@@ -25,10 +25,11 @@ public class Day12 {
     }
 
     private static void setup() {
+        final Register b = new Register("b");
+        final Register d = new Register("d");
+
         a = new Register("a");
-        b = new Register("b");
         c = new Register("c");
-        d = new Register("d");
         assembunny = new Assembunny(RegisterSet.of(a, b, c, d));
     }
 }

@@ -39,7 +39,7 @@ public class Assembunny {
 
         while (ip.get() < program.length) {
             if (verbose)
-                System.out.println(regs.toString() + " " + program[ip.get()].toString());
+                System.out.println(regs + " " + program[ip.get()].toString());
 
             ip.accept(ip.get() + program[ip.get()].execute());
         }
@@ -122,9 +122,5 @@ public class Assembunny {
             throw new IllegalArgumentException(compilerErrorAt(line) + "Register '" + name + "' not defined");
 
         return reg.get();
-    }
-
-    public RegisterSet regs() {
-        return regs;
     }
 }

@@ -10,15 +10,14 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 class AssembunnyTest {
-    private Register a, b;
-    private RegisterSet regs;
+    private Register a;
     private Assembunny assembunny;
 
     @BeforeEach
     void setup() {
         a = new Register("a");
-        b = new Register("b");
-        regs = RegisterSet.of(a, b);
+        Register b = new Register("b");
+        RegisterSet regs = RegisterSet.of(a, b);
         assembunny = new Assembunny(regs);
     }
 

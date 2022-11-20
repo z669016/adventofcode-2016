@@ -17,7 +17,7 @@ helper class to keep track of a current location (```Point```) and facing (curre
 data in a stream of pairs with ```Turn``` and distance, and ```move``` the current location.
 The answer to part 1 is simply the Manhattan distance from the origin to the current location after all moves.
 For part 2, I've added a ```trace``` (```Set```) and a ```doubles``` (```List```) property, to keep track of points 
-visited and points visited more than once updated by the ```move``` method. The anser for part 2, is the first element 
+visited and points visited more than once updated by the ```move``` method. The answer for part 2, is the first element 
 in the ```doubles``` list.
 
 ## Day 2
@@ -42,11 +42,11 @@ trick is of course in validating the checksum.
 For part 1 simply transform the input into a list of ```EncryptedName```s, and sum the sectorId, which is straight 
 forward using streams. For part 2, I added a ```decrypt``` to the ```EncryptedName```, and simply searched for the
 ```EncryptedName``` that decrypted to the name "northpole object storage" (which I stumbled upon after looking at list 
-of all decrypted names.
+of all decrypted names).
 
 ## Day 5
-Brute force search for a hash starting with five zero's and when found, return character at position 6 (the first 
-char after the five zeroes). Repeat this enough times so it generates a password of sufficient length (8 for part 1). 
+Brute force search for a hash starting with five zeros and when found, return character at position 6 (the first 
+char after the five zeroes). Repeat this enough times, so it generates a password of sufficient length (8 for part 1). 
 
 The ```PasswordGenerator``` takes care of this, the class initializes with an empty list of the required size of
 empty strings (each string is a character for the password). The ```generate()``` method, fills the list one by one
@@ -64,7 +64,7 @@ in the ```generate()``` method and can be handled identical for part 1 and 2.
 Basic approach, is to transform the input (list of strings), into a ```List<List<Character>>``` (split each string 
 into a list of character). Then count the characters on each position, and replace the list of lists into a 
 ```List<Map<Character,Integer>>``` where the map contains the count of each character in a position (so the map
-at index 0, contains the map with all characters at position 0 and the count of their occurance at that position).
+at index 0, contains the map with all characters at position 0 and the count of their occurrence at that position).
 
 For part 1, filter the most occurring keys from each map, and join the result into a string. This approach proofed 
 helpful for part 2, for now simply filter to the least occurring keys for each position.
@@ -82,9 +82,9 @@ containsBAB checks if any of the hypernet-sequences contains the BAB of any ABA 
 The basic idea: I have a ```CardReader``` crass which is a ```Supplier``` of instructions read from the card. An
 instruction can be a ```RectInstruction```, a ```RotateRowInstruction```, or a ```RotateColumnInstruction```. Each
 instruction is a ```Consumer``` of a ```FixedGrid<Integer>```. A ```DoorLock``` class has a ```CardReader```, and
-and when the ```swipe()``` method is called on the card reader, all instructions are read one by one from the card
-reader, and each instruction is executed against (consumes) the fixed grid (led lights) of the door lock. AFter the 
-swipe, the ```pixelsLit()``` method, can count the leds lit in the grid.
+when the ```swipe()``` method is called on the card reader, all instructions are read one by one from the card
+reader, and each instruction is executed against (consumes) the fixed grid (LED lights) of the door lock. After the 
+swipe, the ```pixelsLit()``` method, can count the LEDs lit in the grid.
 
 For part 2, the ```display()``` method of the ```DoorLock``` can show the code on the screen.
 
@@ -94,7 +94,7 @@ it creates a decompressed version using a ```StringBuilder```. This will probabl
 too long.
 
 For part 2, I took an entirely different approach. Let's split the input into a ```Sequence```, and a sequence is 
-either a ```FixedSequence``` (piece of non repeated text) or a ```RepeatSequence``` (a repeating ```Sequence```, notice 
+either a ```FixedSequence``` (piece of non-repeated text) or a ```RepeatSequence``` (a repeating ```Sequence```, notice 
 the recursion!). The length of a ```FixedSequence``` is the length of the text, while the length of a 
 ```RepeatSequence``` is repeat-factor times the ```Sequence``` to repeat (which in turn can be a ```FixedSequence``` or 
 a ```RepeatSequence```). The ```SequenceBuilder``` is the top level ```Sequence```, which transforms the input into
@@ -129,6 +129,9 @@ inputs. Added history checking, and optimization to avoid moving to already empt
 Runs amazingly fast, although I still don't see why it's okay to ignore the type of chips/RTGs. It feels like it cannot
 work for all kinds of input.
 
+## Day 12
+Always fun to implement a virtual computer (```Assembunny```). Compile the input into a ```List<Instruction>```, and
+execute it. The ```Instruction.execute()``` always returns an offset to add to the instruction pointer.
 
 
 
