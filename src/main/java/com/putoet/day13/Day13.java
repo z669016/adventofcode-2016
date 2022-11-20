@@ -1,6 +1,5 @@
 package com.putoet.day13;
 
-import com.putoet.utils.maze.Maze;
 import com.putoet.utils.maze.Point;
 import com.putoet.utils.maze.Route;
 
@@ -12,7 +11,7 @@ public class Day13 {
 
     public static void main(String[] args) {
         final int officeDesignerFavouriteNumber = 1352;
-        final Maze maze = new OfficeDesignerMaze(officeDesignerFavouriteNumber);
+        final var maze = new OfficeDesignerMaze(officeDesignerFavouriteNumber);
         final RouteFinder finder = new RouteFinder(maze);
 
         final List<Route> routes = finder.find(STARTING_POINT, TARGET_POINT);

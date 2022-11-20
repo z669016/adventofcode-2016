@@ -1,6 +1,5 @@
 package com.putoet.day13;
 
-import com.putoet.utils.maze.Maze;
 import com.putoet.utils.maze.Point;
 import com.putoet.utils.maze.Route;
 import org.junit.jupiter.api.BeforeEach;
@@ -66,7 +65,7 @@ class RouteFinderTest {
                 new Route(STARTING_POINT),
                 new Route(STARTING_POINT)
         );
-        assertFalse(finder.containsTargetRoute(routes, TARGET_POINT));
+        assertFalse(finder.endsAtTarget(routes, TARGET_POINT));
         assertEquals(0, finder.filterTargetRoutes(routes, TARGET_POINT).size());
     }
 
@@ -81,7 +80,7 @@ class RouteFinderTest {
                 new Route(TARGET_POINT),
                 new Route(STARTING_POINT)
         );
-        assertTrue(finder.containsTargetRoute(routes, TARGET_POINT));
+        assertTrue(finder.endsAtTarget(routes, TARGET_POINT));
         assertEquals(2, finder.filterTargetRoutes(routes, TARGET_POINT).size());
     }
 

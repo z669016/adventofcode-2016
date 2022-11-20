@@ -26,18 +26,18 @@ public class RouteFinder {
             return List.of();
 
         final Set<Point> visited = new HashSet<>(Set.of(startingPoint));
-        List<Route> foundRoutes = new ArrayList<>(List.of(new Route(startingPoint)));
+        List<Route> next = new ArrayList<>(List.of(new Route(startingPoint)));
         int count = 0;
 
-        while (foundRoutes.size() > 0 && !containsTargetRoute(foundRoutes, targetPoint) && count < MAX_STEPS) {
-            foundRoutes = nextStep(foundRoutes, visited);
+        while (next.size() > 0 && !endsAtTarget(next, targetPoint) && count < MAX_STEPS) {
+            next = nextStep(next, visited);
             count++;
         }
 
-        if (foundRoutes.size() > 0 && !containsTargetRoute(foundRoutes, targetPoint))
+        if (next.size() > 0 && !endsAtTarget(next, targetPoint))
             throw new IllegalStateException("Target route not found within " + MAX_STEPS + " steps.");
 
-        return filterTargetRoutes(foundRoutes, targetPoint);
+        return filterTargetRoutes(next, targetPoint);
     }
 
     public int distinct(Point startingPoint, int steps) {
@@ -60,7 +60,7 @@ public class RouteFinder {
         return foundRoutes.stream().filter(route -> route.current().equals(targetPoint)).collect(Collectors.toList());
     }
 
-    protected boolean containsTargetRoute(List<Route> foundRoutes, Point targetPoint) {
+    protected boolean endsAtTarget(List<Route> foundRoutes, Point targetPoint) {
         return foundRoutes.stream().anyMatch(route -> route.current().equals(targetPoint));
     }
 

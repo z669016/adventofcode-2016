@@ -133,5 +133,17 @@ work for all kinds of input.
 Always fun to implement a virtual computer (```Assembunny```). Compile the input into a ```List<Instruction>```, and
 execute it. The ```Instruction.execute()``` always returns an offset to add to the instruction pointer.
 
+## Day 13
+Again a BSF based solution, however instead of a fixed maze (with a set width and height and known layout), it's 
+one of infinite size, and the location of wall elements must be calculated. Amazing how someone can think of such a 
+puzzle.
+
+The ```OfficeDesignerMaze``` contains the algorithm to determine if a cell is open of a wall. The 
+```RouteFinder.find()``` method navigates through the maze using BSF for part 1.
+
+Part 2 is basically the same. ```RouteFinder.distinct()```, uses BSF navigation and stops after 50 steps. The method 
+then returns the number of visited points.
+
+Not a very clean implementation, and I would have done it slightly different nowadays (2022).
 
 

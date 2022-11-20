@@ -28,9 +28,4 @@ public class OfficeDesignerMaze extends AbstractMaze<String> {
                 .count();
         return ones % 2 == 1;
     }
-
-    @Override
-    public void draw() {
-        draw(10, 10);
-    }
 }

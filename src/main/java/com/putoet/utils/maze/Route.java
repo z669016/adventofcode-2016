@@ -2,12 +2,10 @@ package com.putoet.utils.maze;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.OptionalInt;
 import java.util.function.Function;
 
 public class Route {
     private final List<Point> route = new ArrayList<>();
-    private Point current;
 
     public Route(Point startingPoint) {
         assert startingPoint != null;
@@ -66,7 +64,7 @@ public class Route {
         return route.stream()
                 .mapToInt(ref::apply)
                 .max()
-                .orElseGet(() -> 0);
+                .orElse(0);
     }
 
     public int length() {

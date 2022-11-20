@@ -3,25 +3,10 @@ package com.putoet.utils.maze;
 import java.util.Optional;
 
 public abstract class AbstractMaze<T> implements Maze<T> {
-    protected void checkCoordinates(int x, int y) {
-        if (!contains(x, y))
-            throw new IllegalArgumentException("Invalid coordinates (" + x + "," + y + ")");
-    }
-
-    @Override
-    public boolean isOpen(int x, int y) {
-        return !isWall(x, y);
-    }
-
     @Override
     public void draw(Route route) {
         final int maxX = route.maxX() + 1, maxY = route.maxY() + 1;
         draw(Optional.of(route), maxX, maxY);
-    }
-
-    @Override
-    public void draw(int maxX, int maxY) {
-        draw(Optional.empty(), maxX, maxY);
     }
 
     @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
