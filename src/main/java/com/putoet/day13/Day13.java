@@ -1,9 +1,6 @@
 package com.putoet.day13;
 
-import com.putoet.utils.maze.Point;
-import com.putoet.utils.maze.Route;
-
-import java.util.List;
+import com.putoet.grid.Point;
 
 public class Day13 {
     private static final Point STARTING_POINT = Point.of(1, 1);
@@ -11,18 +8,19 @@ public class Day13 {
 
     public static void main(String[] args) {
         final int officeDesignerFavouriteNumber = 1352;
-        final var maze = new OfficeDesignerMaze(officeDesignerFavouriteNumber);
-        final RouteFinder finder = new RouteFinder(maze);
+        final var maze = new Maze(officeDesignerFavouriteNumber);
+        final Finder finder = new Finder(maze);
 
-        final List<Route> routes = finder.find(STARTING_POINT, TARGET_POINT);
+        var found = finder.locate(STARTING_POINT, TARGET_POINT);
+        if (found.isEmpty())
+            System.out.println("Part 1 could not be solved");
+        else
+            System.out.println("Part 1 finding " + TARGET_POINT + " took " + found.get().getValue0() + " steps");
 
-        System.out.println("Found " + routes.size() + " routes.");
-        routes.forEach(route -> {
-            System.out.println("Steps " + (route.length() - 1));
-            maze.draw(route);
-        });
-
-        final int steps = 50;
-        System.out.println("Distinct points after " + steps + " is " + finder.distinct(STARTING_POINT, steps));
+        found = finder.distinct(STARTING_POINT, 50);
+        if (found.isEmpty())
+            System.out.println("Part 2 could not be solved");
+        else
+            System.out.println("Part 2 taking 50 steps visited " + found.get().getValue1().size() + " distinct points");
     }
 }

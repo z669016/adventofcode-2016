@@ -134,16 +134,13 @@ Always fun to implement a virtual computer (```Assembunny```). Compile the input
 execute it. The ```Instruction.execute()``` always returns an offset to add to the instruction pointer.
 
 ## Day 13
-Again a BSF based solution, however instead of a fixed maze (with a set width and height and known layout), it's 
-one of infinite size, and the location of wall elements must be calculated. Amazing how someone can think of such a 
-puzzle.
+Again a BSF based solution, with a Maze that can basically only tell you if a location in the maze is a wall or not, 
+and that's all it needs to be able to do. The ```Finder.find()``` searches the maze using BSF until a certain
+predicate is fulfilled, after which the number of steps and the set of visited points is returned in as ```Pair``` as 
+an ```Optional```. The predicate is a lambda which checks the current state for the find-criteria.
 
-The ```OfficeDesignerMaze``` contains the algorithm to determine if a cell is open of a wall. The 
-```RouteFinder.find()``` method navigates through the maze using BSF for part 1.
-
-Part 2 is basically the same. ```RouteFinder.distinct()```, uses BSF navigation and stops after 50 steps. The method 
-then returns the number of visited points.
-
-Not a very clean implementation, and I would have done it slightly different nowadays (2022).
+For part 1, ```Finder.locate()``` simply calls ```Finder.find()```, and the predicate checks if the right location
+has been found. For part 2, ```Finder.distinct()``` calls ```Finder.find()```, and the predicate checks if the 
+max number of steps have been taken. Clean and simple!
 
 
