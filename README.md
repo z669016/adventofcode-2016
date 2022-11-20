@@ -114,5 +114,21 @@ and wires them all together.
 For part 1, run the factory, and search the list of ```Bot```s for the one that contains chip 17 and 61. For part 2,
 select ```Output``` from the factory output list and multiply the values of the chips they contain.
 
+## Day 11
+A long time a go I solved part 1, but wasn't able to solve part 2 in a reasonable amount of time (to run). Even using
+the tips on pruning didn't work that well, part 2 took so long I couldn't wait for it. I checked a few solutions
+online, found a ridiculous simple one (based of number of steps to move x items up) that didn't work for the test 
+input but provided the right answers on my input.
+
+Then I found another solution by [Matt Wade](https://github.com/romellem/advent-of-code/blob/master/2016/11/notes.txt) 
+(Chicago) in Javascript. He simply ignored the different types of chips and RTGs, and calculated the number of steps 
+to solve. The only invalid combination is one with more chips than RTGs on a floor. I've implemented it in Java, using 
+BSF and a PriorityQueue (ordered by number of steps taken), and it works like a charm for the sample input and my 
+inputs. Added history checking, and optimization to avoid moving to already emptied floors.
+
+Runs amazingly fast, although I still don't see why it's okay to ignore the type of chips/RTGs. It feels like it cannot
+work for all kinds of input.
+
+
 
 

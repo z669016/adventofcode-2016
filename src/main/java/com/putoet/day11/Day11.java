@@ -1,73 +1,54 @@
 package com.putoet.day11;
 
-import java.util.Set;
+import org.javatuples.Pair;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.PriorityQueue;
 
 public class Day11 {
-    public static final String DILITHIUM = "dilithium";
-    public static final String ELERIUM = "elerium";
-    public static final String CURIUM = "curium";
-    public static final String RUTHENIUM = "ruthenium";
-    public static final String THULIUM = "thulium";
-    public static final String STRONTIUM = "strontium";
-    public static final String PLUTONIUM = "plutonium";
-
-    private static final Generator dg = new Generator(DILITHIUM);
-    private static final Microchip dm = new Microchip(DILITHIUM);
-    private static final Generator eg = new Generator(ELERIUM);
-    private static final Microchip em = new Microchip(ELERIUM);
-    private static final Generator cg = new Generator(CURIUM);
-    private static final Microchip cm = new Microchip(CURIUM);
-    private static final Generator rg = new Generator(RUTHENIUM);
-    private static final Microchip rm = new Microchip(RUTHENIUM);
-    private static final Generator tg = new Generator(THULIUM);
-    private static final Microchip tm = new Microchip(THULIUM);
-    private static final Generator sg = new Generator(STRONTIUM);
-    private static final Microchip sm = new Microchip(STRONTIUM);
-    private static final Generator pg = new Generator(PLUTONIUM);
-    private static final Microchip pm = new Microchip(PLUTONIUM);
-
-    // The first floor contains a strontium generator, a strontium-compatible microchip, a plutonium generator, and a plutonium-compatible microchip.
-    // The second floor contains a thulium generator, a ruthenium generator, a ruthenium-compatible microchip, a curium generator, and a curium-compatible microchip.
-    // The third floor contains a thulium-compatible microchip.
-    // The fourth floor contains nothing relevant.
-    private static final Floor[] floors = new Floor[]{
-            new Floor(0, Set.of(sg, sm, pg, pm)),
-            new Floor(1, Set.of(tg, rg, rm, cg, cm)),
-            new Floor(2, Set.of(tm)),
-            new Floor(3, Set.of())
-    };
+    // https://github.com/romellem/advent-of-code/blob/master/2016/11/notes.txt
 
     public static void main(String[] args) {
-//        System.out.println("Total memory: " + Runtime.getRuntime().totalMemory());
-//        System.out.println("Max memory: " + Runtime.getRuntime().maxMemory());
-
-        part1();
-        part2();
+        part(new Floor(0, List.of(
+                Pair.with(2, 2),
+                Pair.with(2, 3),
+                Pair.with(1, 0),
+                Pair.with(0, 0)
+        )));
+        part(new Floor(0, List.of(
+                Pair.with(4, 4),
+                Pair.with(2, 3),
+                Pair.with(1, 0),
+                Pair.with(0, 0)
+        )));
     }
 
-    private static void part1() {
-        final long start = System.currentTimeMillis();
-        System.out.println("the minimum number of steps required to bring all of the objects to the fourth floor is " +
-                Solver.solve(floors));
-        final long end = System.currentTimeMillis();
-        System.out.println("This search took " + duration(start, end));
+    public static void part(Floor floor) {
+        var state = solve(floor);
+        if (state == null)
+            System.out.println("Puzzle with " + floor + " could not be solved.");
+        else
+            System.out.println("Puzzle with " + floor + " solved in " + state.steps() + " steps.");
     }
 
-    private static void part2() {
-        final Floor[] part2 = new Floor[]{
-                floors[0].add(Set.of(dg, dm, eg, em)).orElseThrow(),
-                floors[1],
-                floors[2],
-                floors[3]};
+    public static State solve(Floor floor) {
+        final var queue = new PriorityQueue<State>();
+        final var history = new HashSet<Floor>();
 
-        final long start = System.currentTimeMillis();
-        System.out.println("the minimum number of steps required to bring all of the objects to the fourth floor is " +
-                Solver.solve(part2));
-        final long end = System.currentTimeMillis();
-        System.out.println("This search took " + duration(start, end));
-    }
+        queue.offer(new State(0, floor, null));
+        history.add(floor);
 
-    private static String duration(long start, long end) {
-        return (end - start) > 1000L ? (end - start) + " ms." : (end - start) / 1000 + "sec.";
+        var state = queue.poll();
+        while (state != null && !state.floor().done()) {
+            final var next = state.floor().next();
+            final var current = state;
+
+            next.stream()
+                    .filter(history::add)
+                    .forEach(f -> queue.offer(new State(current.steps() + 1, f, current)));
+            state = queue.poll();
+        }
+        return state;
     }
 }
