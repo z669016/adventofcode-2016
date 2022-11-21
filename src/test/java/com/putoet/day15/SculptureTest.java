@@ -15,6 +15,7 @@ class SculptureTest {
 
     @Test
     void isOpenOn() {
+        Disk.reset();
         final Sculpture sculpture = new Sculpture(List.of(
                 Disk.of(5,4),
                 Disk.of(2, 1)

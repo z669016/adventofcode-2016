@@ -156,3 +156,17 @@ features clearly seperated in different classes.
 For part 2, actually only the ```IndexedHashSupplier```  needs to change into a ```IndexStretchedHashSupplier```, end the rest
 (caching, checking values) can be the same. 
 
+## Day 15
+The trick with this one is to calculate the position of a ```Disk``` at a certain point in time, which is 
+```(id + start + t) % positions``` (id = sequence number of the disk, start = starting position, positions =
+number of positions on the disk). A ```Sculpture``` is a sequence of ```Disk```s, or a sequence of functions
+that calculates the position of a disk at a certain point in time. So yes, you can replace disks, with a sequence 
+of functions, which for a time ```t```, calculate the position of the disk.
+Now the solution for part 1 has become simple, ```Sculpture.isOpen()```, calculates the position for each disk, and
+sums the result. WEHen the result is 0, all disks are open. SO, you only need to iterate over time starting at 
+```t = 0``` to find the first moment all disks are open.
+For part 2, just add another disk and redo the math.
+
+
+
+
