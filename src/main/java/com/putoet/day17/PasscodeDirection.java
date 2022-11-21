@@ -21,7 +21,7 @@ public class PasscodeDirection {
         return directions;
     }
 
-    private static final boolean isOpen(char c) {
+    private static boolean isOpen(char c) {
         return "bcdef".indexOf(c) != -1;
     }
 }

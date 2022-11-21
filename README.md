@@ -171,6 +171,20 @@ For part 2, just add another disk and redo the math.
 Hmmm, chop the problem into pieces (grow the fill data block, and calculate checksum), and write the code. Very 
 straight forward.
 
+## Day 17
+Again a BSF challenge. The maze is a 4x4 grid, and directions depend on a passcode from a generated MD5 hash.
+```Passcode``` generates a 4 character hash for the current route. ```PasscodeDirection``` wraps ```Passcode```
+to generate a list op available directions (a list of which directions are 'open') for the current point of a route.
+```Point``` provides a position and navigation within a 4x4 grid (so, you cannot move off the grid). 
+```Finder.solve()``` implements an abstract/generic BSF search, and RouteFinder implements the generic BSF for this 
+problem (yes, it's a bit over-designed). ```Me``` is a helper class that is able to determine the current 
+location at the end of a route (string).
+
+For part 1, I just used RouteFinder to find a solution. For part 2, a small change was required to find all solutions 
+to the destination (simply don't stop after finding one, but stop when the queue of next options is empty). I 
+refactored RouteFinder to always find all routes (so I only need to run it once), then grouped the routes by their 
+length in a map, filter the shortest route (part 1), and the longest route (part 2) to solve day 17.
+
 
 
 

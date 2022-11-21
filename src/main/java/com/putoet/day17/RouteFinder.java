@@ -1,12 +1,9 @@
 package com.putoet.day17;
 
-import com.putoet.utils.BacktrackProblemSolver;
-
 import java.util.List;
-import java.util.stream.Collectors;
 
-public class RouteFinder extends BacktrackProblemSolver<String> {
-    public static class RouteProblemCase implements BacktrackState<String> {
+public class RouteFinder extends Finder<String> {
+    public static class RouteProblemCase implements State<String> {
         private final Me me;
         private final String route;
         private final PasscodeDirection passcode;
@@ -27,14 +24,14 @@ public class RouteFinder extends BacktrackProblemSolver<String> {
         }
 
         @Override
-        public List<? extends BacktrackState<String>> next() {
+        public List<? extends State<String>> next() {
             final List<Direction> directions = passcode.forRoute(route);
             final Point current = me.whereAmI(route);
 
             return directions.stream()
                     .filter(direction -> current.move(direction).isPresent())
-                    .map(direction -> new RouteProblemCase(me, route + direction.toString(), passcode))
-                    .collect(Collectors.toList());
+                    .map(direction -> new RouteProblemCase(me, route + direction, passcode))
+                    .toList();
         }
 
         @Override

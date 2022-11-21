@@ -12,13 +12,6 @@ class PointTest {
     }
 
     @Test
-    void equals() {
-        assertTrue(Point.of(1,1).equals(Point.of(1,1)));
-        assertFalse(Point.of(1,1).equals(Point.of(1,0)));
-        assertFalse(Point.of(1,1).equals(Point.of(0,1)));
-    }
-
-    @Test
     void right() {
         assertTrue(Point.of(2, 0).right().isPresent());
         assertFalse(Point.of(3, 0).right().isPresent());

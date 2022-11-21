@@ -3,13 +3,9 @@ package com.putoet.day17;
 import com.putoet.security.MD5;
 import lombok.SneakyThrows;
 
-public class Passcode {
-    private final String seed;
-
-    public Passcode(String seed) {
+public record Passcode(String seed) {
+    public Passcode {
         assert seed != null;
-
-        this.seed = seed;
     }
 
     @SneakyThrows
