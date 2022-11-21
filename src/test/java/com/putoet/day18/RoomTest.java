@@ -18,24 +18,26 @@ class RoomTest {
     void ofThree() {
         final Room room = Room.of("..^^.", 3);
         assertEquals(6, room.safeTileCount());
-        assertEquals( "..^^.\n" +
-                ".^^^^\n" +
-                "^^..^", room.toString());
+        assertEquals("""
+                ..^^.
+                .^^^^
+                ^^..^""", room.toString());
     }
 
     @Test
     void ofTen() {
         final Room room = Room.of(".^^.^.^^^^", 10);
         assertEquals(38, room.safeTileCount());
-        assertEquals( ".^^.^.^^^^\n" +
-                "^^^...^..^\n" +
-                "^.^^.^.^^.\n" +
-                "..^^...^^^\n" +
-                ".^^^^.^^.^\n" +
-                "^^..^.^^..\n" +
-                "^^^^..^^^.\n" +
-                "^..^^^^.^^\n" +
-                ".^^^..^.^^\n" +
-                "^^.^^^..^^", room.toString());
+        assertEquals("""
+                .^^.^.^^^^
+                ^^^...^..^
+                ^.^^.^.^^.
+                ..^^...^^^
+                .^^^^.^^.^
+                ^^..^.^^..
+                ^^^^..^^^.
+                ^..^^^^.^^
+                .^^^..^.^^
+                ^^.^^^..^^""", room.toString());
     }
 }

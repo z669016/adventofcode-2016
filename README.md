@@ -185,6 +185,13 @@ to the destination (simply don't stop after finding one, but stop when the queue
 refactored RouteFinder to always find all routes (so I only need to run it once), then grouped the routes by their 
 length in a map, filter the shortest route (part 1), and the longest route (part 2) to solve day 17.
 
+## Day 18
+Basic arithmetic, nothing really fancy. Created a ```Room``` class to hold the room related methods. The class gets 
+created using a factory method ```Room.from()``` which takes a layout line (first line of tiles), and generates a
+room according to the requested size (it build an array of arrays of ```Tile```s. Depending on the symbol during
+initialization, a tile is safe or it's a trap. The slightly sophisticated part is the ```TileRowSupplier``` which
+generates the subsequent rows from the current row (it's a ```Supplier<Tile[]>```).
 
-
+Part 1 and two are identical, although the room for part 2 is 10,000 times larger. On my laptop this wasn;t any
+issue at all end didn;t cause any problems.
 

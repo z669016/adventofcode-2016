@@ -4,7 +4,7 @@ public class Tile {
     public static Tile SAFE = new Tile('.');
     public static Tile TRAP = new Tile('^');
 
-    private boolean safe = true;
+    private final boolean safe;
 
     private Tile(int c) {
         assert c == '.' || c == '^';
@@ -27,7 +27,7 @@ public class Tile {
 
     public static Tile[] of(String rowOfTiles) {
         assert rowOfTiles != null;
-        assert rowOfTiles.matches("^[\\^\\.]+$");
+        assert rowOfTiles.matches("^[\\^.]+$");
 
         return rowOfTiles.chars()
                 .mapToObj(c -> c == '.' ? SAFE : TRAP)
