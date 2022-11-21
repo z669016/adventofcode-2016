@@ -2,23 +2,21 @@ package com.putoet.day16;
 
 public class DragonCurve {
     public static String checksumForDiskSpace(String initialState, int sizeToFill) {
+        assert initialState != null;
+        assert initialState.matches("[0-1]+");
+
         while (initialState.length() < sizeToFill)
             initialState = grow(initialState);
 
         return checksum(initialState, sizeToFill);
     }
 
-    public static String grow(String binary) {
-        assert binary != null;
-        assert binary.matches("[0-1]+");
-
-        final String a = binary;
-        final String b = transform(a);
-        return a + "0" + b;
+    static String grow(String binary) {
+        return binary + "0" + transform(binary);
     }
 
     private static String transform(String a) {
-        String b = new StringBuilder(a).reverse().toString();
+        final String b = new StringBuilder(a).reverse().toString();
         return b.chars()
                 .map(c -> c == '1' ? '0' : '1')
                 .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)

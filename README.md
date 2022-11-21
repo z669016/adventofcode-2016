@@ -167,6 +167,10 @@ sums the result. WEHen the result is 0, all disks are open. SO, you only need to
 ```t = 0``` to find the first moment all disks are open.
 For part 2, just add another disk and redo the math.
 
+## Day 16
+Hmmm, chop the problem into pieces (grow the fill data block, and calculate checksum), and write the code. Very 
+straight forward.
+
 
 
 

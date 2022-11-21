@@ -8,10 +8,6 @@ class DragonCurveTest {
 
     @Test
     void transform() {
-        assertThrows(AssertionError.class, () -> DragonCurve.grow(null));
-        assertThrows(AssertionError.class, () -> DragonCurve.grow(""));
-        assertThrows(AssertionError.class, () -> DragonCurve.grow("012"));
-
         assertEquals("100", DragonCurve.grow("1"));
         assertEquals("001", DragonCurve.grow("0"));
         assertEquals("11111000000", DragonCurve.grow("11111"));
