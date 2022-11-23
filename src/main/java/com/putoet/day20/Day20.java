@@ -5,6 +5,9 @@ import com.putoet.resources.ResourceLines;
 import java.util.List;
 
 public class Day20 {
+
+    public static final long MAX_VALUE_INCLUSIVE = 4_294_967_295L;
+
     public static void main(String[] args) {
         final RangeSet set = new RangeSet();
         ResourceLines.list("/day20.txt").stream()
@@ -19,7 +22,6 @@ public class Day20 {
             System.out.println("lowest available IP address is " + (lowest.upperBound() + 1));
         }
 
-        final long maxValue = 4_294_967_295L;
-        System.out.println("Number of available IP addresses is " + set.availableCount(maxValue));
+        System.out.println("Number of available IP addresses is " + set.availableCount(MAX_VALUE_INCLUSIVE));
     }
 }

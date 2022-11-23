@@ -188,12 +188,12 @@ length in a map, filter the shortest route (part 1), and the longest route (part
 ## Day 18
 Basic arithmetic, nothing really fancy. Created a ```Room``` class to hold the room related methods. The class gets 
 created using a factory method ```Room.from()``` which takes a layout line (first line of tiles), and generates a
-room according to the requested size (it build an array of arrays of ```Tile```s. Depending on the symbol during
-initialization, a tile is safe or it's a trap. The slightly sophisticated part is the ```TileRowSupplier``` which
+room according to the requested size (it build an array of arrays of ```Tile```s). Depending on the symbol during
+initialization, a tile is safe, or it's a trap. The slightly sophisticated part is the ```TileRowSupplier``` which
 generates the subsequent rows from the current row (it's a ```Supplier<Tile[]>```).
 
-Part 1 and two are identical, although the room for part 2 is 10,000 times larger. On my laptop this wasn;t any
-issue at all end didn;t cause any problems.
+Part 1 and two are identical, although the room for part 2 is 10,000 times larger. On my laptop this wasn't any
+issue at all end didn't cause any problems.
 
 ## Day 19
 The name of the puzzle refers to the [Josephus problem](https://www.youtube.com/watch?v=uCsD3ZGzMgE), and there 
@@ -212,3 +212,13 @@ circle moves clockwise 1 step forward (clockwise), so the first Elf on the left 
 
 A Java ```LinkedList``` holds references to the first and last element in the list, making additions and removals to
 either sides of the deque very fast.
+
+## Day 20
+Started with a ```Range``` record with a lower and upper bound (to represent ranges of IP addresses). The type
+can identify ```overlap()``` (or adjacent) with another range, and if so, can ```merge()``` two ranges into one new 
+range. The ```RangeSet```, loads the input data, checks for overlap with known ranges, and merges in case of overlap
+or adjacent ranges.
+
+For part 1, get the first range (of the ordered list of known ranges), and add 1 to the upper bound value. For part 2,
+the number of allowed addresses is MAX_VALUE_INCLUSIVE minus the number of blocked IP addresses if all known blocked 
+ranges.

@@ -1,12 +1,10 @@
 package com.putoet.day20;
 
-import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Range implements Comparable<Range> {
+public record Range(long lowerBound, long upperBound) implements Comparable<Range> {
     private static final Pattern PATTERN = Pattern.compile("([0-9]+)-([0-9]+)");
-    private final long lowerBound, upperBound;
 
     public static Range of(String line) {
         assert line != null;
@@ -26,14 +24,6 @@ public class Range implements Comparable<Range> {
         return new Range(lowerBound, upperBound);
     }
 
-    private Range(long lowerBound, long upperBound) {
-        this.lowerBound = lowerBound;
-        this.upperBound = upperBound;
-    }
-
-    public long lowerBound() { return lowerBound; }
-    public long upperBound() { return upperBound; }
-
     public boolean overlaps(Range other) {
         return this.lowerBound >= other.lowerBound && this.lowerBound <= other.upperBound
                 || other.lowerBound >= this.lowerBound && other.lowerBound <= this.upperBound
@@ -45,7 +35,7 @@ public class Range implements Comparable<Range> {
 
     public Range merge(Range other) {
         if (!overlaps(other))
-            throw new IllegalArgumentException(String.format("Ranges %s and %s don't overlap", toString(), other.toString()));
+            throw new IllegalArgumentException(String.format("Ranges %s and %s don't overlap", this, other));
 
         return new Range(Math.min(this.lowerBound, other.lowerBound), Math.max(this.upperBound, other.upperBound));
     }
@@ -53,20 +43,6 @@ public class Range implements Comparable<Range> {
     @Override
     public String toString() {
         return lowerBound + "-" + upperBound;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Range)) return false;
-        Range range = (Range) o;
-        return lowerBound == range.lowerBound &&
-                upperBound == range.upperBound;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(lowerBound, upperBound);
     }
 
     @Override

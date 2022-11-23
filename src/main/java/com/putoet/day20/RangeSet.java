@@ -1,7 +1,6 @@
 package com.putoet.day20;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class RangeSet {
     private final Set<Range> set = new HashSet<>();
@@ -21,7 +20,7 @@ public class RangeSet {
     }
 
     protected List<Range> overlaps(Range range) {
-        return set.stream().filter(r -> r.overlaps(range)).collect(Collectors.toList());
+        return set.stream().filter(r -> r.overlaps(range)).toList();
     }
 
     public int size() {
@@ -29,7 +28,7 @@ public class RangeSet {
     }
 
     public List<Range> toList() {
-        return set.stream().sorted().collect(Collectors.toList());
+        return set.stream().sorted().toList();
     }
 
     @Override
