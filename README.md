@@ -233,3 +233,9 @@ For part 2, I transformed the operations from ```Function<String,String>``` into
 next to the ```apply()``` also implements an ```unapply()``` to do the reverse operation. Then I added a 
 ```unscramble()``` to the ```PasswordScrambler```, which un-applies all operations in reversed order.
 
+## Day 22
+Part 1 is not too complicated, just create a list of ```Node```s, and for each node, count the other nodes that might
+make a pair (has enough free space). Sum all the counted pairs and you're done.
+Part two I tried to solve programmatically, but it ran too long. After looking at other solutions, it was clear that
+a visual approach worked best (print the grid and count the steps by hand).
+

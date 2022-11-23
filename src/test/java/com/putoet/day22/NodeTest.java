@@ -29,16 +29,6 @@ class NodeTest {
     }
 
     @Test
-    void size() {
-        assertEquals(SIZE, node.size());
-    }
-
-    @Test
-    void used() {
-        assertEquals(USED, node.used());
-    }
-
-    @Test
     void free() {
         assertEquals(SIZE - USED, node.free());
     }
@@ -46,28 +36,5 @@ class NodeTest {
     @Test
     void use() {
         assertEquals(1, node.use());
-    }
-
-    @Test
-    void move() {
-        assertThrows(IllegalArgumentException.class, () -> node.move(new Node(X+1, Y+1, 1000, 0)));
-        assertThrows(IllegalStateException.class, () -> node.move(new Node(X+1, Y, 1, 1)));
-
-        final Node to = new Node(X+1, Y, 1000, 0);
-        node.move(to);
-        assertEquals(USED, to.used());
-        assertEquals(0, node.used());
-    }
-
-    @Test
-    void isAdjacent() {
-        assertTrue(node.isAdjacent(new Node(X + 1, Y, 1, 0)));
-        assertTrue(node.isAdjacent(new Node(X - 1, Y, 1, 0)));
-        assertTrue(node.isAdjacent(new Node(X, Y + 1, 1, 0)));
-        assertTrue(node.isAdjacent(new Node(X, Y - 1, 1, 0)));
-
-        assertFalse(node.isAdjacent(new Node(X + 1, Y + 1, 1, 0)));
-        assertFalse(node.isAdjacent(new Node(X - 1, Y - 1, 1, 0)));
-        assertFalse(node.isAdjacent(node));
     }
 }

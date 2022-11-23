@@ -5,7 +5,6 @@ import java.util.Optional;
 import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 public class DfParser implements Function<String, Optional<Node>> {
     public static final String PREFIX = "/dev/grid/node";
@@ -41,6 +40,6 @@ public class DfParser implements Function<String, Optional<Node>> {
         return lines.stream()
                 .map(parser)
                 .flatMap(Optional::stream)
-                .collect(Collectors.toList());
+                .toList();
     }
 }
