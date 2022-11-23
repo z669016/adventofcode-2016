@@ -33,6 +33,10 @@ public enum Cell {
         };
     }
 
+    public boolean isGate() {
+        return this != OPEN && this != WALL;
+    }
+
     @Override
     public String toString() {
         return switch (this) {

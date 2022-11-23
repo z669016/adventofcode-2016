@@ -7,20 +7,18 @@ import org.paukov.combinatorics3.Generator;
 
 import java.util.*;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 import static com.putoet.search.GenericSearch.bfs;
 
 public class DuctLayout implements Maze<Cell> {
     private final int rows, columns;
-    private Cell[][] grid;
-    private Cell goal;
+    final private Cell[][] grid;
 
     public DuctLayout(List<String> maze) {
         assert maze != null;
         assert maze.size() > 0;
 
-        grid = maze.stream().sequential()
+        grid = maze.stream()
                 .map(line -> line.chars()
                         .mapToObj(Cell::of)
                         .toArray(Cell[]::new))
@@ -81,17 +79,16 @@ public class DuctLayout implements Maze<Cell> {
     public List<Cell> gates() {
         return Arrays.stream(grid)
                 .flatMap(Arrays::stream)
-                .filter(cell -> cell != Cell.OPEN && cell != Cell.WALL)
-                .distinct()
+                .filter(Cell::isGate)
                 .sorted()
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public List<List<Cell>> gateCombinations() {
         return Generator.combination(gates())
                 .simple(2)
                 .stream()
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public Map<String, Map<String,Integer>> distances(List<List<Cell>> combinations) {
@@ -124,8 +121,8 @@ public class DuctLayout implements Maze<Cell> {
         assert distances != null;
 
         final List<Cell[]> permutations = TSP.permutations(gates().toArray(Cell[]::new)).stream()
-                .filter(g ->g[0] == start)
-                .collect(Collectors.toList());
+                .filter(g -> g[0] == start)
+                .toList();
 
         return permutations.stream().mapToInt(path -> {
             int length = 0;

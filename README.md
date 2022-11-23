@@ -244,3 +244,12 @@ An update to the ```Assembunny``` computer, introduced on day 12. Added some new
 refactoring required, though I did move the implementation into a separate package to keep all stuff together.
 
 Of course running part 2 takes a bit longer than part 1, but acceptable, and no need for extreme optimizations.
+
+## Day 24
+Implemented ```DuctLayout``` which implements ```Maze<Cell>```, and it transforms the input (```List<String>``` into 
+a maze). For part 1, first create an overview of the shortest distance between all possible combinations of gates 
+stored in a ```Map<String, Map<String,Integer>>``` (using a generic BSF approach). Then determine the shortest path 
+using the distances between gates, by determining the permutation of gates with the shortest total distance.
+Part 2 is a Traveling Salesman Problem, which can be solved using a generic TSP class and the already available
+distances. 
+
