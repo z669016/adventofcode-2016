@@ -239,3 +239,8 @@ make a pair (has enough free space). Sum all the counted pairs and you're done.
 Part two I tried to solve programmatically, but it ran too long. After looking at other solutions, it was clear that
 a visual approach worked best (print the grid and count the steps by hand).
 
+## Day 23
+An update to the ```Assembunny``` computer, introduced on day 12. Added some new instructions and off we go. No major 
+refactoring required, though I did move the implementation into a separate package to keep all stuff together.
+
+Of course running part 2 takes a bit longer than part 1, but acceptable, and no need for extreme optimizations.
