@@ -5,12 +5,13 @@ import com.putoet.utils.assembunny.Assembunny;
 import com.putoet.utils.assembunny.Instruction;
 import com.putoet.utils.assembunny.Register;
 import com.putoet.utils.assembunny.RegisterSet;
+import lombok.SneakyThrows;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Day25 {
-    private static Register a, b, c, d;
+    private static Register a;
     private static Assembunny assembunny;
 
     public static void main(String[] args) {
@@ -27,8 +28,8 @@ public class Day25 {
 
     private static boolean validate(List<Integer> list) {
         int bit = 0;
-        for (int idx = 0; idx < list.size(); idx++) {
-            if (bit != list.get(idx))
+        for (Integer integer : list) {
+            if (bit != integer)
                 return false;
             bit = (bit == 0) ? 1 : 0;
         }
@@ -38,12 +39,13 @@ public class Day25 {
 
     private static void setup() {
         a = new Register("a");
-        b = new Register("b");
-        c = new Register("c");
-        d = new Register("d");
+        final var b = new Register("b");
+        final var c = new Register("c");
+        final var d = new Register("d");
         assembunny = new Assembunny(RegisterSet.of(a, b, c, d));
     }
 
+    @SneakyThrows
     public static List<Integer> runLimitedTime(int millis, int startValue) {
         setup();
         a.accept(startValue);
@@ -52,22 +54,12 @@ public class Day25 {
         final List<Integer> out = new ArrayList<>();
         assembunny.setConsumer(out::add);
 
-        final Runnable runner = new Runnable() {
-            @Override
-            public void run() {
-                assembunny.run(instructions);
-            }
-        };
+        final Runnable runner = () -> assembunny.run(instructions);
 
-        try {
-            final Thread thread = new Thread(runner);
-            final long start = System.currentTimeMillis();
-            thread.start();
-            Thread.sleep(millis);
-            thread.stop();
-
-            while (thread.isAlive()) {}
-        } catch (InterruptedException exc) {}
+        final Thread thread = new Thread(runner);
+        thread.start();
+        Thread.sleep(millis);
+        thread.stop();
 
         return out;
     }

@@ -253,3 +253,10 @@ using the distances between gates, by determining the permutation of gates with 
 Part 2 is a Traveling Salesman Problem, which can be solved using a generic TSP class and the already available
 distances. 
 
+## Day 25
+Implemented the ```out``` instruction on the ```Assembunny``` instruction set. Run the Assembunny program 
+a-synchronously for 50 milliseconds with different input on the a register, and find the first integer value for 
+register a that delivers a valid result. ```Thread.stop()``` might not be the right approach, but it works :-)
+
+
+
