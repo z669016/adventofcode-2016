@@ -195,3 +195,20 @@ generates the subsequent rows from the current row (it's a ```Supplier<Tile[]>``
 Part 1 and two are identical, although the room for part 2 is 10,000 times larger. On my laptop this wasn;t any
 issue at all end didn;t cause any problems.
 
+## Day 19
+The name of the puzzle refers to the [Josephus problem](https://www.youtube.com/watch?v=uCsD3ZGzMgE), and there 
+is a very simple algorithm to solve that. 
+
+On part two [aceshades](https://www.reddit.com/user/aceshades/) published a brilliant solution using two 
+```Deque<Integer>``` (though his solution is in Python), published on 
+[Reddit](https://www.reddit.com/r/adventofcode/comments/5j4lp1/2016_day_19_solutions/). He uses a deque left (counting
+up: 1, 2, 3, ...) and right (counting down: 1000, 999, 998, ...), making left and right a full ordered circle 
+counter-clockwise.
+
+While there are elements in one of the deque's, removes the last element from the longest queue (the ```right```
+one, if they're of equal size), and then rotates (moves first element from ```left``` as first element on the 
+```right```deque, and last element of the ```right``` as last element of the ```left``` deque). This means the entire
+circle moves clockwise 1 step forward (clockwise), so the first Elf on the left deque has the turn.
+
+A Java ```LinkedList``` holds references to the first and last element in the list, making additions and removals to
+either sides of the deque very fast.
