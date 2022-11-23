@@ -43,7 +43,7 @@ public class ReverseOperation implements ScrambleOperation {
             throw new IllegalArgumentException("Cannot reverse positions " + from + " through " + to + " for password '" + password + "'");
 
         return password.substring(0, from)
-                + new StringBuilder(password.substring(from, to + 1)).reverse().toString()
+                + new StringBuilder(password.substring(from, to + 1)).reverse()
                 + password.substring(to + 1);
     }
 }

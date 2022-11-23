@@ -1,9 +1,7 @@
 package com.putoet.day21;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class PasswordScrambler implements ScrambleOperation {
     private final List<ScrambleOperation> operations;
@@ -44,7 +42,7 @@ public class PasswordScrambler implements ScrambleOperation {
         return new PasswordScrambler(lines.stream()
                 .sequential()
                 .map(ScrambleOperation::of)
-                .collect(Collectors.toList())
+                .toList()
         );
     }
 }

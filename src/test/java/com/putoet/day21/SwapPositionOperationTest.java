@@ -7,8 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class SwapPositionOperationTest {
     @Test
     void create() {
-        final String nul = null;
-        assertThrows(AssertionError.class, () -> new SwapPositionOperation(nul));
+        assertThrows(AssertionError.class, () -> new SwapPositionOperation((String) null));
         assertThrows(AssertionError.class, () -> new SwapPositionOperation(new String[] {}));
         assertThrows(AssertionError.class, () -> new SwapPositionOperation(new String[] {"a", "b", "c", "d", "e", "f"}));
         assertThrows(AssertionError.class, () -> new SwapPositionOperation(new String[] {"swap", "b", "c", "d", "e", "f"}));

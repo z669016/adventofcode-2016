@@ -7,8 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class ReverseOperationTest {
     @Test
     void create() {
-        final String nul = null;
-        assertThrows(AssertionError.class, () -> new ReverseOperation(nul));
+        assertThrows(AssertionError.class, () -> new ReverseOperation((String) null));
         assertThrows(AssertionError.class, () -> new ReverseOperation(new String[] {}));
         assertThrows(AssertionError.class, () -> new ReverseOperation(new String[] {"a", "b", "c", "d", "e"}));
         assertThrows(AssertionError.class, () -> new ReverseOperation(new String[] {"reverse", "positions", "c", "d", "e"}));

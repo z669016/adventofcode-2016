@@ -7,8 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class SwapLetterOperationTest {
     @Test
     void create() {
-        final String nul = null;
-        assertThrows(AssertionError.class, () -> new SwapLetterOperation(nul));
+        assertThrows(AssertionError.class, () -> new SwapLetterOperation((String) null));
         assertThrows(AssertionError.class, () -> new SwapLetterOperation(new String[] {}));
         assertThrows(AssertionError.class, () -> new SwapLetterOperation(new String[] {"a", "b", "c", "d", "e", "f"}));
         assertThrows(AssertionError.class, () -> new SwapLetterOperation(new String[] {"swap", "b", "c", "d", "e", "f"}));

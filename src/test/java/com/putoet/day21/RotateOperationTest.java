@@ -7,8 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class RotateOperationTest {
     @Test
     void create() {
-        final String nul = null;
-        assertThrows(AssertionError.class, () -> new RotateOperation(nul));
+        assertThrows(AssertionError.class, () -> new RotateOperation((String) null));
         assertThrows(AssertionError.class, () -> new RotateOperation(new String[] {}));
         assertThrows(AssertionError.class, () -> new RotateOperation(new String[] {"a", "b", "c", "d"}));
         assertThrows(AssertionError.class, () -> new RotateOperation(new String[] {"rotate", "b", "c", "d"}));

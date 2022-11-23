@@ -2,7 +2,7 @@ package com.putoet.day21;
 
 public class RotateOperation implements ScrambleOperation {
     private final int steps;
-    private boolean left;
+    private final boolean left;
 
     public RotateOperation(String line) {
         this(line != null ? line.split(" ") : new String[] {});

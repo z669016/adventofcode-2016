@@ -7,8 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class MoveOperationTest {
     @Test
     void create() {
-        final String nul = null;
-        assertThrows(AssertionError.class, () -> new MoveOperation(nul));
+        assertThrows(AssertionError.class, () -> new MoveOperation((String) null));
         assertThrows(AssertionError.class, () -> new MoveOperation(new String[] {}));
         assertThrows(AssertionError.class, () -> new MoveOperation(new String[] {"a", "b", "c", "d", "e", "f"}));
         assertThrows(AssertionError.class, () -> new MoveOperation(new String[] {"move", "b", "c", "d", "e", "f"}));

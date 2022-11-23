@@ -11,9 +11,5 @@ public class Day21 {
         final String unscrambled = scrambler.unApply("fbgdceah");
         System.out.println("Unscrambled password is '" + unscrambled + "'");
         System.out.println("Rescrambled password is '" + scrambler.apply(unscrambled) + "'");
-
-
-        // edcgafbh
-        // cegahdbf
     }
 }

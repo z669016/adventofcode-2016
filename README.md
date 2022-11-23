@@ -222,3 +222,14 @@ or adjacent ranges.
 For part 1, get the first range (of the ordered list of known ranges), and add 1 to the upper bound value. For part 2,
 the number of allowed addresses is MAX_VALUE_INCLUSIVE minus the number of blocked IP addresses if all known blocked 
 ranges.
+
+## Day 21
+This puzzle isn't much different from the Assembunny computer puzzle, you need to create some computer, compiling
+the puzzle input into scramble operations, and run all operations against the input password. The puzzle input can 
+be compiled into ```List<Function<String,String>> ```instructions (take an input string, apply their function and 
+return the result). The ```PasswordScrambler``` holds the list of operations, and the ```scramble()``` method applies
+all of them (like a pipeline) one by one. That solves part 1.
+For part 2, I transformed the operations from ```Function<String,String>``` into a ```ScrambleOperations``` which, 
+next to the ```apply()``` also implements an ```unapply()``` to do the reverse operation. Then I added a 
+```unscramble()``` to the ```PasswordScrambler```, which un-applies all operations in reversed order.
+
