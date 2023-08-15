@@ -5,7 +5,7 @@ import com.putoet.utils.FixedNonNegativeGrid;
 
 import java.util.List;
 
-public class SquareKeyPad extends AbstractKeyPad<Integer> {
+class SquareKeyPad extends AbstractKeyPad<Integer> {
     private final FixedGrid<Integer> grid = new FixedNonNegativeGrid<>(List.of(
             List.of(7, 8, 9),
             List.of(4, 5, 6),
@@ -18,10 +18,18 @@ public class SquareKeyPad extends AbstractKeyPad<Integer> {
     @Override
     public void move(Direction direction) {
         switch (direction) {
-            case U: if (currentY < (grid.height() - 1)) currentY++; break;
-            case D: if (currentY > 0) currentY--; break;
-            case L: if (currentX > 0) currentX--; break;
-            case R: if (currentX < (grid.width() - 1)) currentX++; break;
+            case U -> {
+                if (currentY < (grid.height() - 1)) currentY++;
+            }
+            case D -> {
+                if (currentY > 0) currentY--;
+            }
+            case L -> {
+                if (currentX > 0) currentX--;
+            }
+            case R -> {
+                if (currentX < (grid.width() - 1)) currentX++;
+            }
         }
     }
 

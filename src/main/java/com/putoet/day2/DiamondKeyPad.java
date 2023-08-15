@@ -4,7 +4,7 @@ import com.putoet.utils.FixedNonNegativeGrid;
 
 import java.util.List;
 
-public class DiamondKeyPad extends AbstractKeyPad<String> {
+class DiamondKeyPad extends AbstractKeyPad<String> {
     private final FixedNonNegativeGrid<String> grid;
 
     public DiamondKeyPad() {
@@ -28,10 +28,18 @@ public class DiamondKeyPad extends AbstractKeyPad<String> {
         final int maxX = maxXforY(currentY);
 
         switch (direction) {
-            case U: if (currentY < maxY) currentY++; break;
-            case D: if (currentY > minY) currentY--; break;
-            case L: if (currentX > minX) currentX--; break;
-            case R: if (currentX < maxX) currentX++; break;
+            case U -> {
+                if (currentY < maxY) currentY++;
+            }
+            case D -> {
+                if (currentY > minY) currentY--;
+            }
+            case L -> {
+                if (currentX > minX) currentX--;
+            }
+            case R -> {
+                if (currentX < maxX) currentX++;
+            }
         }
     }
 

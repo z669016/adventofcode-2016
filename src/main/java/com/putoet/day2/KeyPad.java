@@ -2,7 +2,7 @@ package com.putoet.day2;
 
 import java.util.List;
 
-public interface KeyPad {
+interface KeyPad {
     enum Direction {
         U, D, L, R
     }
