@@ -5,7 +5,7 @@ import com.putoet.grid.Point;
 import java.util.*;
 
 public class Location {
-    enum Direction {
+    public enum Direction {
         NORTH, WEST, SOUTH, EAST;
 
         Direction turn(Turn turn) {
@@ -32,7 +32,7 @@ public class Location {
         }
     }
 
-    enum Turn {
+    public enum Turn {
         RIGHT, LEFT;
 
         static Turn from(char c) {
@@ -57,7 +57,7 @@ public class Location {
         return facing;
     }
 
-    public void move(Turn turn, int distance) {
+    public Location move(Turn turn, int distance) {
         facing = facing.turn(turn);
 
         while (distance-- > 0) {
@@ -68,6 +68,8 @@ public class Location {
             else
                 trace.add(current);
         }
+
+        return this;
     }
 
     public int distance() {

@@ -10,8 +10,8 @@ class LocationTest {
 
     @Test
     void facing() {
-        final Location location = new Location();
-        final Location.Direction direction = location.facing();
+        final var location = new Location();
+        final var direction = location.facing();
         assertEquals(Location.Direction.NORTH, direction);
 
         assertEquals(WEST, direction.turn(Location.Turn.RIGHT));
