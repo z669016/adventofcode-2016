@@ -4,11 +4,10 @@ import org.javatuples.Pair;
 import org.javatuples.Triplet;
 
 import java.util.*;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-public record EncryptedName(String name, int sectorId, String checksum) {
+record EncryptedName(String name, int sectorId, String checksum) {
     private static final Pattern PATTERN = Pattern.compile("([a-z\\-]+)-([0-9)]+)\\[([a-z]{5})]");
     private static final int CHECKSUM_SIZE = 5;
 
@@ -29,12 +28,12 @@ public record EncryptedName(String name, int sectorId, String checksum) {
         return name + "-" + sectorId + "[" + checksum + "]";
     }
 
-    public static Optional<EncryptedName> from(String encryptedName) {
+    public static Optional<EncryptedName> of(String encryptedName) {
         final var triplet = split(encryptedName);
         if (triplet.isPresent()) {
-            final String name = triplet.get().getValue0();
-            final Integer sectorId = triplet.get().getValue1();
-            final String checksum = triplet.get().getValue2();
+            final var name = triplet.get().getValue0();
+            final var sectorId = triplet.get().getValue1();
+            final var checksum = triplet.get().getValue2();
 
             if (validChecksum(name, checksum)) {
                 return Optional.of(new EncryptedName(name, sectorId, checksum));
@@ -51,9 +50,8 @@ public record EncryptedName(String name, int sectorId, String checksum) {
     }
 
     private static List<Pair<Long, String>> letterList(String name) {
-        final String letters = name.replaceAll("-", "");
-
-        return letters.chars()
+        return name.chars()
+                .filter(c -> c != '-')
                 .mapToObj(Character::toString)
                 .collect(Collectors.groupingBy(String::valueOf, Collectors.counting()))
                 .entrySet()
@@ -71,7 +69,7 @@ public record EncryptedName(String name, int sectorId, String checksum) {
     }
 
     static Optional<Triplet<String, Integer, String>> split(String encryptedName) {
-        final Matcher matcher = PATTERN.matcher(encryptedName);
+        final var matcher = PATTERN.matcher(encryptedName);
         if (matcher.matches()) {
             return Optional.of(Triplet.with(matcher.group(1), Integer.parseInt(matcher.group(2)), matcher.group(3)));
         }
