@@ -19,7 +19,7 @@ class SquareKeyPadTest {
     @Test
     void move() {
         final List<String> list = List.of("ULL", "RRDDD", "LURDL", "UUUUD");
-        for (String line : list) {
+        for (var line : list) {
             keyPad.move(line.chars()
                     .mapToObj(Character::toString)
                     .map(SquareKeyPad.Direction::valueOf)
