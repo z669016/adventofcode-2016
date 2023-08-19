@@ -4,11 +4,12 @@ import com.putoet.security.MD5;
 import lombok.SneakyThrows;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.OptionalInt;
 import java.util.function.Function;
 
-public class PasswordGenerator {
+class PasswordGenerator {
     private final Function<String, String> getCharacterFunction;
     private final Function<String, OptionalInt> getPositionFunction;
     private final List<String> password;
@@ -25,9 +26,9 @@ public class PasswordGenerator {
 
     public String generate(String prefix) {
         while (!isComplete(password)) {
-            final String hash = nextMatchingHash(prefix);
-            final String c = getCharacterFunction.apply(hash);
-            final OptionalInt pos = getPositionFunction.apply(hash);
+            final var hash = nextMatchingHash(prefix);
+            final var c = getCharacterFunction.apply(hash);
+            final var pos = getPositionFunction.apply(hash);
 
             // System.out.println(dump(hash, password, c, pos));
             if (pos.isPresent() && password.get(pos.getAsInt()).isEmpty())
@@ -42,22 +43,18 @@ public class PasswordGenerator {
     }
 
     private static List<String> emptyPassword(int size) {
-        final List<String> emptyPassword = new ArrayList<>();
-        for (int idx = 0; idx < size; idx++)
-            emptyPassword.add("");
-
-        return emptyPassword;
+        return new ArrayList<>(Collections.nCopies(size, ""));
     }
 
     private static boolean isComplete(List<String> password) {
-        return password.stream().noneMatch(s -> s.length() == 0);
+        return password.stream().noneMatch(String::isEmpty);
     }
 
     @SneakyThrows
     private String nextMatchingHash(String prefix) {
         index++;
-        String key = prefix + index;
-        String hash = MD5.hash(key);
+        var key = prefix + index;
+        var hash = MD5.hash(key);
         while (!hash.startsWith("00000")) {
             index++;
             key = prefix + index;
@@ -91,14 +88,14 @@ public class PasswordGenerator {
 
 
     public static String generatePassword(String doorId) {
-        final PasswordGenerator generator = new PasswordGenerator(8, GET_CHAR_6, PUT_NEXT_POS);
+        final var generator = new PasswordGenerator(8, GET_CHAR_6, PUT_NEXT_POS);
         return generator.generate(doorId);
     }
 
     public static String generatePassword(String doorId,
                                           Function<String, String> getCharacterFunction,
                                           Function<String, OptionalInt> getPositionFunction) {
-        final PasswordGenerator generator = new PasswordGenerator(8, getCharacterFunction, getPositionFunction);
+        final var generator = new PasswordGenerator(8, getCharacterFunction, getPositionFunction);
         return generator.generate(doorId);
     }
 }
