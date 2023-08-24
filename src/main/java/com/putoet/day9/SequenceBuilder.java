@@ -2,10 +2,9 @@ package com.putoet.day9;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
 import java.util.stream.Collectors;
 
-public class SequenceBuilder implements Sequence {
+class SequenceBuilder implements Sequence {
     private final List<Sequence> sequences;
 
     private SequenceBuilder(List<Sequence> sequences) {
@@ -23,18 +22,18 @@ public class SequenceBuilder implements Sequence {
     }
 
     public static Sequence from(String line) {
-        final int orgLength = line.length();
-        final ArrayList<Sequence> sequences = new ArrayList<>();
+        final var orgLength = line.length();
+        final var sequences = new ArrayList<Sequence>();
 
         while (line.contains("(")) {
-            final int start = line.indexOf("(");
+            final var start = line.indexOf("(");
 
             sequences.add(new FixedSequence(line.substring(0, start)));
 
             line = line.substring(start);
-            final Matcher matcher = Sequence.REPEAT_SEQUENCE.matcher(line);
+            final var matcher = Sequence.REPEAT_SEQUENCE.matcher(line);
             if (matcher.matches()) {
-                final int length = matcher.group(1).length() + Integer.parseInt(matcher.group(2));
+                final var length = matcher.group(1).length() + Integer.parseInt(matcher.group(2));
                 sequences.add(new RepeatSequence(line.substring(0, length)));
                 line = line.substring(length);
             } else {

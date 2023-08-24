@@ -1,29 +1,28 @@
 package com.putoet.day9;
 
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Decompressor {
+class Decompressor {
     private static final Pattern pattern = Pattern.compile("^(\\((\\d+)x(\\d+)\\)).*");
 
     public static String decompress(String compressedText) {
-        final int orgLength = compressedText.length();
-        final StringBuilder decompressed = new StringBuilder();
+        final var orgLength = compressedText.length();
+        final var decompressed = new StringBuilder();
 
         while (compressedText.contains("(")) {
-            final int start = compressedText.indexOf("(");
+            final var start = compressedText.indexOf("(");
 
             decompressed.append(compressedText, 0, start);
             compressedText = compressedText.substring(start);
 
-            final Matcher matcher = pattern.matcher(compressedText);
+            final var matcher = pattern.matcher(compressedText);
             if (matcher.matches()) {
-                final int length = Integer.parseInt(matcher.group(2));
-                int times = Integer.parseInt(matcher.group(3));
+                final var length = Integer.parseInt(matcher.group(2));
+                var times = Integer.parseInt(matcher.group(3));
 
                 compressedText = compressedText.substring(matcher.group(1).length());
 
-                final String copy = compressedText.substring(0, length);
+                final var copy = compressedText.substring(0, length);
                 while (times-- > 0)
                     decompressed.append(copy);
 

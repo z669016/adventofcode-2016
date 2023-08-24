@@ -10,7 +10,7 @@ class FixedSequenceTest {
 
     @Test
     void text() {
-        final Sequence seq = new FixedSequence(HELLO_WORLD);
+        final var seq = new FixedSequence(HELLO_WORLD);
         assertEquals(HELLO_WORLD, seq.text());
         assertEquals(HELLO_WORLD.length(), seq.length());
     }

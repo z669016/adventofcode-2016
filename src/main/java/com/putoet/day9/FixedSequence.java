@@ -1,6 +1,6 @@
 package com.putoet.day9;
 
-public class FixedSequence implements Sequence {
+class FixedSequence implements Sequence {
     private final String text;
 
     public FixedSequence(String text) {

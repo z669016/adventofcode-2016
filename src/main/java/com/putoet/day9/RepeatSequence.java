@@ -1,15 +1,13 @@
 package com.putoet.day9;
 
-import java.util.regex.Matcher;
-
-public class RepeatSequence implements Sequence {
+class RepeatSequence implements Sequence {
     private final int length;
     private final int times;
 
     private final Sequence sequence;
 
     public RepeatSequence(String text) {
-        Matcher matcher = Sequence.REPEAT_SEQUENCE.matcher(text);
+        final var matcher = Sequence.REPEAT_SEQUENCE.matcher(text);
         if (!matcher.matches())
             throw new IllegalArgumentException("Invalid repeat definition: '" + text + "'");
 
@@ -27,8 +25,8 @@ public class RepeatSequence implements Sequence {
 
     @Override
     public String text() {
-        final StringBuilder sb = new StringBuilder();
-        for (int idx = 0; idx < times; idx++)
+        final var sb = new StringBuilder();
+        for (var idx = 0; idx < times; idx++)
             sb.append(sequence.text());
 
         return sb.toString();
