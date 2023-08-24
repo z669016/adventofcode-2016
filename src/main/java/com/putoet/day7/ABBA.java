@@ -3,7 +3,7 @@ package com.putoet.day7;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ABBA {
+class ABBA {
     public static boolean containsABBA(String text) {
         assert text != null;
 
