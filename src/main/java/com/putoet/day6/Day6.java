@@ -1,15 +1,14 @@
 package com.putoet.day6;
 
 import com.putoet.resources.ResourceLines;
-
-import java.util.List;
+import com.putoet.utils.Timer;
 
 public class Day6 {
     public static void main(String[] args) {
-        final List<String> data = ResourceLines.list("/day6.txt");
+        final var data = ResourceLines.list("/day6.txt");
         assert data.size() == 572;
 
-        System.out.println("The corrected error message is: " + ErrorCorrect.correct(data, true));
-        System.out.println("The corrected (min) error message is: " + ErrorCorrect.correct(data, false));
+        Timer.run(() -> System.out.println("The corrected error message is: " + ErrorCorrect.correct(data, true)));
+        Timer.run(() -> System.out.println("The corrected (min) error message is: " + ErrorCorrect.correct(data, false)));
     }
 }

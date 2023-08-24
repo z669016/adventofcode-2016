@@ -10,7 +10,7 @@ class ErrorCorrectTest {
 
     @Test
     void correct() {
-        final List<String> repeatedMessages = List.of("eedadn",
+        final var repeatedMessages = List.of("eedadn",
                 "drvtee",
                 "eandsr",
                 "raavrd",
