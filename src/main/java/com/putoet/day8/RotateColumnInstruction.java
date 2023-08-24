@@ -4,7 +4,7 @@ import com.putoet.utils.FixedGrid;
 
 import java.util.function.Consumer;
 
-public class RotateColumnInstruction  implements Consumer<FixedGrid<Integer>> {
+class RotateColumnInstruction  implements Consumer<FixedGrid<Integer>> {
     private final int a;
     private final int b;
 
@@ -15,11 +15,11 @@ public class RotateColumnInstruction  implements Consumer<FixedGrid<Integer>> {
 
     @Override
     public void accept(FixedGrid<Integer> grid) {
-        int rotations = b % grid.height();
-        for (int pixels = 0; pixels < rotations; pixels++) {
-            final int temp = grid.get(a, grid.height() - 1);
+        var rotations = b % grid.height();
+        for (var pixels = 0; pixels < rotations; pixels++) {
+            final var temp = grid.get(a, grid.height() - 1);
 
-            for (int idy = grid.height() - 1; idy > 0; idy--)
+            for (var idy = grid.height() - 1; idy > 0; idy--)
                 grid.set(a, idy, grid.get(a, idy - 1));
 
             grid.set(a, 0, temp);

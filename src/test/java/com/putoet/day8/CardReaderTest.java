@@ -1,12 +1,9 @@
 package com.putoet.day8;
 
-import com.putoet.utils.FixedGrid;
 import com.putoet.utils.FixedNonNegativeGrid;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.function.Consumer;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -14,21 +11,21 @@ class CardReaderTest {
 
     @Test
     void get() {
-        final FixedGrid<Integer> grid = new FixedNonNegativeGrid<>(List.of(
+        final var grid = new FixedNonNegativeGrid<>(List.of(
                 List.of(0, 0, 0, 0, 0, 0, 0),
                 List.of(0, 0, 0, 0, 0, 0, 0),
                 List.of(0, 0, 0, 0, 0, 0, 0)
         ));
 
-        final List<String> instructions = List.of(
+        final var instructions = List.of(
                 "rect 3x2",
                 "rotate column x=1 by 1",
                 "rotate row y=0 by 4",
                 "rotate column x=1 by 1"
         );
 
-        final CardReader cardReader = new CardReader(instructions);
-        Optional<Consumer<FixedGrid<Integer>>> consumer = cardReader.get();
+        final var cardReader = new CardReader(instructions);
+        var consumer = cardReader.get();
         while (consumer.isPresent()) {
             consumer.get().accept(grid);
             consumer = cardReader.get();

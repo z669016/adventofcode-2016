@@ -1,6 +1,5 @@
 package com.putoet.day8;
 
-import com.putoet.utils.FixedGrid;
 import com.putoet.utils.FixedNonNegativeGrid;
 import org.junit.jupiter.api.Test;
 
@@ -12,7 +11,7 @@ class RectInstructionTest {
 
     @Test
     void accept() {
-        final FixedGrid<Integer> grid = new FixedNonNegativeGrid<>(List.of(
+        final var grid = new FixedNonNegativeGrid<>(List.of(
                 List.of(0, 0, 0, 0, 0, 0, 0),
                 List.of(0, 0, 0, 0, 0, 0, 0),
                 List.of(0, 0, 0, 0, 0, 0, 0)
