@@ -37,7 +37,7 @@ class ABBA {
 
     public static boolean containsBAB(List<String> abaList, String text) {
         assert abaList != null;
-        assert abaList.size() > 0;
+        assert !abaList.isEmpty();
         assert text != null;
 
         return abaList.stream().anyMatch(aba -> text.contains(bab(aba)));
