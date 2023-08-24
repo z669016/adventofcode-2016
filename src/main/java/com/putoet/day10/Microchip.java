@@ -1,6 +1,6 @@
 package com.putoet.day10;
 
-public record Microchip(int value) implements Comparable<Microchip> {
+record Microchip(int value) implements Comparable<Microchip> {
 
     @Override
     public String toString() {

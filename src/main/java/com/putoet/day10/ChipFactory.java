@@ -6,10 +6,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ChipFactory implements Runnable {
+class ChipFactory implements Runnable {
     private enum DestinationType {
         bot, output
     }
@@ -43,22 +42,22 @@ public class ChipFactory implements Runnable {
     @Override
     public void run() {
         while (iterator.hasNext()) {
-            final String instruction = iterator.next();
-            final Matcher valueMatcher = VALUE_PATTERN.matcher(instruction);
-            final Matcher givesMatcher = GIVES_PATTERN.matcher(instruction);
+            final var instruction = iterator.next();
+            final var valueMatcher = VALUE_PATTERN.matcher(instruction);
+            final var givesMatcher = GIVES_PATTERN.matcher(instruction);
 
             if (givesMatcher.matches()) {
-                final Bot bot = findOrCreateBot(asInt(givesMatcher.group(1)));
-                final DestinationType lowerType = DestinationType.valueOf(givesMatcher.group(2));
-                final Consumer<Microchip> lowerConsumer = findOrCreateConsumer(asInt(givesMatcher.group(3)), lowerType);
-                final DestinationType higherType = DestinationType.valueOf(givesMatcher.group(4));
-                final Consumer<Microchip> higherConsumer = findOrCreateConsumer(asInt(givesMatcher.group(5)), higherType);
+                final var bot = findOrCreateBot(asInt(givesMatcher.group(1)));
+                final var lowerType = DestinationType.valueOf(givesMatcher.group(2));
+                final var lowerConsumer = findOrCreateConsumer(asInt(givesMatcher.group(3)), lowerType);
+                final var higherType = DestinationType.valueOf(givesMatcher.group(4));
+                final var higherConsumer = findOrCreateConsumer(asInt(givesMatcher.group(5)), higherType);
 
                 bot.setHigherConsumer(higherConsumer);
                 bot.setLowerConsumer(lowerConsumer);
             } else if (valueMatcher.matches()){
-                final Microchip microchip = new Microchip(asInt(valueMatcher.group(1)));
-                final Bot bot = findOrCreateBot(asInt(valueMatcher.group(2)));
+                final var microchip = new Microchip(asInt(valueMatcher.group(1)));
+                final var bot = findOrCreateBot(asInt(valueMatcher.group(2)));
 
                 bot.accept(microchip);
             } else {

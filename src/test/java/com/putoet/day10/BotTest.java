@@ -23,12 +23,13 @@ class BotTest {
         assertEquals("bot-13", bot.name());
     }
 
+    @SuppressWarnings("unchecked")
     @Test
     void receive() {
         assertThrows(IllegalStateException.class, () -> bot.accept(new Microchip(3)));
 
-        final Consumer<Microchip> lower = (Consumer<Microchip>) mock(Consumer.class);
-        final Consumer<Microchip> higher =  (Consumer<Microchip>) mock(Consumer.class);
+        final var lower = (Consumer<Microchip>) mock(Consumer.class);
+        final var higher =  (Consumer<Microchip>) mock(Consumer.class);
 
         bot.setLowerConsumer(lower);
         bot.setHigherConsumer(higher);

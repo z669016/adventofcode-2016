@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class Output implements Consumer<Microchip> {
+class Output implements Consumer<Microchip> {
     public static final String PREFIX = "output-";
 
     private final int id;

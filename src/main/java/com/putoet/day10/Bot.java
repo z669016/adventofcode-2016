@@ -4,7 +4,7 @@ import java.util.*;
 import java.util.function.Consumer;
 
 @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
-public class Bot implements Consumer<Microchip> {
+class Bot implements Consumer<Microchip> {
     public static final String PREFIX = "bot-";
 
     private final int id;
@@ -57,8 +57,8 @@ public class Bot implements Consumer<Microchip> {
 
     private void distribute() {
         if ((microchips.size() == 2) && higherConsumer.isPresent() && lowerConsumer.isPresent()) {
-            final Optional<Microchip> higher = higher();
-            final Optional<Microchip> lower = lower();
+            final var higher = higher();
+            final var lower = lower();
 
             higher.ifPresent(higherConsumer.get());
             lower.ifPresent(lowerConsumer.get());

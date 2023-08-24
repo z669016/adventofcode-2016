@@ -11,7 +11,7 @@ class ChipFactoryTest {
 
     @Test
     void run() {
-        final List<String> instructions = List.of(
+        final var instructions = List.of(
                 "value 5 goes to bot 2",
                 "bot 2 gives low to bot 1 and high to bot 0",
                 "value 3 goes to bot 1",
@@ -19,13 +19,13 @@ class ChipFactoryTest {
                 "bot 0 gives low to output 2 and high to output 0",
                 "value 2 goes to bot 2"
         );
-        final ChipFactory factory = new ChipFactory(instructions);
+        final var factory = new ChipFactory(instructions);
 
         factory.run();
 
-        final List<Output> outputs = factory.output();
+        final var outputs = factory.output();
         assertEquals(3, outputs.size());
-        for (int idx = 0; idx < 3; idx++) {
+        for (var idx = 0; idx < 3; idx++) {
             final Output output = outputs.get(idx);
             if (output.name().equals("output-0"))
                 assertEquals(List.of(new Microchip(5)), output.list());
@@ -37,7 +37,7 @@ class ChipFactoryTest {
                 fail();
         }
 
-        final List<Bot> bots = factory.bots();
+        final var bots = factory.bots();
         assertEquals(3, bots.size());
         bots.forEach(bot -> assertEquals(2, bot.microchips().size()));
     }
