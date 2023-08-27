@@ -1,9 +1,8 @@
 package com.putoet.day14;
 
-import java.util.Optional;
 import java.util.function.Supplier;
 
-public class IndexedHashGenerator implements Supplier<IndexedHash> {
+class IndexedHashGenerator implements Supplier<IndexedHash> {
     private static final int RANGE = 1_000;
 
     private final IndexedHashPeekableSupplier supplier;
@@ -16,7 +15,7 @@ public class IndexedHashGenerator implements Supplier<IndexedHash> {
 
     @Override
     public IndexedHash get() {
-        IndexedHash ih = supplier.get();
+        var ih = supplier.get();
         while (!isValid(ih))
             ih = supplier.get();
 
@@ -24,12 +23,12 @@ public class IndexedHashGenerator implements Supplier<IndexedHash> {
     }
 
     private boolean isValid(IndexedHash ih) {
-        final Optional<String> triplet = SequenceValidator.triplet(ih.hash());
+        final var triplet = SequenceValidator.triplet(ih.hash());
         if (triplet.isEmpty())
             return false;
 
-        for (int idx = 0; idx < RANGE; idx++) {
-            final IndexedHash peek = supplier.peek(idx);
+        for (var idx = 0; idx < RANGE; idx++) {
+            final var peek = supplier.peek(idx);
             if (SequenceValidator.fivelet(triplet.get(), peek.hash()))
                 return true;
         }

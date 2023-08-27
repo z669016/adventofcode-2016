@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
-public class IndexedHashPeekableSupplier implements Supplier<IndexedHash>, Peekable<IndexedHash> {
+class IndexedHashPeekableSupplier implements Supplier<IndexedHash>, Peekable<IndexedHash> {
     private final Supplier<IndexedHash> supplier;
     private final List<IndexedHash> cache = new ArrayList<>();
 
@@ -16,7 +16,7 @@ public class IndexedHashPeekableSupplier implements Supplier<IndexedHash>, Peeka
 
     @Override
     public IndexedHash get() {
-        return cache.size() > 0 ? cache.remove(0) : supplier.get();
+        return !cache.isEmpty() ? cache.remove(0) : supplier.get();
     }
 
     @Override

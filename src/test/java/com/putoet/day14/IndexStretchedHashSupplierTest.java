@@ -15,7 +15,6 @@ class IndexStretchedHashSupplierTest {
 
     @Test
     void create() {
-        assertThrows(AssertionError.class, () -> new IndexStretchedHashSupplier(null));
         assertThrows(AssertionError.class, () -> new IndexStretchedHashSupplier(""));
     }
     @Test

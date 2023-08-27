@@ -5,7 +5,7 @@ import lombok.SneakyThrows;
 
 import java.util.function.Supplier;
 
-public class IndexStretchedHashSupplier implements Supplier<IndexedHash> {
+class IndexStretchedHashSupplier implements Supplier<IndexedHash> {
     private static final int STRETCH = 2016;
 
     private final String salt;
@@ -14,7 +14,7 @@ public class IndexStretchedHashSupplier implements Supplier<IndexedHash> {
 
     public IndexStretchedHashSupplier(String salt) {
         assert salt != null;
-        assert salt.length() > 0;
+        assert !salt.isEmpty();
 
         this.salt = salt;
     }
@@ -22,10 +22,10 @@ public class IndexStretchedHashSupplier implements Supplier<IndexedHash> {
     @SneakyThrows
     @Override
     public IndexedHash get() {
-        final String code = salt + index;
-        String hash = MD5.hash(code).toLowerCase();
+        final var code = salt + index;
+        var hash = MD5.hash(code).toLowerCase();
 
-        for (int idx = 0; idx < STRETCH; idx++)
+        for (var idx = 0; idx < STRETCH; idx++)
             hash = MD5.hash(hash).toLowerCase();
 
         return new IndexedHash(index++, hash);

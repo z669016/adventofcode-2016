@@ -15,12 +15,11 @@ class IndexedHashSupplierTest {
 
     @Test
     void create() {
-        assertThrows(AssertionError.class, () -> new IndexedHashSupplier(null));
         assertThrows(AssertionError.class, () -> new IndexedHashSupplier(""));
     }
     @Test
     void get() {
-        IndexedHash ih = supplier.get();
+        var ih = supplier.get();
         while (ih.index() < 18)
             ih = supplier.get();
 

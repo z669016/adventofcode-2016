@@ -1,5 +1,5 @@
 package com.putoet.day14;
 
-public interface Peekable<T> {
+interface Peekable<T> {
     T peek(int offset);
 }

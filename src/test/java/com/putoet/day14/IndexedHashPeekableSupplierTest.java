@@ -3,8 +3,6 @@ package com.putoet.day14;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.Optional;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -27,8 +25,8 @@ class IndexedHashPeekableSupplierTest {
 
     @Test
     void peek() {
-        final IndexedHashSupplier spy = spy(supplier);
-        final IndexedHashPeekableSupplier generator = new IndexedHashPeekableSupplier(spy);
+        final var spy = spy(supplier);
+        final var generator = new IndexedHashPeekableSupplier(spy);
 
         assertEquals(0, generator.peek(0).index());
         assertEquals(10, generator.peek(10).index());
@@ -43,7 +41,7 @@ class IndexedHashPeekableSupplierTest {
 
     @Test
     void check() {
-        final Optional<String> triplet = SequenceValidator.triplet(generator.peek(39).hash());
+        final var triplet = SequenceValidator.triplet(generator.peek(39).hash());
         assertTrue(triplet.isPresent());
         assertEquals("e", triplet.get());
         assertTrue(SequenceValidator.fivelet(triplet.get(), generator.peek(816).hash()));
