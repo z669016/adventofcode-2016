@@ -1,23 +1,11 @@
 package com.putoet.day18;
 
-public class Tile {
+record Tile(boolean safe) {
     public static Tile SAFE = new Tile('.');
     public static Tile TRAP = new Tile('^');
 
-    private final boolean safe;
-
     private Tile(int c) {
-        assert c == '.' || c == '^';
-
-        this.safe = c == '.';
-    }
-
-    public boolean isSafe() {
-        return safe;
-    }
-
-    public boolean isTrap() {
-        return !safe;
+        this(c == '.');
     }
 
     @Override

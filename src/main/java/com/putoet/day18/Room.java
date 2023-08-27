@@ -5,7 +5,7 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class Room {
+class Room {
     private final Tile[][] tiles;
 
     private Room(Tile[][] tiles) {
@@ -17,7 +17,7 @@ public class Room {
     public static Room of(String rowOfTiles, int numberOfRows) {
         assert numberOfRows > 0;
 
-        final TileRowSupplier supplier = new TileRowSupplier(Tile.of(rowOfTiles));
+        final var supplier = new TileRowSupplier(Tile.of(rowOfTiles));
         return new Room(IntStream.range(0, numberOfRows)
                 .mapToObj(idx -> supplier.get())
                 .toArray(Tile[][]::new)
@@ -27,7 +27,7 @@ public class Room {
     public long safeTileCount() {
         return Arrays.stream(tiles)
                 .flatMap(Arrays::stream)
-                .filter(Tile::isSafe)
+                .filter(Tile::safe)
                 .count();
     }
 
@@ -51,15 +51,15 @@ public class Room {
 
         @Override
         public Tile[] get() {
-            final Tile[] result = nextRow;
+            final var result = nextRow;
             nextRow = next();
             return result;
         }
 
         private Tile[] next() {
-            final Tile[] nextRowOfTiles = new Tile[nextRow.length];
+            final var nextRowOfTiles = new Tile[nextRow.length];
 
-            for (int idx = 0; idx < nextRow.length; idx++) {
+            for (var idx = 0; idx < nextRow.length; idx++) {
                 nextRowOfTiles[idx] = next(idx == 0 ? null : nextRow[idx-1]
                         , nextRow[idx]
                         , idx == nextRow.length - 1 ? null : nextRow[idx + 1]
@@ -73,16 +73,16 @@ public class Room {
             left = (left == null ? Tile.SAFE : left);
             right = (right == null ? Tile.SAFE : right);
 
-            if (left.isTrap() && center.isTrap() && right.isSafe())
+            if (!left.safe() && !center.safe() && right.safe())
                 return Tile.TRAP;
 
-            if (left.isTrap() && center.isSafe() && right.isSafe())
+            if (!left.safe() && center.safe() && right.safe())
                 return Tile.TRAP;
 
-            if (left.isSafe() && center.isTrap() && right.isTrap())
+            if (left.safe() && !center.safe() && !right.safe())
                 return Tile.TRAP;
 
-            if (left.isSafe() && center.isSafe() && right.isTrap())
+            if (left.safe() && center.safe() && !right.safe())
                 return Tile.TRAP;
 
             return Tile.SAFE;
