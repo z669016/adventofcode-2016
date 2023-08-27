@@ -2,7 +2,7 @@ package com.putoet.day17;
 
 import java.util.*;
 
-public class Finder<T> {
+class Finder<T> {
     public interface State<T> {
         boolean isFinished();
         List<? extends State<T>> next();
@@ -10,8 +10,8 @@ public class Finder<T> {
     }
 
     public List<T> solve(final State<T> initialState) {
-        final Queue<State<T>> queue = new LinkedList<>();
-        final List<T> solutions = new ArrayList<>();
+        final var queue = new LinkedList<State<T>>();
+        final var solutions = new ArrayList<T>();
 
         queue.offer(initialState);
         while (!queue.isEmpty()) {

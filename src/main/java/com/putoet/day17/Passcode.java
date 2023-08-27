@@ -3,7 +3,7 @@ package com.putoet.day17;
 import com.putoet.security.MD5;
 import lombok.SneakyThrows;
 
-public record Passcode(String seed) {
+record Passcode(String seed) {
     public Passcode {
         assert seed != null;
     }

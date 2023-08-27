@@ -1,30 +1,32 @@
 package com.putoet.day17;
 
-import java.util.*;
+import com.putoet.utils.Timer;
+
 import java.util.stream.Collectors;
 
 public class Day17 {
     public static void main(String[] args) {
-        final RouteFinder finder = new RouteFinder();
-        final List<String> routes = finder.solve(
+        final var finder = new RouteFinder();
+
+        final var routes = Timer.run(() -> finder.solve(
                 new RouteFinder.RouteProblemCase(
                         new Me(),
                         "",
                         new PasscodeDirection(new Passcode("vkjiggvb")::forRoute)
-                ));
+                ))
+        );
 
-        final Map<Integer, List<String>> groupedRoutes =
-                routes.stream().collect(Collectors.groupingBy(String::length));
-
-        final int minLength = groupedRoutes.keySet().stream()
+        final var groupedRoutes = routes.stream().collect(Collectors.groupingBy(String::length));
+        final var minLength = groupedRoutes.keySet().stream()
                 .mapToInt(Integer::intValue)
                 .min()
                 .orElseThrow();
 
         System.out.println("Minimal length is " + minLength);
         System.out.println("Routes are: " + groupedRoutes.get(minLength));
+        System.out.println();
 
-        final int maxLength = groupedRoutes.keySet().stream()
+        final var maxLength = groupedRoutes.keySet().stream()
                 .mapToInt(Integer::intValue)
                 .max()
                 .orElseThrow();

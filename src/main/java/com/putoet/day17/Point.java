@@ -2,7 +2,7 @@ package com.putoet.day17;
 
 import java.util.Optional;
 
-public record Point(int x, int y) {
+record Point(int x, int y) {
     public Point {
         assert x >= 0 && x <= 3;
         assert y >= 0 && y <= 3;

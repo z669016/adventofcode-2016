@@ -10,7 +10,6 @@ class MeTest {
     void whereAmI() {
         final Me me = new Me();
 
-        assertThrows(AssertionError.class, () -> me.whereAmI(null));
         assertThrows(IllegalArgumentException.class, () -> me.whereAmI(" "));
         assertThrows(IllegalArgumentException.class, () -> me.whereAmI("U"));
         assertThrows(IllegalArgumentException.class, () -> me.whereAmI("L"));

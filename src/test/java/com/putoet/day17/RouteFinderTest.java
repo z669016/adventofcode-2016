@@ -4,6 +4,8 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+
 class RouteFinderTest {
     @Test
     void solve() {
@@ -15,7 +17,7 @@ class RouteFinderTest {
                         "",
                         new PasscodeDirection(new Passcode("ihgpwlah")::forRoute)
                 ));
-//        System.out.println(routes);
+        assertFalse(routes.isEmpty());
     }
 
 }

@@ -2,8 +2,8 @@ package com.putoet.day17;
 
 import java.util.List;
 
-public class RouteFinder extends Finder<String> {
-    public static class RouteProblemCase implements State<String> {
+class RouteFinder extends Finder<String> {
+    static class RouteProblemCase implements State<String> {
         private final Me me;
         private final String route;
         private final PasscodeDirection passcode;
@@ -25,8 +25,8 @@ public class RouteFinder extends Finder<String> {
 
         @Override
         public List<? extends State<String>> next() {
-            final List<Direction> directions = passcode.forRoute(route);
-            final Point current = me.whereAmI(route);
+            final var directions = passcode.forRoute(route);
+            final var current = me.whereAmI(route);
 
             return directions.stream()
                     .filter(direction -> current.move(direction).isPresent())

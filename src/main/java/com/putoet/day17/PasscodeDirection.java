@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
-public class PasscodeDirection {
+class PasscodeDirection {
     private final Function<String,String> passcode;
 
     public PasscodeDirection(Function<String,String> passcode) {
@@ -12,8 +12,8 @@ public class PasscodeDirection {
     }
 
     public List<Direction> forRoute(String route) {
-        final String code = passcode.apply(route);
-        final List<Direction> directions = new ArrayList<>();
+        final var code = passcode.apply(route);
+        final var directions = new ArrayList<Direction>();
         if (isOpen(code.charAt(0))) directions.add(Direction.UP);
         if (isOpen(code.charAt(1))) directions.add(Direction.DOWN);
         if (isOpen(code.charAt(2))) directions.add(Direction.LEFT);
