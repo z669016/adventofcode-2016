@@ -2,8 +2,8 @@ package com.putoet.day11;
 
 import java.util.Objects;
 
-public record State(int steps, Floor floor, State parent) implements Comparable<State> {
-    public State {
+record BuildingState(int steps, Floor floor, BuildingState parent) implements Comparable<BuildingState> {
+    public BuildingState {
         assert steps >= 0;
         assert floor != null;
     }
@@ -14,7 +14,7 @@ public record State(int steps, Floor floor, State parent) implements Comparable<
     }
 
     @Override
-    public int compareTo(State o) {
+    public int compareTo(BuildingState o) {
         return Integer.compare(steps, o.steps);
     }
 }
