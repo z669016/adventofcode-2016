@@ -2,7 +2,7 @@ package com.putoet.day15;
 
 import java.util.function.Function;
 
-public record Disk(int id, int positions, int start) {
+record Disk(int id, int positions, int start) {
     private static int counter = 0;
 
     Function<Integer,Integer> position() {

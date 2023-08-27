@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
-public class Sculpture {
+class Sculpture {
     private final List<Disk> disks;
     private List<Function<Integer,Integer>> positions;
 
     public Sculpture(List<Disk> disks) {
         assert disks != null;
-        assert disks.size() > 0;
+        assert !disks.isEmpty();
 
         this.disks = new ArrayList<>(disks);
         this.positions = asPositions(disks);

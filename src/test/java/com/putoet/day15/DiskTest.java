@@ -10,8 +10,8 @@ class DiskTest {
     void position() {
         Disk.reset();
 
-        final Disk one = Disk.of(5,4);
-        final Disk two = Disk.of(2, 1);
+        final var one = Disk.of(5,4);
+        final var two = Disk.of(2, 1);
 
         assertEquals(0, one.position().apply(0));
         assertEquals(1, one.position().apply(1));
