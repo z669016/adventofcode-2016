@@ -7,12 +7,13 @@ import java.util.stream.Collectors;
 public class Day17 {
     public static void main(String[] args) {
         final var finder = new RouteFinder();
+        final var passcode = new Passcode("vkjiggvb");
 
         final var routes = Timer.run(() -> finder.solve(
                 new RouteFinder.RouteProblemCase(
                         new Me(),
                         "",
-                        new PasscodeDirection(new Passcode("vkjiggvb")::forRoute)
+                        new PasscodeDirection(passcode::forRoute)
                 ))
         );
 
