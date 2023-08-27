@@ -9,11 +9,10 @@ class FinderTest {
 
     @Test
     void find() {
-        final Maze maze = new Maze(10);
-        final Finder finder = new Finder(maze);
-
-        var result = finder.locate(Point.of(1, 1), Point.of(7, 4));
+        final var maze = new Maze(10);
+        final var finder = new Finder(maze);
+        final var result = finder.locate(Point.of(1, 1), Point.of(7, 4));
         assertTrue(result.isPresent());
-        assertEquals(11, result.orElseThrow().getValue0());
+        assertEquals(11, result.orElseThrow().steps());
     }
 }
