@@ -12,8 +12,8 @@ class DecTest {
 
     @Test
     void execute() {
-        final Register register = new Register("ax");
-        final Instruction dec = new Dec(new InOperant(register));
+        final var register = new Register("ax");
+        final var dec = new Dec(new InOperant(register));
 
         assertEquals("dec ax", dec.toString());
 
@@ -26,9 +26,9 @@ class DecTest {
 
     @Test
     void toggle() {
-        final Register register = new Register("ax");
-        final Instruction dec = new Dec(new InOperant(register));
-        final Instruction toggle = dec.toggle();
+        final var register = new Register("ax");
+        final var dec = new Dec(new InOperant(register));
+        final var toggle = dec.toggle();
 
         assertTrue(toggle instanceof Inc);
     }

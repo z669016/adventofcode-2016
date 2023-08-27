@@ -7,7 +7,7 @@ public class RegisterSet {
     private final Map<String, Register> map = new HashMap<>();
 
     public static RegisterSet of(Register ... registers) {
-        final RegisterSet set = new RegisterSet();
+        final var set = new RegisterSet();
         Arrays.stream(registers)
                 .forEach(register -> set.map.put(register.name(), register));
         return set;

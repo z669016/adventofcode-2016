@@ -11,21 +11,21 @@ class OutTest {
 
     @Test
     void toggle() {
-        final Register a = mock(Register.class);
-        final ExecutionContext context = mock(ExecutionContext.class);
+        final var a = mock(Register.class);
+        final var context = mock(ExecutionContext.class);
 
-        final Instruction out = new Out(new InOperant(a), () -> context);
-        final Instruction toggle = out.toggle();
+        final var out = new Out(new InOperant(a), () -> context);
+        final var toggle = out.toggle();
 
         assertTrue(toggle instanceof Inc);
     }
 
     @Test
     void execute() {
-        final Register a = mock(Register.class);
+        final var a = mock(Register.class);
 
         when(a.get()).thenReturn(2);
-        final Instruction out = new Out(new InOperant(a), () -> context);
+        final var out = new Out(new InOperant(a), () -> context);
 
         context = mock(ExecutionContext.class);
         when(context.consumer()).thenReturn(i -> assertEquals(2, i));

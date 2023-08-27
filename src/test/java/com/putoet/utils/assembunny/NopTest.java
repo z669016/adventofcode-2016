@@ -8,15 +8,15 @@ class NopTest {
 
     @Test
     void execute() {
-        final Instruction nop = new Nop();
+        final var nop = new Nop();
         assertEquals(1, nop.execute());
     }
 
     @Test
     void toggle() {
-        final Instruction nop = new Nop();
-        final Instruction toggle =nop.toggle();
+        final var nop = new Nop();
+        final var toggle = nop.toggle();
 
-        assertEquals(nop,toggle);
+        assertEquals(nop, toggle);
     }
 }

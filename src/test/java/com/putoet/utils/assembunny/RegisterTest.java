@@ -14,14 +14,14 @@ class RegisterTest {
 
     @Test
     void name() {
-        final String name = "ax";
+        final var name = "ax";
         assertEquals(name, new Register(name).name());
     }
 
     @Test
     void get() {
-        final int value = 11;
-        final Register register = new Register("ax");
+        final var value = 11;
+        final var register = new Register("ax");
         register.accept(value);
         assertEquals(value, register.get());
     }

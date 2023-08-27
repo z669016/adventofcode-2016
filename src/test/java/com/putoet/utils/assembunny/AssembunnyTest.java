@@ -28,7 +28,7 @@ class AssembunnyTest {
 
     @Test
     void run() {
-        final Instruction nop = mock(Nop.class);
+        final var nop = mock(Nop.class);
         when(nop.execute()).thenReturn(1);
 
         final Instruction[] instructions = new Instruction[]{nop, nop, nop};
@@ -41,16 +41,16 @@ class AssembunnyTest {
 
     @Test
     void compile() {
-        final List<String> program = List.of(
+        final var program = List.of(
                 "cpy 3 a",
                 "cpy a b",
                 "inc b",
                 "dec a",
                 "jnz a 4"
         );
-        final Instruction[] instructions = assembunny.compile(program);
+        final var instructions = assembunny.compile(program);
 
-        for (int idx = 0; idx < program.size(); idx++)
+        for (var idx = 0; idx < program.size(); idx++)
             assertEquals(program.get(idx), instructions[idx].toString());
     }
 
@@ -74,7 +74,7 @@ class AssembunnyTest {
 
     @Test
     void program() {
-        final List<String> program = List.of(
+        final var program = List.of(
                 "cpy 41 a",
                 "inc a",
                 "inc a",
@@ -82,14 +82,14 @@ class AssembunnyTest {
                 "jnz a 2",
                 "dec a"
         );
-        final Instruction[] instructions = assembunny.compile(program);
+        final var instructions = assembunny.compile(program);
         assembunny.run(instructions);
         assertEquals(42, a.get());
     }
 
     @Test
     void toggle() {
-        final List<String> program = List.of(
+        final var program = List.of(
                 "cpy 2 a",
                 "tgl a",
                 "tgl a",
@@ -98,7 +98,7 @@ class AssembunnyTest {
                 "dec a",
                 "dec a"
         );
-        final Instruction[] instructions = assembunny.compile(program);
+        final var instructions = assembunny.compile(program);
         assembunny.run(instructions);
         assertEquals(3, a.get());
     }

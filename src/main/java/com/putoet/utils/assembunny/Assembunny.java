@@ -34,7 +34,7 @@ public class Assembunny {
     }
 
     public void run(Instruction[] program) {
-        final Register ip = new Register("ip");
+        final var ip = new Register("ip");
         context = new ExecutionContext(ip, regs, program, consumer);
 
         while (ip.get() < program.length) {
@@ -48,18 +48,18 @@ public class Assembunny {
     }
 
     public Instruction[] compile(List<String> program) {
-        final List<Instruction> instructions = new ArrayList<>();
-        for (int idx = 0; idx < program.size(); idx++)
+        final var instructions = new ArrayList<Instruction>();
+        for (var idx = 0; idx < program.size(); idx++)
             instructions.add(compile(idx, program.get(idx)));
 
         return instructions.toArray(new Instruction[0]);
     }
 
     public Instruction compile(int line, String programLine) {
-        if (programLine == null || programLine.length() == 0)
+        if (programLine == null || programLine.isEmpty())
             return new Nop();
 
-        final String[] tokens = programLine.split(" ");
+        final var tokens = programLine.split(" ");
         return switch(tokens[0]) {
             case "cpy" -> cpyInstruction(line, tokens);
             case "inc" -> incInstruction(line, tokens);
@@ -117,10 +117,7 @@ public class Assembunny {
     }
 
     private Register checkRegister(int line, String name) {
-        final Optional<Register> reg = regs.get(name);
-        if (reg.isEmpty())
-            throw new IllegalArgumentException(compilerErrorAt(line) + "Register '" + name + "' not defined");
-
-        return reg.get();
+        final var reg = regs.get(name);
+        return reg.orElseThrow(() -> new IllegalArgumentException(compilerErrorAt(line) + "Register '" + name + "' not defined"));
     }
 }

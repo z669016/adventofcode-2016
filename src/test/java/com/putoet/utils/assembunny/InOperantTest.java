@@ -8,20 +8,18 @@ class InOperantTest {
 
     @Test
     void getConstant() {
-        final int value = 3;
-
-        final InOperant in = new InOperant(value);
+        final var value = 3;
+        final var in = new InOperant(value);
         assertEquals(value, in.get());
     }
 
     @Test
     void getRegister() {
-        final int value = 3;
-
-        final Register register = new Register("a");
+        final var value = 3;
+        final var register = new Register("a");
         register.accept(value);
 
-        final InOperant in = new InOperant(register);
+        final var in = new InOperant(register);
         assertEquals(value, in.get());
     }
 

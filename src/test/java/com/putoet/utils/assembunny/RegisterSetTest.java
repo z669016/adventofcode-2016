@@ -27,7 +27,7 @@ class RegisterSetTest {
     @Test
     void get() {
         List.of(AX, BX, CX).forEach(id -> {
-            final Optional<Register> reg = set.get(id);
+            final var reg = set.get(id);
             assertTrue(reg.isPresent());
             assertEquals(id, reg.get().name());
         });

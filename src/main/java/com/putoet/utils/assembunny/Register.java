@@ -17,7 +17,7 @@ public class Register implements Consumer<Integer>, Supplier<Integer> {
     }
 
     private static boolean isValidName(String name) {
-        return name != null && name.length() > 0 && name.chars().allMatch(Character::isLetter);
+        return name != null && !name.isEmpty() && name.chars().allMatch(Character::isLetter);
     }
 
     @Override

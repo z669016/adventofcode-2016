@@ -13,9 +13,9 @@ class JnzTest {
 
     @Test
     void execute() {
-        final Register register = new Register("a");
-        final int offset = 13;
-        final Instruction jnz = new Jnz(new InOperant(register), new InOperant(offset));
+        final var register = new Register("a");
+        final var offset = 13;
+        final var jnz = new Jnz(new InOperant(register), new InOperant(offset));
 
         assertEquals("jnz a 13", jnz.toString());
 
@@ -26,10 +26,10 @@ class JnzTest {
 
     @Test
     void toggle() {
-        final Register register = new Register("a");
-        final int offset = 13;
-        final Instruction jnz = new Jnz(new InOperant(register), new InOperant(offset));
-        final Instruction toggle = jnz.toggle();
+        final var register = new Register("a");
+        final var offset = 13;
+        final var jnz = new Jnz(new InOperant(register), new InOperant(offset));
+        final var toggle = jnz.toggle();
 
         assertTrue(toggle instanceof Cpy);
     }
