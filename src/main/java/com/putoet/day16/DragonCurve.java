@@ -1,6 +1,6 @@
 package com.putoet.day16;
 
-public class DragonCurve {
+class DragonCurve {
     public static String checksumForDiskSpace(String initialState, int sizeToFill) {
         assert initialState != null;
         assert initialState.matches("[0-1]+");
@@ -16,7 +16,7 @@ public class DragonCurve {
     }
 
     private static String transform(String a) {
-        final String b = new StringBuilder(a).reverse().toString();
+        final var b = new StringBuilder(a).reverse().toString();
         return b.chars()
                 .map(c -> c == '1' ? '0' : '1')
                 .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
@@ -32,7 +32,7 @@ public class DragonCurve {
     }
 
     private static String checksum(String binary) {
-        final String checksum = calculateChecksum(binary);
+        final var checksum = calculateChecksum(binary);
 
         return checksum.length() % 2 == 1 ? checksum : checksum(checksum);
     }
@@ -41,9 +41,9 @@ public class DragonCurve {
         if (binary.length() % 2 == 1)
             throw new IllegalArgumentException("Cannot calculate checksum on odd length string '" + binary + "'");
 
-        final StringBuilder sb = new StringBuilder();
-        final char[] chars = binary.toCharArray();
-        for (int i = 0; i < binary.length(); i += 2)
+        final var sb = new StringBuilder();
+        final var chars = binary.toCharArray();
+        for (var i = 0; i < binary.length(); i += 2)
             sb.append(chars[i] == chars[i+1] ? "1" : "0");
 
         return sb.toString();

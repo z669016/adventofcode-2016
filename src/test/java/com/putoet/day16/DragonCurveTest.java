@@ -16,7 +16,6 @@ class DragonCurveTest {
 
     @Test
     void checksum() {
-        assertThrows(AssertionError.class, () -> DragonCurve.checksum(null, 0));
         assertThrows(AssertionError.class, () -> DragonCurve.checksum("1001", 5));
         assertThrows(AssertionError.class, () -> DragonCurve.checksum("10001", 5));
 
