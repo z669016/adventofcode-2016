@@ -1,7 +1,6 @@
 package com.putoet.day24;
 
 import com.putoet.maze.Maze;
-import com.putoet.search.GenericSearch;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
