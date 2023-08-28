@@ -1,6 +1,7 @@
 package com.putoet.day25;
 
 import com.putoet.resources.ResourceLines;
+import com.putoet.utils.Timer;
 import com.putoet.utils.assembunny.Assembunny;
 import com.putoet.utils.assembunny.Instruction;
 import com.putoet.utils.assembunny.Register;
@@ -15,20 +16,22 @@ public class Day25 {
     private static Assembunny assembunny;
 
     public static void main(String[] args) {
-        for (int idx = 0; idx < 1000; idx++) {
-            System.out.print(idx);
-            System.out.print("\r");
-            final List<Integer> out = runLimitedTime(50, idx);
-            if (validate(out)) {
-                System.out.println("\rList for value " + idx + " is " + (validate(out) ? "valid" : "invalid"));
-                break;
+        Timer.run(() -> {
+            for (var idx = 0; idx < 1000; idx++) {
+                System.out.print(idx);
+                System.out.print("\r");
+                final var out = runLimitedTime(50, idx);
+                if (validate(out)) {
+                    System.out.println("\rList for value " + idx + " is " + (validate(out) ? "valid" : "invalid"));
+                    break;
+                }
             }
-        }
+        });
     }
 
     private static boolean validate(List<Integer> list) {
-        int bit = 0;
-        for (Integer integer : list) {
+        var bit = 0;
+        for (var integer : list) {
             if (bit != integer)
                 return false;
             bit = (bit == 0) ? 1 : 0;
@@ -51,15 +54,14 @@ public class Day25 {
         a.accept(startValue);
         Instruction[] instructions = assembunny.compile(ResourceLines.list("/day25.txt"));
 
-        final List<Integer> out = new ArrayList<>();
+        final var out = new ArrayList<Integer>();
         assembunny.setConsumer(out::add);
 
         final Runnable runner = () -> assembunny.run(instructions);
-
-        final Thread thread = new Thread(runner);
+        final var thread = new Thread(runner);
         thread.start();
         Thread.sleep(millis);
-        thread.stop();
+        thread.interrupt();
 
         return out;
     }
