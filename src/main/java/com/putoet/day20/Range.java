@@ -1,16 +1,17 @@
 package com.putoet.day20;
 
-import java.util.regex.Matcher;
+import org.jetbrains.annotations.NotNull;
+
 import java.util.regex.Pattern;
 
-public record Range(long lowerBound, long upperBound) implements Comparable<Range> {
+record Range(long lowerBound, long upperBound) implements Comparable<Range> {
     private static final Pattern PATTERN = Pattern.compile("([0-9]+)-([0-9]+)");
 
     public static Range of(String line) {
         assert line != null;
         assert line.length() > 3;
 
-        final Matcher matcher = PATTERN.matcher(line);
+        final var matcher = PATTERN.matcher(line);
         if (!matcher.matches())
             throw new IllegalArgumentException(("Invalid range '" + line + "'"));
 
@@ -46,7 +47,7 @@ public record Range(long lowerBound, long upperBound) implements Comparable<Rang
     }
 
     @Override
-    public int compareTo(Range other) {
+    public int compareTo(@NotNull Range other) {
         if (equals(other))
             return 0;
 
