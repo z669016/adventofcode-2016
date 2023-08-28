@@ -10,7 +10,7 @@ public record Node(int x, int y, int size, int used) {
     }
 
     public String name() {
-        return DfParser.PREFIX + DfParser.SEPERATOR + "x" + x + DfParser.SEPERATOR + "y" + y;
+        return DfParser.PREFIX + DfParser.SEPARATOR + "x" + x + DfParser.SEPARATOR + "y" + y;
     }
 
     public int free() { return size - used; }

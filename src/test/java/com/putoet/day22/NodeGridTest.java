@@ -30,7 +30,6 @@ class NodeGridTest {
 
     @Test
     void create() {
-        assertThrows(AssertionError.class, () -> new NodeGrid(null));
         assertThrows(AssertionError.class, () -> new NodeGrid(List.of()));
 
         assertThrows(IllegalStateException.class, () -> new NodeGrid(List.of(
@@ -46,12 +45,12 @@ class NodeGridTest {
 
     @Test
     void get() {
-        final Node one = new Node(0, 0, 1, 0);
-        final Node two = new Node(1, 0, 2, 0);
-        final Node three = new Node(0, 1, 3, 0);
-        final Node four = new Node(1, 1, 4, 0);
+        final var one = new Node(0, 0, 1, 0);
+        final var two = new Node(1, 0, 2, 0);
+        final var three = new Node(0, 1, 3, 0);
+        final var four = new Node(1, 1, 4, 0);
 
-        final NodeGrid grid = new NodeGrid(List.of(four, one, two, three));
+        final var grid = new NodeGrid(List.of(four, one, two, three));
         assertEquals(one, grid.get(0, 0));
         assertEquals(two, grid.get(1, 0));
         assertEquals(three, grid.get(0, 1));

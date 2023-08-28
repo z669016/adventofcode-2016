@@ -1,13 +1,15 @@
 package com.putoet.day22;
 
 import com.putoet.resources.ResourceLines;
+import com.putoet.utils.Timer;
 
 import java.util.List;
 
 public class Day22 {
     public static void main(String[] args) {
-        final List<Node> nodes = DfParser.parse(ResourceLines.list("/day22.txt"));
-        System.out.println("Number of viable pairs: " + viablePairs(nodes));
+        final var nodes = DfParser.parse(ResourceLines.list("/day22.txt"));
+
+        Timer.run(() -> System.out.println("Number of viable pairs: " + viablePairs(nodes)));
 
         // Part 2 was solved by hand using the printed grid of nodes ... The puzzle might be solvable by a program
         // but it requires a lot of work to make it generic (if even possible). Beware, the grid contain nodes which
