@@ -2,7 +2,6 @@ package com.putoet.day24;
 
 import com.putoet.maze.Maze;
 import com.putoet.misc.TSP;
-import com.putoet.search.GenericSearch;
 import org.paukov.combinatorics3.Generator;
 
 import java.util.*;
@@ -10,13 +9,13 @@ import java.util.function.Predicate;
 
 import static com.putoet.search.GenericSearch.bfs;
 
-public class DuctLayout implements Maze<Cell> {
+class DuctLayout implements Maze<Cell> {
     private final int rows, columns;
     final private Cell[][] grid;
 
     public DuctLayout(List<String> maze) {
         assert maze != null;
-        assert maze.size() > 0;
+        assert !maze.isEmpty();
 
         grid = maze.stream()
                 .map(line -> line.chars()
@@ -35,9 +34,9 @@ public class DuctLayout implements Maze<Cell> {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder();
-        for (Cell[] row : grid) {
-            for (Cell cell : row) {
+        final var sb = new StringBuilder();
+        for (var row : grid) {
+            for (var cell : row) {
                 sb.append(cell.toString());
             }
             sb.append(System.lineSeparator());
@@ -49,7 +48,7 @@ public class DuctLayout implements Maze<Cell> {
     public List<Maze.Location> successors(Maze.Location ml) {
         assert ml != null;
 
-        final List<Maze.Location> locations = new ArrayList<>();
+        final var locations = new ArrayList<Maze.Location>();
         if (ml.row + 1 < rows && grid[ml.row + 1][ml.column] != Cell.WALL) {
             locations.add(new Maze.Location(ml.row + 1, ml.column));
         }
@@ -94,18 +93,17 @@ public class DuctLayout implements Maze<Cell> {
     public Map<String, Map<String,Integer>> distances(List<List<Cell>> combinations) {
         assert combinations != null;
 
-        final Map<String, Map<String,Integer>> distances = new HashMap<>();
+        final var distances = new HashMap<String, Map<String,Integer>>();
         gates().forEach(gate -> distances.put(gate.toString(),new HashMap<>()));
 
         combinations.forEach(combination-> {
-            final Cell u = combination.get(0);
-            final Cell v = combination.get(1);
+            final var u = combination.get(0);
+            final var v = combination.get(1);
 
-            final Optional<Maze.Location> start = locate(cell -> cell == u);
+            final var start = locate(cell -> cell == u);
 
             start.ifPresent(location -> {
-                final Optional<GenericSearch.Node<Maze.Location>> weight =
-                        bfs(location, ml -> cell(ml) == v, this::successors);
+                final var weight = bfs(location, ml -> cell(ml) == v, this::successors);
                 weight.ifPresent(locationNode -> {
                     distances.get(u.toString()).put(v.toString(), locationNode.steps());
                     distances.get(v.toString()).put(u.toString(), locationNode.steps());
@@ -120,7 +118,7 @@ public class DuctLayout implements Maze<Cell> {
         assert start != null;
         assert distances != null;
 
-        final List<Cell[]> permutations = TSP.permutations(gates().toArray(Cell[]::new)).stream()
+        final var permutations = TSP.permutations(gates().toArray(Cell[]::new)).stream()
                 .filter(g -> g[0] == start)
                 .toList();
 

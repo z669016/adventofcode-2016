@@ -1,6 +1,6 @@
 package com.putoet.day24;
 
-public enum Cell {
+enum Cell {
 
         OPEN,
         WALL,
