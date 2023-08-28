@@ -37,7 +37,7 @@ public class Assembunny {
         final var ip = new Register("ip");
         context = new ExecutionContext(ip, regs, program, consumer);
 
-        while (ip.get() < program.length) {
+        while (ip.get() < program.length && !Thread.interrupted()) {
             if (verbose)
                 System.out.println(regs + " " + program[ip.get()].toString());
 
