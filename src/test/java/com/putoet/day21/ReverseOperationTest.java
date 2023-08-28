@@ -7,7 +7,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class ReverseOperationTest {
     @Test
     void create() {
-        assertThrows(AssertionError.class, () -> new ReverseOperation((String) null));
         assertThrows(AssertionError.class, () -> new ReverseOperation(new String[] {}));
         assertThrows(AssertionError.class, () -> new ReverseOperation(new String[] {"a", "b", "c", "d", "e"}));
         assertThrows(AssertionError.class, () -> new ReverseOperation(new String[] {"reverse", "positions", "c", "d", "e"}));
@@ -20,33 +19,32 @@ class ReverseOperationTest {
 
     @Test
     void unAapply() {
-        ReverseOperation reverse = new ReverseOperation("reverse positions 1 through 4");
+        final var reverse = new ReverseOperation("reverse positions 1 through 4");
         assertEquals("abcdef", reverse.unApply(reverse.apply("abcdef")));
     }
 
     @Test
     void applyError() {
-        final ReverseOperation reverse = new ReverseOperation("reverse positions 4 through 6");
-        assertThrows(AssertionError.class, () -> reverse.apply(null));
+        final var reverse = new ReverseOperation("reverse positions 4 through 6");
         assertThrows(IllegalArgumentException.class, () -> reverse.apply("abc"));
         assertThrows(IllegalArgumentException.class, () -> reverse.apply("abcde"));
     }
 
     @Test
     void applyMiddle() {
-        final ReverseOperation reverse = new ReverseOperation("reverse positions 1 through 4");
+        final var reverse = new ReverseOperation("reverse positions 1 through 4");
         assertEquals("aedcbf", reverse.apply("abcdef"));
     }
 
     @Test
     void applyStart() {
-        final ReverseOperation reverse = new ReverseOperation("reverse positions 0 through 3");
+        final var reverse = new ReverseOperation("reverse positions 0 through 3");
         assertEquals("dcbaef", reverse.apply("abcdef"));
     }
 
     @Test
     void applyEnd() {
-        final ReverseOperation reverse = new ReverseOperation("reverse positions 2 through 5");
+        final var reverse = new ReverseOperation("reverse positions 2 through 5");
         assertEquals("abfedc", reverse.apply("abcdef"));
     }
 }

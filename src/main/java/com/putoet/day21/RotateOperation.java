@@ -1,15 +1,16 @@
 package com.putoet.day21;
 
-public class RotateOperation implements ScrambleOperation {
+import org.jetbrains.annotations.NotNull;
+
+class RotateOperation implements ScrambleOperation {
     private final int steps;
     private final boolean left;
 
-    public RotateOperation(String line) {
-        this(line != null ? line.split(" ") : new String[] {});
+    public RotateOperation(@NotNull String line) {
+        this(line.split(" "));
     }
 
-    public RotateOperation(String[] split) {
-        assert split != null;
+    public RotateOperation(@NotNull String[] split) {
         assert split.length == 4;
         assert "rotate".equals(split[0]);
         assert "left|right".contains(split[1]);
@@ -22,12 +23,12 @@ public class RotateOperation implements ScrambleOperation {
     }
 
     @Override
-    public String apply(String password) {
+    public String apply(@NotNull String password) {
         return rotate(password, steps, left);
     }
 
     @Override
-    public String unApply(String password) {
+    public String unApply(@NotNull String password) {
         return rotate(password, steps, !left);
     }
 
@@ -36,23 +37,21 @@ public class RotateOperation implements ScrambleOperation {
         return String.format("rotate %s %d %s", left ? "left" : "right", steps, steps == 1 ? "step" : "steps");
     }
 
-    private static String rotate(String password, int steps, boolean left) {
-        assert password != null;
-
+    private static String rotate(@NotNull String password, int steps, boolean left) {
         if (steps == 0 || password.length() == 1)
             return password;
 
         return left ? rotateLeft(password, steps) : rotateRight(password, steps);
     }
 
-    public static String rotateRight(String password, int steps) {
-        for (int idx = 0; idx < steps; idx++)
+    public static String rotateRight(@NotNull String password, int steps) {
+        for (var idx = 0; idx < steps; idx++)
             password = password.charAt(password.length()-1) + password.substring(0, password.length() - 1);
         return password;
     }
 
-    public static String rotateLeft(String password, int steps) {
-        for (int idx = 0; idx < steps; idx++)
+    public static String rotateLeft(@NotNull String password, int steps) {
+        for (var idx = 0; idx < steps; idx++)
             password = password.substring(1) + password.charAt(0);
         return password;
     }

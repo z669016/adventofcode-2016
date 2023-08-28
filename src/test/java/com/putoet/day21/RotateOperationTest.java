@@ -7,7 +7,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class RotateOperationTest {
     @Test
     void create() {
-        assertThrows(AssertionError.class, () -> new RotateOperation((String) null));
         assertThrows(AssertionError.class, () -> new RotateOperation(new String[] {}));
         assertThrows(AssertionError.class, () -> new RotateOperation(new String[] {"a", "b", "c", "d"}));
         assertThrows(AssertionError.class, () -> new RotateOperation(new String[] {"rotate", "b", "c", "d"}));
@@ -19,7 +18,7 @@ class RotateOperationTest {
 
     @Test
     void applyLeft() {
-        final RotateOperation rotateLeft = new RotateOperation("rotate left 3 steps");
+        final var rotateLeft = new RotateOperation("rotate left 3 steps");
         assertEquals("a", rotateLeft.apply("a"));
         assertEquals("defgabc", rotateLeft.apply("abcdefg"));
         assertEquals("abcdefg", rotateLeft.unApply(rotateLeft.apply("abcdefg")));
@@ -27,7 +26,7 @@ class RotateOperationTest {
 
     @Test
     void applyRight() {
-        final RotateOperation rotateRight = new RotateOperation("rotate right 3 steps");
+        final var rotateRight = new RotateOperation("rotate right 3 steps");
         assertEquals("a", rotateRight.apply("a"));
         assertEquals("efgabcd", rotateRight.apply("abcdefg"));
         assertEquals("abcdefg", rotateRight.unApply(rotateRight.apply("abcdefg")));

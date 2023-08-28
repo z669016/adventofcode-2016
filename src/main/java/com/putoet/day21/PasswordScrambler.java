@@ -1,37 +1,28 @@
 package com.putoet.day21;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Collections;
 import java.util.List;
 
-public class PasswordScrambler implements ScrambleOperation {
-    private final List<ScrambleOperation> operations;
-
-    public PasswordScrambler(List<ScrambleOperation> operations) {
-        assert operations != null;
-
-        this.operations = operations;
-    }
-
+record PasswordScrambler(@NotNull List<ScrambleOperation> operations) implements ScrambleOperation {
     @Override
-    public String apply(String password) {
-        assert password != null;
-
-        for (ScrambleOperation operation : operations) {
+    public String apply(@NotNull String password) {
+        for (var operation : operations) {
             password = operation.apply(password);
         }
         return password;
     }
 
     @Override
-    public String unApply(String password) {
-        assert password != null;
-
-        for (int idx = operations.size() - 1; idx >= 0; idx--) {
+    public String unApply(@NotNull String password) {
+        for (var idx = operations.size() - 1; idx >= 0; idx--) {
             password = operations.get(idx).unApply(password);
         }
         return password;
     }
 
+    @Override
     public List<ScrambleOperation> operations() {
         return Collections.unmodifiableList(operations);
     }
@@ -40,7 +31,6 @@ public class PasswordScrambler implements ScrambleOperation {
         assert lines != null;
 
         return new PasswordScrambler(lines.stream()
-                .sequential()
                 .map(ScrambleOperation::of)
                 .toList()
         );

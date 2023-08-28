@@ -1,21 +1,24 @@
 package com.putoet.day21;
 
+import org.jetbrains.annotations.NotNull;
+
 public class SwapPositionOperation implements ScrambleOperation {
     private final int from, to;
 
-    public SwapPositionOperation(String line) {
-        this(line != null ? line.split(" ") : new String[] {});
+    public SwapPositionOperation(@NotNull String line) {
+        this(line.split(" "));
     }
 
-    public SwapPositionOperation(String[] split) {
-        assert split != null;
+    public SwapPositionOperation(@NotNull String[] split) {
         assert split.length == 6;
         assert "swap".equals(split[0]);
         assert "position".equals(split[1]);
         assert "with".equals(split[3]);
         assert split[1].equals(split[4]);
 
-        final int f = Integer.parseInt(split[2]), t = Integer.parseInt(split[5]);
+        final var f = Integer.parseInt(split[2]);
+        final var t = Integer.parseInt(split[5]);
+
         from = Math.min(f, t);
         to = Math.max(f, t);
 
@@ -23,12 +26,12 @@ public class SwapPositionOperation implements ScrambleOperation {
     }
 
     @Override
-    public String apply(String password) {
+    public String apply(@NotNull String password) {
         return swap(password, from, to);
     }
 
     @Override
-    public String unApply(String password) {
+    public String unApply(@NotNull String password) {
         return apply(password);
     }
 
@@ -37,9 +40,7 @@ public class SwapPositionOperation implements ScrambleOperation {
         return String.format("swap position %d with %d", from, to);
     }
 
-    private static String swap(String password, int from, int to) {
-        assert password != null;
-
+    private static String swap(@NotNull String password, int from, int to) {
         if (from >= password.length())
             throw new IllegalArgumentException("Cannot swap from " + from + " for password '" + password + "'");
         if (to >= password.length())
@@ -48,8 +49,8 @@ public class SwapPositionOperation implements ScrambleOperation {
         if (from == to)
             return password;
 
-        final char fromChar = password.charAt(from);
-        final char toChar = password.charAt(to);
+        final var fromChar = password.charAt(from);
+        final var toChar = password.charAt(to);
 
         return password.substring(0, from) + toChar + password.substring(from + 1, to) + fromChar + password.substring(to + 1);
     }

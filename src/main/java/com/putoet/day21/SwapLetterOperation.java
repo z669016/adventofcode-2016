@@ -1,14 +1,15 @@
 package com.putoet.day21;
 
+import org.jetbrains.annotations.NotNull;
+
 public class SwapLetterOperation implements ScrambleOperation {
     private final String from, to;
 
-    public SwapLetterOperation(String line) {
-        this(line != null ? line.split(" ") : new String[] {});
+    public SwapLetterOperation(@NotNull String line) {
+        this(line.split(" "));
     }
 
-    public SwapLetterOperation(String[] split) {
-        assert split != null;
+    public SwapLetterOperation(@NotNull String[] split) {
         assert split.length == 6;
         assert "swap".equals(split[0]);
         assert "letter".equals(split[1]);
@@ -23,12 +24,12 @@ public class SwapLetterOperation implements ScrambleOperation {
     }
 
     @Override
-    public String apply(String password) {
+    public String apply(@NotNull String password) {
         return swap(password, from, to);
     }
 
     @Override
-    public String unApply(String password) {
+    public String unApply(@NotNull String password) {
         return apply(password);
     }
 
@@ -37,9 +38,7 @@ public class SwapLetterOperation implements ScrambleOperation {
         return String.format("swap letter %s with %s", from, to);
     }
 
-    private static String swap(String password, String from, String to) {
-        assert password != null;
-
+    private static String swap(@NotNull String password, String from, String to) {
         if (!password.contains(from) || !password.contains(to))
             throw new IllegalArgumentException("Cannot swap '" + from + "' and '" + to + "' for password '" + password +"'");
 

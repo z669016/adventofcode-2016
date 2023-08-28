@@ -7,7 +7,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class RotateBasedOperationTest {
     @Test
     void create() {
-        assertThrows(AssertionError.class, () -> new RotateBasedOperation((String) null));
         assertThrows(AssertionError.class, () -> new RotateBasedOperation(new String[] {}));
         assertThrows(AssertionError.class, () -> new RotateBasedOperation(new String[] {"a", "b", "c", "d", "e", "f", "1"}));
         assertThrows(AssertionError.class, () -> new RotateBasedOperation(new String[] {"rotate", "b", "c", "d", "e", "f", "1"}));
@@ -20,7 +19,7 @@ class RotateBasedOperationTest {
 
     @Test
     void apply() {
-        final RotateBasedOperation rotate = new RotateBasedOperation("rotate based on position of letter d");
+        final var rotate = new RotateBasedOperation("rotate based on position of letter d");
         assertEquals("ado", rotate.apply("doa"));
         assertEquals("oad", rotate.apply("oad"));
         assertEquals("cefdghiob", rotate.apply("obcefdghi"));
@@ -28,7 +27,7 @@ class RotateBasedOperationTest {
 
     @Test
     void unApply() {
-        final RotateBasedOperation rotate = new RotateBasedOperation("rotate based on position of letter a");
+        final var rotate = new RotateBasedOperation("rotate based on position of letter a");
         assertEquals("abcdefgh", rotate.unApply(rotate.apply("abcdefgh")));
         assertEquals("habcdefg", rotate.unApply(rotate.apply("habcdefg")));
         assertEquals("ghabcdef", rotate.unApply(rotate.apply("ghabcdef")));

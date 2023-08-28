@@ -7,7 +7,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class SwapLetterOperationTest {
     @Test
     void create() {
-        assertThrows(AssertionError.class, () -> new SwapLetterOperation((String) null));
         assertThrows(AssertionError.class, () -> new SwapLetterOperation(new String[] {}));
         assertThrows(AssertionError.class, () -> new SwapLetterOperation(new String[] {"a", "b", "c", "d", "e", "f"}));
         assertThrows(AssertionError.class, () -> new SwapLetterOperation(new String[] {"swap", "b", "c", "d", "e", "f"}));
@@ -21,20 +20,20 @@ class SwapLetterOperationTest {
 
     @Test
     void apply() {
-        final SwapLetterOperation swap = new SwapLetterOperation("swap letter a with letter d");
+        final var swap = new SwapLetterOperation("swap letter a with letter d");
         assertEquals("dbca", swap.apply("abcd"));
         assertEquals("abcd", swap.unApply(swap.apply("abcd")));
     }
 
     @Test
     void applyUnchanged() {
-        final SwapLetterOperation swap = new SwapLetterOperation("swap letter a with letter a");
+        final var swap = new SwapLetterOperation("swap letter a with letter a");
         assertEquals("abcd", swap.apply("abcd"));
     }
 
     @Test
     void applyNotFound() {
-        final SwapLetterOperation swap = new SwapLetterOperation("swap letter q with letter t");
+        final var swap = new SwapLetterOperation("swap letter q with letter t");
         assertThrows(IllegalArgumentException.class, () -> swap.apply("abcd"));
     }
 }

@@ -20,9 +20,9 @@ class PasswordScramblerTest {
 
     @Test
     void apply() {
-        final PasswordScrambler scrambler = PasswordScrambler.of(OPERATIONS);
+        final var scrambler = PasswordScrambler.of(OPERATIONS);
 
-        List<ScrambleOperation> scrambleOperations = scrambler.operations();
+        final var scrambleOperations = scrambler.operations();
         assertEquals(SwapPositionOperation.class, scrambleOperations.get(0).getClass());
         assertEquals(SwapLetterOperation.class, scrambleOperations.get(1).getClass());
         assertEquals(ReverseOperation.class, scrambleOperations.get(2).getClass());
@@ -39,7 +39,6 @@ class PasswordScramblerTest {
 
     @Test
     void of() {
-        assertThrows(AssertionError.class, () -> PasswordScrambler.of(null));
         assertEquals("abcdef", PasswordScrambler.of(List.of()).apply("abcdef"));
     }
 }

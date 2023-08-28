@@ -1,14 +1,15 @@
 package com.putoet.day21;
 
-public class MoveOperation implements ScrambleOperation {
+import org.jetbrains.annotations.NotNull;
+
+class MoveOperation implements ScrambleOperation {
     private final int from, to;
 
-    public MoveOperation(String line) {
-        this(line != null ? line.split(" ") : new String[] {});
+    public MoveOperation(@NotNull String line) {
+        this(line.split(" "));
     }
 
-    public MoveOperation(String[] split) {
-        assert split != null;
+    public MoveOperation(@NotNull String[] split) {
         assert split.length == 6;
         assert "move".equals(split[0]);
         assert "position".equals(split[1]);
@@ -23,12 +24,12 @@ public class MoveOperation implements ScrambleOperation {
     }
 
     @Override
-    public String apply(String password) {
+    public String apply(@NotNull String password) {
         return move(password,from, to);
     }
 
     @Override
-    public String unApply(String password) {
+    public String unApply(@NotNull String password) {
         return move(password, to, from);
     }
 
@@ -37,9 +38,7 @@ public class MoveOperation implements ScrambleOperation {
         return String.format("move position %d to %d", from, to);
     }
 
-    private static String move(String password, int from, int to) {
-        assert password != null;
-
+    private static String move(@NotNull String password, int from, int to) {
         if (from >= password.length())
             throw new IllegalArgumentException("Cannot move from " + from + " for password '" + password + "'");
         if (to >= password.length())

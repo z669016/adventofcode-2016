@@ -1,9 +1,11 @@
 package com.putoet.day21;
 
-public interface ScrambleOperation {
+import org.jetbrains.annotations.NotNull;
 
-    static ScrambleOperation of(String line) {
-        final String[] split = line.split(" ");
+interface ScrambleOperation {
+
+    static ScrambleOperation of(@NotNull String line) {
+        final var split = line.split(" ");
         return switch (split[0]) {
             case "move" -> new MoveOperation(split);
             case "reverse" -> new ReverseOperation(split);
@@ -13,6 +15,6 @@ public interface ScrambleOperation {
         };
     }
 
-    String apply(String password);
-    String unApply(String password);
+    String apply(@NotNull String password);
+    String unApply(@NotNull String password);
 }
