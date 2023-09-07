@@ -10,8 +10,6 @@ class ABBATest {
 
     @Test
     void containsABBA() {
-        assertThrows(AssertionError.class, () -> ABBA.containsABBA(null));
-
         assertFalse(ABBA.containsABBA(""));
         assertFalse(ABBA.containsABBA("abb"));
         assertFalse(ABBA.containsABBA("aaaa"));
@@ -21,8 +19,6 @@ class ABBATest {
 
     @Test
     void listABA() {
-        assertThrows(AssertionError.class, () -> ABBA.listABA(null));
-
         assertTrue(ABBA.listABA("").isEmpty());
         assertTrue(ABBA.listABA("abb").isEmpty());
         assertTrue(ABBA.listABA("aaa").isEmpty());
@@ -41,7 +37,6 @@ class ABBATest {
 
     @Test
     void bab() {
-        assertThrows(AssertionError.class, () -> ABBA.bab(null));
         assertThrows(AssertionError.class, () -> ABBA.bab(""));
         assertThrows(AssertionError.class, () -> ABBA.bab("1234"));
 

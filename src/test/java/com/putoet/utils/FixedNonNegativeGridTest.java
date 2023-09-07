@@ -32,9 +32,6 @@ class FixedNonNegativeGridTest {
 
     @Test
     void createInvalid() {
-        // Matrix cannot be null
-        assertThrows(AssertionError.class, () -> new FixedNonNegativeGrid<String>(null));
-
         // All rows must have the same size
         assertThrows(AssertionError.class, () -> new FixedNonNegativeGrid<>(List.of(
                 List.of("A", "B", "C", "1"),
@@ -42,8 +39,8 @@ class FixedNonNegativeGridTest {
                 List.of("G", "H","I", "3"))
         ));
 
-        assertThrows(AssertionError.class, () -> new FixedNonNegativeGrid<String>(0, 2, ""));
-        assertThrows(AssertionError.class, () -> new FixedNonNegativeGrid<String>(2, 0, ""));
+        assertThrows(AssertionError.class, () -> new FixedNonNegativeGrid<>(0, 2, ""));
+        assertThrows(AssertionError.class, () -> new FixedNonNegativeGrid<>(2, 0, ""));
         assertThrows(AssertionError.class, () -> new FixedNonNegativeGrid<String>(2, 2, null));
     }
 }

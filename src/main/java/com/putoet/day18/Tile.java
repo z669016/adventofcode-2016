@@ -1,8 +1,8 @@
 package com.putoet.day18;
 
 record Tile(boolean safe) {
-    public static Tile SAFE = new Tile('.');
-    public static Tile TRAP = new Tile('^');
+    public static final Tile SAFE = new Tile('.');
+    public static final Tile TRAP = new Tile('^');
 
     private Tile(int c) {
         this(c == '.');

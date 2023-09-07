@@ -3,12 +3,11 @@ package com.putoet.day22;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class DfParserTest {
-    private DfParser parser = new DfParser();
+    private final DfParser parser = new DfParser();
 
     @Test
     void patternInvalid() {
